@@ -1,2 +1,4 @@
 # <>------::------< P4RZ1V4L >------::------<>
-Bot management - console environment - Genetic Algorithm
+- Bot management ☑️
+- console environment ☑️
+- Genetic Algorithm ☑️
