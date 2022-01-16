@@ -1,0 +1,9 @@
+import pandas
+
+
+# includes date column based on time column inside the MATRIX
+def ccxt_ohlcv_to_dataframe(ohlcv):
+    df = pandas.DataFrame(ohlcv)
+    df.columns = ['time', 'open', 'high', 'low', 'close', 'volume']
+    df['date'] = pandas.to_datetime(df['time'] * 1000000, infer_datetime_format=True)
+    return df
