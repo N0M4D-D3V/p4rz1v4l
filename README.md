@@ -1,2 +1,2 @@
-# p4rz1v4l
-Trad-bot - console environment
+# <>------< P4RZ1V4L >------<>
+Bot management - console environment - Genetic Algorithm
