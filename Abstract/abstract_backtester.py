@@ -1,7 +1,7 @@
 import abc
 
 
-class AbstractBacktesterInterface(metaclass=abc.ABCMeta):
+class AbstractBacktester(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def __backtesting__(self, dataframe, strategy):

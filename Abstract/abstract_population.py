@@ -1,7 +1,7 @@
 import abc
 
 
-class AbstractPopulationInterface(metaclass=abc.ABCMeta):
+class AbstractPopulation(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
     def selection(self):
