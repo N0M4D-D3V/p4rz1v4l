@@ -2,10 +2,18 @@ app_version = 'v0.0.0'
 menu_options = {
     1: 'Backtest',
     2: 'Genetic Algorithm',
-    3: 'Create new bot',
-    4: 'Run P4RZ1V4L! >:v',
-    5: "Go Away ='(",
+    3: 'Run P4RZ1V4L! >:v',
+    4: "Go Away ='(",
 }
+file_paths = {
+    'genetic_algorithm': './GeneticAlgorithm',
+    'backtesting': './Backtesting',
+}
+
+
+def open_script(path_name):
+    path = file_paths[path_name]
+    exec(open(path + '/__ini__.py').read())
 
 
 def print_menu():
@@ -15,20 +23,19 @@ def print_menu():
         print(' <> ' + str(key) + ' >-< ' + menu_options[key])
 
 
-def manage_options(selected_option: int):
+def manage_options(selected_option):
     if selected_option == 1:
         print("\n   Backtest initialized!")
+        open_script('backtesting')
 
     elif selected_option == 2:
         print("\n   Genetic Algorithm initialized!")
+        open_script('genetic_algorithm')
 
     elif selected_option == 3:
-        print("\n   Bot-Creator initialized!")
-
-    elif selected_option == 4:
         print("\n   Bot-Runner initialized!")
 
-    elif selected_option == 5:
+    elif selected_option == 4:
         print("\n\n   U 4r3 n0t r1ch 3n0ugh! >:[")
         exit()
     else:
