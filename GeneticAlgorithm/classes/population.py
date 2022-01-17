@@ -1,7 +1,7 @@
 import numpy as np
 
 from p4rz1v4l.Abstract.abstract_population import AbstractPopulation
-from p4rz1v4l.GeneticAlgorithm.individual import Individual
+from p4rz1v4l.GeneticAlgorithm.classes.individual import Individual
 
 
 class Population(AbstractPopulation):

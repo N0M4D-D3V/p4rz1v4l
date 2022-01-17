@@ -1,8 +1,10 @@
 import ccxt
 
-from p4rz1v4l.GeneticAlgorithm.population import Population
+from p4rz1v4l.GeneticAlgorithm.classes.population import Population
 from p4rz1v4l.Strategy.bollinger_bands_strategy import BollingerBandsStrategy
 from p4rz1v4l.Utils.utils import ccxt_ohlcv_to_dataframe
+
+
 
 exchange = ccxt.binance()
 symbol = 'SOL/USDT'
