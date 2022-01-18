@@ -1,14 +1,16 @@
 from Abstract.abstract_menu import AbstractMenu
-from GeneticAlgorithm.genetic_algorithm_backtester import GeneticAlgorithmBacktester
+from Backtesting.backtester import Backtester
 
-
-class GeneticAlgorithmMenu(AbstractMenu):
-
+class BacktesterMenu(AbstractMenu):
     def __init__(self):
         self.is_menu_active: bool = True
-        self.genetic_algorithm_tester = GeneticAlgorithmBacktester()
+        self.backtester = Backtester(
+            initial_balance=1000,
+            leverage=10,
+            trailing_stop_loss=True
+        )
         self.menu_options = {
-            1: 'Pre-configured Run',
+            1: 'Bollinger Bands + RSI Strategy',
             2: "Return",
         }
 
@@ -27,7 +29,8 @@ class GeneticAlgorithmMenu(AbstractMenu):
 
     def manage_options(self, option):
         if option == 1:
-            self.genetic_algorithm_tester.run()
+            #TESTEAR
+            pass
 
         elif option == 2:
             self.is_menu_active = False
@@ -37,6 +40,6 @@ class GeneticAlgorithmMenu(AbstractMenu):
 
     def print_menu(self):
         print('\n<>----------< P4RZ1V4L >----------<>')
-        print('  -----< Genetic Algorithms >-----\n')
+        print('      -----< Backtester >-----\n')
         for key in self.menu_options.keys():
             print(' <> ' + str(key) + ' >-< ' + self.menu_options[key])

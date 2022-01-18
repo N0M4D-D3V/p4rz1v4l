@@ -1,4 +1,5 @@
 from GeneticAlgorithm.genetic_algorithm_menu import GeneticAlgorithmMenu
+from Backtesting.backtester_menu import BacktesterMenu
 
 app_version = 'v0.0.0'
 menu_options = {
@@ -7,17 +8,9 @@ menu_options = {
     3: 'Run P4RZ1V4L! >:v',
     4: "Go Away ='(",
 }
-file_paths = {
-    'genetic_algorithm': './GeneticAlgorithm',
-    'backtesting': './Backtesting',
-}
 
 genetic_algorithm_submenu = GeneticAlgorithmMenu()
-
-
-def open_script(path_name):
-    path = file_paths[path_name]
-    exec(open(path + '/genetic_algorithm_menu.py').read())
+backtester_submenu = BacktesterMenu()
 
 
 def print_menu():
@@ -30,13 +23,13 @@ def print_menu():
 def manage_options(selected_option):
     if selected_option == 1:
         print("\n   Backtest initialized!")
-        open_script('backtesting')
+        backtester_submenu.start()
 
     elif selected_option == 2:
         genetic_algorithm_submenu.start()
 
     elif selected_option == 3:
-        print("\n   Bot-Runner initialized!")
+        print("\n   Not implemented yet!")
 
     elif selected_option == 4:
         print("\n\n   U 4r3 n0t r1ch 3n0ugh! >:[")

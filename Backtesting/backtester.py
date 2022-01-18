@@ -4,7 +4,6 @@ from Abstract.abstract_strategy import AbstractStrategy
 
 class Backtester(AbstractBacktester):
     def __init__(self, initial_balance=1000, leverage=10, trailing_stop_loss=False):
-
         self.initial_balance = initial_balance
         self.balance = initial_balance
         self.amount = 0
@@ -35,7 +34,6 @@ class Backtester(AbstractBacktester):
         self.stop_loss_price = 0
 
     def reset_results(self):
-
         self.balance = self.initial_balance
         self.amount = 0
         self.profit = []
@@ -55,7 +53,6 @@ class Backtester(AbstractBacktester):
         if side == 'long':
             self.num_longs += 1
 
-            # comment
             if self.is_short_open:
                 self.close_position(price)
 
@@ -149,7 +146,6 @@ class Backtester(AbstractBacktester):
             'num_shorts': self.num_shorts,
             'winner_operations': self.winner_operations,
             'losser_operations': self.losser_operations
-
         }
 
         if self.num_operations > 0 and (self.winner_operations + self.losser_operations) > 0:
