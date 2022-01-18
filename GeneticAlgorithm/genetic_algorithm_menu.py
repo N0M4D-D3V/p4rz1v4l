@@ -1,4 +1,7 @@
-class GeneticAlgorithmMenu:
+from Abstract.abstract_menu import AbstractMenu
+
+
+class GeneticAlgorithmMenu(AbstractMenu):
 
     def __init__(self):
         self.isMenuActive: bool = True
@@ -37,10 +40,6 @@ class GeneticAlgorithmMenu:
 
     def print_menu(self):
         print('\n<>----------< P4RZ1V4L >----------<>')
-        print('     -----< Genetic Algorithms >-----\n')
+        print('  -----< Genetic Algorithms >-----\n')
         for key in self.menu_options.keys():
             print(' <> ' + str(key) + ' >-< ' + self.menu_options[key])
-
-    def open_script(self, path_name):
-        path = self.file_paths[path_name]
-        exec(open(path + '/genetic_algorithm_menu.py').read())
