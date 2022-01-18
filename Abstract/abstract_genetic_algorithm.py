@@ -1,12 +1,12 @@
 import abc
 
 
-class AbstractMenu(metaclass=abc.ABCMeta):
+class AbstractGeneticAlgorithm(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
-    def start(self):
+    def run(self):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def print_menu(self):
+    def print_result(self):
         raise NotImplementedError
