@@ -34,7 +34,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         self.symbol = 'SOL/USDT'
         timeframe = '1d'
         limit = 1000
-        ohlcv = exchange.fetch_ohlcv(symbol, timeframe, limit)
+        ohlcv = exchange.fetch_ohlcv(self.symbol, timeframe, limit)
         self.population = build_population()
         self.dataframe = ccxt_ohlcv_to_dataframe(ohlcv)
         self.number_of_generations = 20
@@ -48,7 +48,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         print('\n\n')
 
     def run(self):
-        for x in range(selfnumber_of_generations):
+        for x in range(self.number_of_generations):
             for individual in self.population.population:
                 individual.backtester.reset_results()
                 strategy = build_strategy(individual)

@@ -1,6 +1,6 @@
 import pandas_ta as ta
 
-from p4rz1v4l.Abstract.abstract_strategy import AbstractStrategy
+from Abstract.abstract_strategy import AbstractStrategy
 
 
 class BollingerBandsStrategy(AbstractStrategy):

@@ -1,5 +1,5 @@
-from p4rz1v4l.Abstract.abstract_backtester import AbstractBacktester
-from p4rz1v4l.Abstract.abstract_strategy import AbstractStrategy
+from Abstract.abstract_backtester import AbstractBacktester
+from Abstract.abstract_strategy import AbstractStrategy
 
 
 class Backtester(AbstractBacktester):

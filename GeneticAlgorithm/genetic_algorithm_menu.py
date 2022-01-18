@@ -1,10 +1,12 @@
 from Abstract.abstract_menu import AbstractMenu
+from GeneticAlgorithm.genetic_algorithm_backtester import GeneticAlgorithmBacktester
 
 
 class GeneticAlgorithmMenu(AbstractMenu):
 
     def __init__(self):
         self.isMenuActive: bool = True
+        self.genetic_algorithm_tester = GeneticAlgorithmBacktester()
         self.file_paths = {
             'genetic_algorithm': './GeneticAlgorithm',
             'backtesting': './Backtesting',
@@ -22,7 +24,7 @@ class GeneticAlgorithmMenu(AbstractMenu):
                 print('\n')
                 option = int(input(' -> Enter your choice: '))
                 if option == 1:
-                    pass
+                    self.genetic_algorithm_tester.run()
 
                 elif option == 2:
                     pass
