@@ -1,3 +1,5 @@
+#Python 3.9
+
 # Gestor de Paquetes
 conda pip -> gestor de paquetes especial para Anaconda Environment
 

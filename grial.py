@@ -1,3 +1,5 @@
+from GeneticAlgorithm.genetic_algorithm_menu import GeneticAlgorithmMenu
+
 app_version = 'v0.0.0'
 menu_options = {
     1: 'Backtest',
@@ -10,10 +12,12 @@ file_paths = {
     'backtesting': './Backtesting',
 }
 
+genetic_algorithm_submenu = GeneticAlgorithmMenu()
+
 
 def open_script(path_name):
     path = file_paths[path_name]
-    exec(open(path + '/__ini__.py').read())
+    exec(open(path + '/genetic_algorithm_menu.py').read())
 
 
 def print_menu():
@@ -29,8 +33,7 @@ def manage_options(selected_option):
         open_script('backtesting')
 
     elif selected_option == 2:
-        print("\n   Genetic Algorithm initialized!")
-        open_script('genetic_algorithm')
+        genetic_algorithm_submenu.start()
 
     elif selected_option == 3:
         print("\n   Bot-Runner initialized!")

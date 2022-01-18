@@ -1,1 +1,0 @@
-print('Genetic Algorithm')
