@@ -15,16 +15,16 @@ menu_options = {
 class BacktesterMenu(AbstractMenu):
     def __init__(self):
         exchange = ccxt.binance()
-        self.symbol = 'SOL/USDT'
-        timeframe = '1d'
-        limit = 1000
+        self.symbol: str = 'SOL/USDT'
+        timeframe: str = '1d'
+        limit: int = 1000
         ohlcv = exchange.fetch_ohlcv(self.symbol, timeframe, limit)
         self.dataframe = ccxt_ohlcv_to_dataframe(ohlcv)
         self.is_menu_active: bool = True
 
-        self.initial_balance = 1000,
-        self.leverage = 10,
-        self.trailing_stop_loss = True
+        self.initial_balance: float = 1000
+        self.leverage: float = 10
+        self.trailing_stop_loss: bool = True
 
     def start(self):
         while self.is_menu_active:
@@ -41,6 +41,7 @@ class BacktesterMenu(AbstractMenu):
     def manage_options(self, option):
         if option == 1:
             self.run_test()
+            self.exit_menu()
         elif option == 2:
             self.set_initial_balance()
             self.set_leverage()
@@ -65,19 +66,19 @@ class BacktesterMenu(AbstractMenu):
         strategy = BollingerBandsStrategy()
         strategy.set_up(self.dataframe)
         backtester = Backtester(
-            self.initial_balance,
-            self.leverage,
-            self.trailing_stop_loss
+            initial_balance=self.initial_balance,
+            leverage=self.leverage,
+            trailing_stop_loss=self.trailing_stop_loss
         )
         backtester.__backtesting__(self.dataframe, strategy)
         print(backtester.return_results(symbol=self.symbol, start_date='', end_date=''))
         print('\n')
 
     def set_initial_balance(self):
-        self.initial_balance = int(input(' -> Initial Balance: '))
+        self.initial_balance = float(input(' -> Initial Balance: '))
 
     def set_leverage(self):
-        self.leverage = int(input(' -> Leverage: '))
+        self.leverage = float(input(' -> Leverage: '))
 
     def set_stop_loss(self):
         self.trailing_stop_loss = bool(input(' -> Stoploss True/False: '))
