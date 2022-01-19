@@ -17,27 +17,20 @@ def build_strategy(individual):
     )
 
 
-def build_population():
-    return Population(
-        generation_size=50,
-        n_genes=5,
-        gene_ranges=[(20, 100), (10, 30), (8, 100), (50, 100), (0, 50)],
-        n_best=5,
-        mutation_rate=0.1
-    )
-
-
 class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
 
-    def __init__(self):
+    def __init__(self, number_of_generations=20, generation_size=50, n_genes=5, mutation_rate=0.1):
         exchange = ccxt.binance()
         self.symbol = 'SOL/USDT'
         timeframe = '1d'
         limit = 1000
         ohlcv = exchange.fetch_ohlcv(self.symbol, timeframe, limit)
-        self.population = build_population()
+        self.number_of_generations = number_of_generations
+        self.generation_size = generation_size
+        self.n_genes = n_genes
+        self.mutation_rate = mutation_rate
+        self.population = self.build_population()
         self.dataframe = ccxt_ohlcv_to_dataframe(ohlcv)
-        self.number_of_generations = 20
 
     def print_header(self):
         print('<>--< GENETIC ALGORITHM >--<>')
@@ -87,6 +80,15 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         ))
         print(self.population.population[0].genes)
         print('\n')
+
+    def build_population(self):
+        return Population(
+            generation_size=self.generation_size,
+            n_genes=self.n_genes,
+            gene_ranges=[(20, 100), (10, 30), (8, 100), (50, 100), (0, 50)],
+            n_best=5,
+            mutation_rate=self.mutation_rate
+        )
 
     def print_worst_individual(self):
         print('WORST INDIVIDUAL:')
