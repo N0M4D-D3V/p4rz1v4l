@@ -28,9 +28,10 @@ class GeneticAlgorithmMenu(AbstractMenu):
     def manage_options(self, option):
         if option == 1:
             self.genetic_algorithm_tester.run()
+            self.exit_menu()
 
         elif option == 2:
-            self.is_menu_active = False
+            self.exit_menu()
 
         else:
             print("\n   404 - Option not found!")
@@ -40,3 +41,6 @@ class GeneticAlgorithmMenu(AbstractMenu):
         print('  -----< Genetic Algorithms >-----\n')
         for key in self.menu_options.keys():
             print(' <> ' + str(key) + ' >-< ' + self.menu_options[key])
+
+    def exit_menu(self):
+        self.is_menu_active = False

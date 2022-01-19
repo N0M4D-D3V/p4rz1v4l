@@ -5,6 +5,12 @@ from Backtesting.backtester import Backtester
 from Strategy.bollinger_bands_strategy import BollingerBandsStrategy
 from Utils.utils import ccxt_ohlcv_to_dataframe
 
+menu_options = {
+    1: 'Bollinger Bands + RSI Strategy',
+    2: 'Run BB + RSI Strategy with custom parameters',
+    3: "Return",
+}
+
 
 class BacktesterMenu(AbstractMenu):
     def __init__(self):
@@ -15,16 +21,15 @@ class BacktesterMenu(AbstractMenu):
         ohlcv = exchange.fetch_ohlcv(self.symbol, timeframe, limit)
         self.dataframe = ccxt_ohlcv_to_dataframe(ohlcv)
         self.is_menu_active: bool = True
-        self.menu_options = {
-            1: 'Bollinger Bands + RSI Strategy',
-            2: "Return",
-        }
+
+        self.initial_balance = 1000,
+        self.leverage = 10,
+        self.trailing_stop_loss = True
 
     def start(self):
         while self.is_menu_active:
             try:
                 self.print_menu()
-                print('\n')
                 option = int(input(' -> Enter your choice: '))
                 self.manage_options(option)
 
@@ -36,27 +41,43 @@ class BacktesterMenu(AbstractMenu):
     def manage_options(self, option):
         if option == 1:
             self.run_test()
-
         elif option == 2:
-            self.is_menu_active = False
-
+            self.set_initial_balance()
+            self.set_leverage()
+            self.set_stop_loss()
+            self.run_test()
+            self.exit_menu()
+        elif option == 3:
+            self.exit_menu()
         else:
             print("\n   404 - Option not found!")
 
     def print_menu(self):
         print('\n<>----------< P4RZ1V4L >----------<>')
         print('      -----< Backtester >-----\n')
-        for key in self.menu_options.keys():
-            print(' <> ' + str(key) + ' >-< ' + self.menu_options[key])
+        for key in menu_options.keys():
+            print(' <> ' + str(key) + ' >-< ' + menu_options[key])
+
+    def exit_menu(self):
+        self.is_menu_active = False
 
     def run_test(self):
         strategy = BollingerBandsStrategy()
         strategy.set_up(self.dataframe)
         backtester = Backtester(
-            initial_balance=1000,
-            leverage=10,
-            trailing_stop_loss=True
+            self.initial_balance,
+            self.leverage,
+            self.trailing_stop_loss
         )
         backtester.__backtesting__(self.dataframe, strategy)
         print(backtester.return_results(symbol=self.symbol, start_date='', end_date=''))
         print('\n')
+
+    def set_initial_balance(self):
+        self.initial_balance = int(input(' -> Initial Balance: '))
+
+    def set_leverage(self):
+        self.leverage = int(input(' -> Leverage: '))
+
+    def set_stop_loss(self):
+        self.trailing_stop_loss = bool(input(' -> Stoploss True/False: '))
