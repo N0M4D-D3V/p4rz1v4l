@@ -12,10 +12,9 @@ class GeneticAlgorithmMenu(AbstractMenu):
 
     def __init__(self):
         self.is_menu_active: bool = True
-        self.number_of_generations = 20
-        self.generation_size = 50
-        self.n_genes = 5
-        self.mutation_rate = 0.1
+        self.number_of_generations: int = 20
+        self.generation_size: int = 50
+        self.mutation_rate: float = 0.1
 
     def start(self):
         while self.is_menu_active:
@@ -34,22 +33,21 @@ class GeneticAlgorithmMenu(AbstractMenu):
             self.run_test()
             self.exit_menu()
         elif option == 2:
-            self.set_number_of_generations()
-            self.set_generation_size()
-            self.set_n_genes()
-            self.set_mutation_rate()
+            self.set_params()
             self.run_test()
             self.exit_menu()
         elif option == 3:
             self.exit_menu()
-
         else:
             print("\n   404 - Option not found!")
 
     def run_test(self):
-        genetic_algorithm_tester = GeneticAlgorithmBacktester(self.number_of_generations, self.generation_size,
-                                                              self.n_genes, self.mutation_rate)
-        genetic_algorithm_tester.run()
+        tester = GeneticAlgorithmBacktester(
+            number_of_generations=self.number_of_generations,
+            generation_size=self.generation_size,
+            mutation_rate=self.mutation_rate
+        )
+        tester.run()
 
     def print_menu(self):
         print('\n<>----------< P4RZ1V4L >----------<>')
@@ -57,17 +55,10 @@ class GeneticAlgorithmMenu(AbstractMenu):
         for key in menu_options.keys():
             print(' <> ' + str(key) + ' >-< ' + menu_options[key])
 
-    def set_number_of_generations(self):
+    def set_params(self):
         self.number_of_generations = int(input(' -> Number of generations (20): '))
-
-    def set_generation_size(self):
         self.generation_size = int(input(' -> Generation size (50): '))
-
-    def set_n_genes(self):
-        self.number_of_generations = int(input(' -> Set number of genes (5): '))
-
-    def set_mutation_rate(self):
-        self.number_of_generations = float(input(' -> Set mutation rate (0.1): '))
+        self.mutation_rate = float(input(' -> Set mutation rate (0.1): '))
 
     def exit_menu(self):
         self.is_menu_active = False

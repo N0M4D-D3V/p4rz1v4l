@@ -19,18 +19,18 @@ def build_strategy(individual):
 
 class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
 
-    def __init__(self, number_of_generations=20, generation_size=50, n_genes=5, mutation_rate=0.1):
+    def __init__(self, number_of_generations=20, generation_size=50, mutation_rate=0.1):
         exchange = ccxt.binance()
         self.symbol = 'SOL/USDT'
         timeframe = '1d'
         limit = 1000
         ohlcv = exchange.fetch_ohlcv(self.symbol, timeframe, limit)
-        self.number_of_generations = number_of_generations
-        self.generation_size = generation_size
-        self.n_genes = n_genes
-        self.mutation_rate = mutation_rate
-        self.population = self.build_population()
         self.dataframe = ccxt_ohlcv_to_dataframe(ohlcv)
+        self.number_of_generations: int = int(number_of_generations)
+        self.generation_size: int = int(generation_size)
+        self.n_genes: int = 5
+        self.mutation_rate: float = float(mutation_rate)
+        self.population = self.build_population()
 
     def print_header(self):
         print('<>--< GENETIC ALGORITHM >--<>')

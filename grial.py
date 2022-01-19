@@ -1,7 +1,7 @@
 from GeneticAlgorithm.genetic_algorithm_menu import GeneticAlgorithmMenu
 from Backtesting.backtester_menu import BacktesterMenu
 
-app_version = 'v0.0.0'
+app_version = 'v0.0.1'
 menu_options = {
     1: 'Backtest',
     2: 'Genetic Algorithm',
@@ -32,7 +32,8 @@ def manage_options(selected_option):
         print("\n   Not implemented yet!")
 
     elif selected_option == 4:
-        print("\n\n   U 4r3 n0t r1ch 3n0ugh! >:[")
+        print("\n\n   Wake the f*ick Up!")
+        print("We have a city to burn...")
         exit()
     else:
         print("\n   404 - Option not found!")
@@ -49,3 +50,7 @@ while True:
         print("\n   404 - Option not found!")
     except ValueError:
         print("\n   404 - Option not found!")
+    except KeyboardInterrupt:
+        print("\n\n   Wake the f*ick Up!")
+        print("We have a city to burn...")
+        exit()
