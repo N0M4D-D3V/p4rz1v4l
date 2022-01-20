@@ -29,9 +29,7 @@ class GeneticAlgorithmMenu(AbstractMenu):
                 option = int(input(' -> Enter your choice: '))
                 self.manage_options(option)
 
-            except SyntaxError:
-                print("\n   404 - Option not found!")
-            except ValueError:
+            except (SyntaxError, ValueError):
                 print("\n   404 - Option not found!")
 
     def manage_options(self, option):
@@ -62,9 +60,9 @@ class GeneticAlgorithmMenu(AbstractMenu):
             print(' <> ' + str(key) + ' >-< ' + menu_options[key])
 
     def set_params(self):
-        self.number_of_generations = int(input(' -> Number of generations (20): '))
-        self.generation_size = int(input(' -> Generation size (50): '))
-        self.mutation_rate = float(input(' -> Set mutation rate (0.1): '))
+        self.number_of_generations = int(input(' -> Number of generations (20): ') or '20')
+        self.generation_size = int(input(' -> Generation size (50): ') or '50')
+        self.mutation_rate = float(input(' -> Set mutation rate (0.1): ') or '0.1')
 
     def exit_menu(self):
         self.is_menu_active = False
