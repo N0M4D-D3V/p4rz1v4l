@@ -4,6 +4,10 @@ import abc
 class AbstractMenu(metaclass=abc.ABCMeta):
 
     @abc.abstractmethod
+    def reset_default_values(self):
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def start(self):
         raise NotImplementedError
 

@@ -16,6 +16,12 @@ class GeneticAlgorithmMenu(AbstractMenu):
         self.generation_size: int = 50
         self.mutation_rate: float = 0.1
 
+    def reset_default_values(self):
+        self.is_menu_active: bool = True
+        self.number_of_generations: int = 20
+        self.generation_size: int = 50
+        self.mutation_rate: float = 0.1
+
     def start(self):
         while self.is_menu_active:
             try:

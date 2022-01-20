@@ -28,6 +28,20 @@ class BacktesterMenu(AbstractMenu):
         self.rsi_overbought = 60
         self.rsi_oversold = 40
 
+    def reset_default_values(self):
+        self.symbol: str = 'SOL/USDT'
+        self.timeframe: str = '1d'
+        self.limit: int = 1000
+        self.is_menu_active: bool = True
+        self.initial_balance: float = 1000
+        self.leverage: float = 10
+        self.trailing_stop_loss: bool = True
+        self.bb_len = 20
+        self.bb_standard_derivations = 2.0
+        self.rsi_len = 14
+        self.rsi_overbought = 60
+        self.rsi_oversold = 40
+
     def start(self):
         while self.is_menu_active:
             try:
