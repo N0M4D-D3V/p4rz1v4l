@@ -35,12 +35,12 @@ class BacktesterMenu(AbstractMenu):
                 option = int(input(' -> Enter your choice: '))
                 self.manage_options(option)
 
-            except SyntaxError:
-                print("\n   404 - Option not found!")
-            except ValueError:
+            except (SyntaxError, ValueError) as e:
                 print("\n   404 - Option not found!")
             except BadSymbol:
                 print("\n Binance does not have market symbol " + self.symbol)
+            except KeyError:
+                print("\n Probably u introduced an invalid timeframe. Try again >:b")
 
     def manage_options(self, option):
         if option == 1:
@@ -72,16 +72,12 @@ class BacktesterMenu(AbstractMenu):
         strategy.set_up(dataframe)
         backtester = self.get_backtester()
         backtester.__backtesting__(dataframe, strategy)
-        print(backtester.return_results(symbol=self.symbol, start_date='', end_date=''))
         print('\n')
+        print(backtester.return_results(symbol=self.symbol, start_date='', end_date=''))
 
-    def set_all_strategy_params(self):
-        print('Setting all params ...')
-        self.set_tester_params()
-        self.set_bb_params()
-        self.set_rsi_params()
+    def set_all_params(self):
+        print('\nSetting all params ...')
 
-    def set_tester_params(self):
         print('Setting tester params ...')
         self.symbol = str(input(' -> Symbol (SOL/USDT): ') or 'BTC/USDT')
         self.timeframe = str(input(' -> Timeframe (1d): ') or '1d')
@@ -89,12 +85,10 @@ class BacktesterMenu(AbstractMenu):
         self.leverage = float(input(' -> Leverage (10): ') or '10')
         self.trailing_stop_loss = bool(input(' -> Stoploss True/False (True): ') or 'True')
 
-    def set_bb_params(self):
         print('BB Options: ')
         self.bb_len = float(input(' -> BB Length (20): ') or '20')
         self.bb_standard_derivations = float(input(' -> BB Standard Derivations (2.0): ') or '2.0')
 
-    def set_rsi_params(self):
         print('RSI Options: ')
         self.rsi_len = float(input(' -> RSI Length (14): ') or '14')
         self.rsi_overbought = float(input(' -> RSI Overbought (60): ') or '60')
