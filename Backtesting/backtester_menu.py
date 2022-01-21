@@ -2,10 +2,10 @@ import ccxt
 
 from ccxt import BadSymbol
 from Abstract.abstract_menu import AbstractMenu
-from Backtesting.classes.backtester import Backtester
+from Backtesting.backtester import Backtester
 from Utils.utils import ccxt_ohlcv_to_dataframe
-from Strategy.strategy_factory import StrategyFactory
-from Config.strategy_config_dictionary import backtest_menu_options
+from Strategy.factory.strategy_factory import StrategyFactory
+from Config.dictionary.strategy_config_dictionary import backtest_menu_options
 
 
 class BacktesterMenu(AbstractMenu):

@@ -1,6 +1,6 @@
 from Abstract.abstract_menu import AbstractMenu
 from GeneticAlgorithm.genetic_algorithm_backtester import GeneticAlgorithmBacktester
-from Config.strategy_config_dictionary import backtest_menu_options
+from Config.dictionary.strategy_config_dictionary import backtest_menu_options
 
 
 class GeneticAlgorithmMenu(AbstractMenu):

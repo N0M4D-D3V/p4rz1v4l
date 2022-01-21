@@ -1,6 +1,6 @@
 from GeneticAlgorithm.genetic_algorithm_menu import GeneticAlgorithmMenu
 from Backtesting.backtester_menu import BacktesterMenu
-from Config.grial_config_dictionary import app_version, menu_options
+from Config.dictionary.grial_config_dictionary import app_version, menu_options
 
 genetic_algorithm_submenu = GeneticAlgorithmMenu()
 backtester_submenu = BacktesterMenu()

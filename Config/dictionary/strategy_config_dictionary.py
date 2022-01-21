@@ -1,4 +1,4 @@
-from Config.backtester_menu_item import BacktestMenuItem
+from Config.clases.backtester_menu_item import BacktestMenuItem
 from Strategy.bollinger_bands_strategy import BollingerBandsStrategy
 from Strategy.rsi_ema_strategy import RsiEmaStrategy
 

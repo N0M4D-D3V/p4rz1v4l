@@ -1,4 +1,4 @@
-from Config.strategy_config_dictionary import strategies
+from Config.dictionary.strategy_config_dictionary import strategies
 
 
 def StrategyFactory(strategy_key: str):

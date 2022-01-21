@@ -5,8 +5,8 @@ from Abstract.abstract_genetic_algorithm import AbstractGeneticAlgorithm
 
 from GeneticAlgorithm.classes.individual import Individual
 
-from GeneticAlgorithm.classes.population_factory import PopulationFactory
-from Strategy.genetic_strategy_factory import GeneticStrategyFactory
+from GeneticAlgorithm.factory.population_factory import PopulationFactory
+from Strategy.factory.genetic_strategy_factory import GeneticStrategyFactory
 
 
 def build_strategy(strategy_key: str, individual: Individual):
