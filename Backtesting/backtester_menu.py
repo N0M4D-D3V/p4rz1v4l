@@ -3,13 +3,15 @@ import ccxt
 from ccxt import BadSymbol
 from Abstract.abstract_menu import AbstractMenu
 from Backtesting.backtester import Backtester
-from Strategy.bollinger_bands_strategy import BollingerBandsStrategy
 from Utils.utils import ccxt_ohlcv_to_dataframe
 
+from Strategy.strategy_factory import StrategyFactory
+
 menu_options = {
-    1: 'Bollinger Bands + RSI Strategy',
-    2: 'Run BB + RSI Strategy with custom parameters',
-    3: "Return",
+    1: ['Bollinger Bands + RSI Strategy', 'bollinger_bands'],
+    2: ['Run BB + RSI Strategy with custom parameters', 'bollinger_bands'],
+    3: ['RSI + EMA Strategy', 'rsi_ma'],
+    4: ['Return', None],
 }
 
 
@@ -58,13 +60,20 @@ class BacktesterMenu(AbstractMenu):
 
     def manage_options(self, option):
         if option == 1:
-            self.run_test()
+            name = menu_options[1][1]
+            self.run_test(name)
             self.exit_menu()
         elif option == 2:
+            name = menu_options[2][1]
             self.set_all_params()
-            self.run_test()
+            self.run_test(name)
             self.exit_menu()
         elif option == 3:
+            name = menu_options[3][1]
+            self.run_test(name)
+            self.exit_menu()
+
+        elif option == 4:
             self.exit_menu()
         else:
             print("\n   404 - Option not found!")
@@ -73,16 +82,16 @@ class BacktesterMenu(AbstractMenu):
         print('\n<>----------< P4RZ1V4L >----------<>')
         print('      -----< Backtester >-----\n')
         for key in menu_options.keys():
-            print(' <> ' + str(key) + ' >-< ' + menu_options[key])
+            print(' <> ' + str(key) + ' >-< ' + menu_options[key][0])
 
     def exit_menu(self):
         self.is_menu_active = False
 
-    def run_test(self):
+    def run_test(self, strategy_name):
         exchange = ccxt.binance()
         ohlcv = exchange.fetch_ohlcv(self.symbol, self.timeframe, self.limit)
         dataframe = ccxt_ohlcv_to_dataframe(ohlcv)
-        strategy = self.get_strategy()
+        strategy = StrategyFactory(strategy_name)
         strategy.set_up(dataframe)
         backtester = self.get_backtester()
         backtester.__backtesting__(dataframe, strategy)
@@ -108,14 +117,14 @@ class BacktesterMenu(AbstractMenu):
         self.rsi_overbought = float(input(' -> RSI Overbought (60): ') or '60')
         self.rsi_oversold = float(input(' -> RSI Oversold (40): ') or '40')
 
-    def get_strategy(self):
-        return BollingerBandsStrategy(
-            bb_len=self.bb_len,
-            n_std=self.bb_standard_derivations,
-            rsi_len=self.rsi_len,
-            rsi_overbought=self.rsi_overbought,
-            rsi_oversold=self.rsi_oversold
-        )
+#    def get_strategy(self):
+#        return BollingerBandsStrategy(
+#            bb_len=self.bb_len,
+#            n_std=self.bb_standard_derivations,
+#            rsi_len=self.rsi_len,
+#            rsi_overbought=self.rsi_overbought,
+#            rsi_oversold=self.rsi_oversold
+#        )
 
     def get_backtester(self):
         return Backtester(
