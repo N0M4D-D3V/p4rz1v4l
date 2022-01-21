@@ -5,8 +5,7 @@ from Abstract.abstract_menu import AbstractMenu
 from Backtesting.classes.backtester import Backtester
 from Utils.utils import ccxt_ohlcv_to_dataframe
 from Strategy.strategy_factory import StrategyFactory
-
-from Backtesting.dictionaries.menu_dictionary import backtest_menu_options
+from Config.strategy_config_dictionary import backtest_menu_options
 
 
 class BacktesterMenu(AbstractMenu):
