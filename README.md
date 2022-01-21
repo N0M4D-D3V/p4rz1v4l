@@ -16,12 +16,12 @@
 - pyjuque -> gestión de órdenes y estrategias
 
 # KANVAN
-| TO-DO                       | DOING                 | DONE                  | TESTED | PRIORITY |
-|-----------------------------|-----------------------|-----------------------|--------|----------|
-|                             |                       | Parámetros de Entrada |        | 1        |
-|                             | Múltiples Estrategias |                       |        | 1        |
-| Abstraer strategies         |                       |                       |        | 1        |
-| Sacar config a diccionarios |                       |                       |        | 1        |
-| Algoritmo de Rejilla        |                       |                       |        | 2        |
-| Obtener +1000 velas         |                       |                       |        | 3        |
-| Implementar bot real        |                       |                       |        | 5        |
+| TO-DO                | DOING                       | DONE                  | TESTED | PRIORITY |
+|----------------------|-----------------------------|-----------------------|--------|----------|
+|                      |                             | Parámetros de Entrada |        | 1        |
+|                      |                             | Múltiples Estrategias |        | 1        |
+|                      | Abstraer Strategies         |                       |        | 1        |
+|                      | Sacar config a diccionarios |                       |        | 1        |
+| Algoritmo de Rejilla |                             |                       |        | 2        |
+| Obtener +1000 velas  |                             |                       |        | 3        |
+| Implementar bot real |                             |                       |        | 5        |
