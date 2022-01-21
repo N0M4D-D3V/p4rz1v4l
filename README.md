@@ -20,8 +20,9 @@
 |----------------------|-----------------------------|-----------------------|--------|----------|
 |                      |                             | Parámetros de Entrada |        | 1        |
 |                      |                             | Múltiples Estrategias |        | 1        |
-|                      | Abstraer Strategies         |                       |        | 1        |
+|                      |                             | Abstraer Strategies   |        | 1        |
 |                      | Sacar config a diccionarios |                       |        | 1        |
+|                      |                             | Abstraer Menús        |        | 1        |
 | Algoritmo de Rejilla |                             |                       |        | 2        |
 | Obtener +1000 velas  |                             |                       |        | 3        |
 | Implementar bot real |                             |                       |        | 5        |

@@ -8,5 +8,4 @@ strategies = {
 
 
 def StrategyFactory(name: str):
-    print(name)
     return strategies[name]

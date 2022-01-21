@@ -9,6 +9,13 @@ class RsiEmaStrategy(AbstractStrategy):
         self.ma_fast_len = ma_fast_len
         self.dataframe = None
 
+    def param_request(self):
+        print('EMA Options: ')
+        self.ma_fast_len = float(input(' -> EMA Length (9): ') or '9')
+        print('RSI Options: ')
+        self.rsi_len = float(input(' -> RSI Length (14): ') or '14')
+        self.rsi_oversold = float(input(' -> RSI Oversold (30): ') or '30')
+
     def set_up(self, df):
         df['fast_ema'] = ta.ema(df['close'], length=self.ma_fast_len, offset=None, append=True)
         df['rsi'] = ta.rsi(close=df['close'], length=self.rsi_len)

@@ -12,6 +12,15 @@ class BollingerBandsStrategy(AbstractStrategy):
         self.rsi_oversold = rsi_oversold
         self.dataframe = None
 
+    def param_request(self):
+        print('BB Options: ')
+        self.bb_len = float(input(' -> BB Length (20): ') or '20')
+        self.n_std = float(input(' -> BB Standard Derivations (2.0): ') or '2.0')
+        print('RSI Options: ')
+        self.rsi_len = float(input(' -> RSI Length (14): ') or '14')
+        self.rsi_overbought = float(input(' -> RSI Overbought (60): ') or '60')
+        self.rsi_oversold = float(input(' -> RSI Oversold (40): ') or '40')
+
     def set_up(self, df):
         bb = ta.bbands(
             close=df['close'],

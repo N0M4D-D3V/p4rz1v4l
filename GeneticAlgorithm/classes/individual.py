@@ -1,6 +1,6 @@
 import numpy as np
 
-from Backtesting.backtester import Backtester
+from Backtesting.classes.backtester import Backtester
 
 
 class Individual:
