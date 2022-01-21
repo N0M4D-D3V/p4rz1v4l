@@ -1,26 +1,15 @@
 from Abstract.abstract_menu import AbstractMenu
 from GeneticAlgorithm.genetic_algorithm_backtester import GeneticAlgorithmBacktester
-
-menu_options = {
-    1: 'Pre-configured Run',
-    2: 'Configure algorithm',
-    3: "Return",
-}
+from Config.strategy_config_dictionary import backtest_menu_options
 
 
 class GeneticAlgorithmMenu(AbstractMenu):
 
     def __init__(self):
         self.is_menu_active: bool = True
-        self.number_of_generations: int = 20
-        self.generation_size: int = 50
-        self.mutation_rate: float = 0.1
 
     def reset_default_values(self):
         self.is_menu_active: bool = True
-        self.number_of_generations: int = 20
-        self.generation_size: int = 50
-        self.mutation_rate: float = 0.1
 
     def start(self):
         while self.is_menu_active:
@@ -33,36 +22,28 @@ class GeneticAlgorithmMenu(AbstractMenu):
                 print("\n   404 - Option not found!")
 
     def manage_options(self, option):
-        if option == 1:
-            self.run_test()
+        if list(backtest_menu_options.keys())[-1] == option:
             self.exit_menu()
-        elif option == 2:
-            self.set_params()
-            self.run_test()
-            self.exit_menu()
-        elif option == 3:
+        elif list(backtest_menu_options.keys())[-1] > option >= list(backtest_menu_options.keys())[0]:
+            menu_item = backtest_menu_options[option]
+            self.run_test(menu_item.strategy_key, menu_item.is_configurable)
             self.exit_menu()
         else:
             print("\n   404 - Option not found!")
 
-    def run_test(self):
-        tester = GeneticAlgorithmBacktester(
-            number_of_generations=self.number_of_generations,
-            generation_size=self.generation_size,
-            mutation_rate=self.mutation_rate
-        )
+    def run_test(self, strategy_key: str, is_configurable: bool = False):
+        tester = GeneticAlgorithmBacktester(strategy_key)
+
+        if is_configurable:
+            tester.param_request()
+
         tester.run()
 
     def print_menu(self):
         print('\n<>----------< P4RZ1V4L >----------<>')
         print('  -----< Genetic Algorithms >-----\n')
-        for key in menu_options.keys():
-            print(' <> ' + str(key) + ' >-< ' + menu_options[key])
-
-    def set_params(self):
-        self.number_of_generations = int(input(' -> Number of generations (20): ') or '20')
-        self.generation_size = int(input(' -> Generation size (50): ') or '50')
-        self.mutation_rate = float(input(' -> Set mutation rate (0.1): ') or '0.1')
+        for key in backtest_menu_options.keys():
+            print(' <> ' + str(key) + ' >-< ' + backtest_menu_options[key].display_name)
 
     def exit_menu(self):
         self.is_menu_active = False

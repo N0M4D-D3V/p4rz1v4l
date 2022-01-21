@@ -5,13 +5,13 @@ from GeneticAlgorithm.classes.individual import Individual
 
 
 class Population(AbstractPopulation):
-    def __init__(self, generation_size, n_genes, gene_ranges, n_best, mutation_rate):
-        self.population = [Individual(n_genes, gene_ranges) for _ in range(generation_size)]
-        self.n_genes = n_genes
+    def __init__(self, generation_size, gene_ranges, n_best, mutation_rate):
+        self.n_genes = len(gene_ranges)
         self.gene_ranges = gene_ranges
         self.n_best = n_best
         self.generation_size = generation_size
         self.mutation_rate = mutation_rate
+        self.population = [Individual(self.n_genes, gene_ranges) for _ in range(generation_size)]
 
     def selection(self):
         return sorted(

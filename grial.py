@@ -1,13 +1,6 @@
 from GeneticAlgorithm.genetic_algorithm_menu import GeneticAlgorithmMenu
 from Backtesting.backtester_menu import BacktesterMenu
-
-app_version = 'v0.0.1'
-menu_options = {
-    1: 'Backtest',
-    2: 'Genetic Algorithm',
-    3: 'Run P4RZ1V4L! >:v',
-    4: "Go Away ='(",
-}
+from Config.grial_config_dictionary import app_version, menu_options
 
 genetic_algorithm_submenu = GeneticAlgorithmMenu()
 backtester_submenu = BacktesterMenu()
@@ -22,7 +15,6 @@ def print_menu():
 
 def manage_options(selected_option):
     if selected_option == 1:
-        print("\n   Backtest initialized!")
         backtester_submenu.reset_default_values()
         backtester_submenu.start()
 

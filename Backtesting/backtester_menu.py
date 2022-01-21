@@ -56,7 +56,7 @@ class BacktesterMenu(AbstractMenu):
         print('\n<>----------< P4RZ1V4L >----------<>')
         print('      -----< Backtester >-----\n')
         for key in backtest_menu_options.keys():
-            print(' <> ' + str(key) + ' >-< ' + backtest_menu_options[key].display_nane)
+            print(' <> ' + str(key) + ' >-< ' + backtest_menu_options[key].display_name)
 
     def exit_menu(self):
         self.is_menu_active = False
