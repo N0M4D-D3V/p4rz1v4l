@@ -137,10 +137,10 @@ class Backtester(AbstractBacktester):
             'symbol': symbol,
             'start_date': start_date,
             'end_date': end_date,
-            'balance': self.balance,
-            'profit': profit,
-            'drawdown': drawdown,
-            'profit_after_fees': profit - fees,
+            'balance': "{:,.2f}$".format(self.balance),
+            'profit': "{:,.2f}$".format(profit),
+            'drawdown':  "{:,.2f}$".format(drawdown), 
+            'profit_after_fees': "{:,.2f}$".format(profit - fees),
             'num_operations': self.num_operations,
             'num_long': self.num_longs,
             'num_shorts': self.num_shorts,
@@ -150,9 +150,9 @@ class Backtester(AbstractBacktester):
 
         if self.num_operations > 0 and (self.winner_operations + self.losser_operations) > 0:
             winrate = self.winner_operations / (self.winner_operations + self.losser_operations)
-            results['winrate'] = winrate
-            results['fitness_function'] = (self.num_longs + self.num_shorts) * (
-                        profit - abs(drawdown)) * winrate / self.num_operations
+            fitness_function = (self.num_longs + self.num_shorts) * (profit - abs(drawdown)) * winrate / self.num_operations
+            results['winrate'] = "{:.2%}".format(winrate) 
+            results['fitness_function'] = fitness_function
 
         else:
             results['winrate'] = 0
