@@ -1,6 +1,6 @@
 from Abstract.abstract_backtester import AbstractBacktester
 from Abstract.abstract_strategy import AbstractStrategy
-
+import datetime
 
 class Backtester(AbstractBacktester):
     def __init__(self, initial_balance=1000, leverage=10, trailing_stop_loss=False):
@@ -128,35 +128,73 @@ class Backtester(AbstractBacktester):
 
     def return_results(self, symbol, start_date, end_date):
 
-        profit = sum(self.profit)
-        drawdown = sum(self.drawdown)
+        operations = self.num_operations
+        longs = self.num_longs
+        shorts = self.num_shorts
+        winners = self.winner_operations
+        lossers = self.losser_operations
 
-        fees = (abs(profit) * self.fee_cost * self.num_operations)
+        profit = sum(self.profit)
+        profit_round = "{:,.2f}$".format(profit)
+
+        drawdown = sum(self.drawdown)
+        drawdown_round =  "{:,.2f}$".format(drawdown)
+
+        balance_round = "{:,.2f}$".format(self.balance)
+        
+        fees = (abs(profit) * self.fee_cost * operations)
+        profit_after_fees_round = "{:,.2f}$".format(profit - fees)
+
+        winrate = winners / (winners + lossers)
+        winrate_round = "{:.2%}".format(winrate) 
+
+        fitness_function = (longs + shorts) * (profit - abs(drawdown)) * winrate / operations
+        fitness_function_round = "{:,.2f}".format(fitness_function)
 
         results = {
             'symbol': symbol,
             'start_date': start_date,
             'end_date': end_date,
-            'balance': "{:,.2f}$".format(self.balance),
-            'profit': "{:,.2f}$".format(profit),
-            'drawdown':  "{:,.2f}$".format(drawdown), 
-            'profit_after_fees': "{:,.2f}$".format(profit - fees),
-            'num_operations': self.num_operations,
-            'num_long': self.num_longs,
-            'num_shorts': self.num_shorts,
-            'winner_operations': self.winner_operations,
-            'losser_operations': self.losser_operations
+            'balance': balance_round,
+            'profit': profit_round,
+            'drawdown': drawdown_round, 
+            'profit_after_fees': profit_after_fees_round,
+            'num_operations': operations,
+            'num_long': longs,
+            'num_shorts': shorts,
+            'winner_operations': winners,
+            'losser_operations': lossers
         }
 
-        if self.num_operations > 0 and (self.winner_operations + self.losser_operations) > 0:
-            winrate = self.winner_operations / (self.winner_operations + self.losser_operations)
-            fitness_function = (self.num_longs + self.num_shorts) * (profit - abs(drawdown)) * winrate / self.num_operations
-            results['winrate'] = "{:.2%}".format(winrate) 
-            results['fitness_function'] = fitness_function
+        results_txt = (
+           str(datetime.datetime.now())+ " \n\n" 
+           + 'symbol: '+ '[' + str(symbol) + ']' + " \n" 
+           + 'start_date: ' + start_date + " \n"
+           + 'end_date: ' + end_date + " \n"
+           + 'balance: ' + balance_round + " \n"
+           + 'profit: ' + profit_round +" \n"
+           + 'drawdown: ' + drawdown_round +" \n"
+           + 'profit_after_fees: ' + profit_after_fees_round +" \n"
+           + 'num_operations: ' + str(operations) +" \n"
+           + 'num_long: ' + str(longs) +" \n"
+           + 'num_shorts: ' + str(shorts) +" \n"
+           + 'winner_operations: ' + str(winners) +" \n"
+           + 'losser_operations: ' + str(lossers) +" \n"
+           + 'winrate: ' + str(winrate_round) +" \n"
+           + 'fitness_function: ' + str(fitness_function_round) +" \n"
+           + '---------------------------' + " \n\n"
+        )
+
+        if operations > 0 and (winners + lossers) > 0:
+            results['winrate'] = winrate_round
+            results['fitness_function'] = fitness_function_round
 
         else:
             results['winrate'] = 0
             results['fitness_function'] = 0
+
+        with open("Results.txt", "a") as myfile:        
+           myfile.write(str(results_txt))
 
         return results
 
