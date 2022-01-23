@@ -16,7 +16,7 @@ class AbstractMenu(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def manage_options(self):
+    def manage_options(self, option: int):
         raise NotImplementedError
 
     @abc.abstractmethod

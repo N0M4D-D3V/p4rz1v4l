@@ -1,6 +1,6 @@
 from Abstract.abstract_backtester import AbstractBacktester
 from Abstract.abstract_strategy import AbstractStrategy
-import datetime
+
 
 class Backtester(AbstractBacktester):
     def __init__(self, initial_balance=1000, leverage=10, trailing_stop_loss=False):
@@ -80,8 +80,6 @@ class Backtester(AbstractBacktester):
                 self.short_open_price = price
                 self.amount = self.inv / price
 
-        # self.amount = self.inv/price
-
         if self.trailing_stop_loss:
             self.from_opened = from_opened
 
@@ -127,7 +125,6 @@ class Backtester(AbstractBacktester):
             self.stop_loss_price = price * sl_short
 
     def return_results(self, symbol, start_date, end_date):
-
         operations = self.num_operations
         longs = self.num_longs
         shorts = self.num_shorts
@@ -135,30 +132,21 @@ class Backtester(AbstractBacktester):
         lossers = self.losser_operations
 
         profit = sum(self.profit)
-        profit_round = "{:,.2f}$".format(profit)
-
         drawdown = sum(self.drawdown)
-        drawdown_round =  "{:,.2f}$".format(drawdown)
-
-        balance_round = "{:,.2f}$".format(self.balance)
-        
         fees = (abs(profit) * self.fee_cost * operations)
-        profit_after_fees_round = "{:,.2f}$".format(profit - fees)
+        profit_after_fees = profit - fees
 
         winrate = winners / (winners + lossers)
-        winrate_round = "{:.2%}".format(winrate) 
-
         fitness_function = (longs + shorts) * (profit - abs(drawdown)) * winrate / operations
-        fitness_function_round = "{:,.2f}".format(fitness_function)
 
         results = {
-            'symbol': symbol,
-            'start_date': start_date,
-            'end_date': end_date,
-            'balance': balance_round,
-            'profit': profit_round,
-            'drawdown': drawdown_round, 
-            'profit_after_fees': profit_after_fees_round,
+            'symbol': str(symbol),
+            'start_date': str(start_date),
+            'end_date': str(end_date),
+            'balance': self.balance,
+            'profit': profit,
+            'drawdown': drawdown,
+            'profit_after_fees': profit_after_fees,
             'num_operations': operations,
             'num_long': longs,
             'num_shorts': shorts,
@@ -166,36 +154,13 @@ class Backtester(AbstractBacktester):
             'losser_operations': lossers
         }
 
-        results_txt = (
-           str(datetime.datetime.now())+ " \n\n" 
-           + 'symbol: '+ '[' + str(symbol) + ']' + " \n" 
-           + 'start_date: ' + start_date + " \n"
-           + 'end_date: ' + end_date + " \n"
-           + 'balance: ' + balance_round + " \n"
-           + 'profit: ' + profit_round +" \n"
-           + 'drawdown: ' + drawdown_round +" \n"
-           + 'profit_after_fees: ' + profit_after_fees_round +" \n"
-           + 'num_operations: ' + str(operations) +" \n"
-           + 'num_long: ' + str(longs) +" \n"
-           + 'num_shorts: ' + str(shorts) +" \n"
-           + 'winner_operations: ' + str(winners) +" \n"
-           + 'losser_operations: ' + str(lossers) +" \n"
-           + 'winrate: ' + str(winrate_round) +" \n"
-           + 'fitness_function: ' + str(fitness_function_round) +" \n"
-           + '---------------------------' + " \n\n"
-        )
-
         if operations > 0 and (winners + lossers) > 0:
-            results['winrate'] = winrate_round
-            results['fitness_function'] = fitness_function_round
+            results['winrate'] = winrate
+            results['fitness_function'] = fitness_function
 
         else:
             results['winrate'] = 0
             results['fitness_function'] = 0
-
-        with open("Results.txt", "a") as myfile:        
-           myfile.write(str(results_txt))
-
         return results
 
     def __backtesting__(self, df, strategy: AbstractStrategy):

@@ -1,8 +1,11 @@
+from pprint import pprint
+
 import ccxt
 
 from ccxt import BadSymbol
 from Abstract.abstract_menu import AbstractMenu
 from Backtesting.backtester import Backtester
+from DocumentWriter.document_writer import FileWriter
 from Utils.utils import ccxt_ohlcv_to_dataframe
 from Strategy.factory.strategy_factory import StrategyFactory
 from Config.dictionary.strategy_config_dictionary import backtest_menu_options
@@ -41,7 +44,7 @@ class BacktesterMenu(AbstractMenu):
             except KeyError:
                 print("\n Probably u introduced an invalid timeframe. Try again >:b")
 
-    def manage_options(self, option):
+    def manage_options(self, option: int):
         if list(backtest_menu_options.keys())[-1] == option:
             self.exit_menu()
         elif list(backtest_menu_options.keys())[-1] > option >= list(backtest_menu_options.keys())[0]:
@@ -50,7 +53,6 @@ class BacktesterMenu(AbstractMenu):
             self.exit_menu()
         else:
             print("\n   404 - Option not found!")
-
 
     def print_menu(self):
         print('\n<>----------< P4RZ1V4L >----------<>')
@@ -74,7 +76,9 @@ class BacktesterMenu(AbstractMenu):
         backtester = self.get_backtester()
         backtester.__backtesting__(dataframe, strategy)
         print('\n')
-        print(backtester.return_results(symbol=self.symbol, start_date='', end_date=''))
+        results_dataset = backtester.return_results(symbol=self.symbol, start_date='', end_date='')
+        pprint(results_dataset)
+        FileWriter(results_dataset).save_results()
 
     def set_all_params(self):
         print('Setting tester params ...')
@@ -82,7 +86,7 @@ class BacktesterMenu(AbstractMenu):
         self.timeframe = str(input(' -> Timeframe (1d): ') or '1d')
         self.initial_balance = float(input(' -> Initial Balance (1000): ') or '1000')
         self.leverage = float(input(' -> Leverage (10): ') or '10')
-        self.trailing_stop_loss = bool(input(' -> Stoploss True/False (True): ') or 'True')
+        self.trailing_stop_loss = bool(input(' -> Stop-loss True/False (True): ') or 'True')
 
     def get_backtester(self):
         return Backtester(
