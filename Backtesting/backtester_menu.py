@@ -70,6 +70,7 @@ class BacktesterMenu(AbstractMenu):
         strategy = StrategyFactory(strategy_name)
 
         if is_setting_params:
+            self.set_all_params()
             strategy.param_request()
 
         strategy.set_up(dataframe)

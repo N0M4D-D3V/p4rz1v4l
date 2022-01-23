@@ -140,9 +140,9 @@ class Backtester(AbstractBacktester):
         fitness_function = (longs + shorts) * (profit - abs(drawdown)) * winrate / operations
 
         results = {
-            'symbol': str(symbol),
-            'start_date': str(start_date),
-            'end_date': str(end_date),
+            'symbol': symbol,
+            'start_date': start_date,
+            'end_date': end_date,
             'balance': self.balance,
             'profit': profit,
             'drawdown': drawdown,

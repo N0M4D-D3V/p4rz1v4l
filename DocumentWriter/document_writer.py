@@ -13,13 +13,13 @@ class FileWriter:
     def _format_results(self):
         formatted_result: str = str(datetime.now()) + " \n\n"
         for key in self.results.keys():
-            if self.is_rate(key):
+            if self.is_rate(key) and isinstance(self.results[key], float):
                 self.results[key] = format_rate(self.results[key])
-            if not self.is_rate(key):
+            if not self.is_rate(key) and isinstance(self.results[key], float):
                 self.results[key] = format_float(self.results[key])
             formatted_result += key + ': ' + str(self.results[key]) + '\n'
         formatted_result += "\n<>-----< P4RZ1V4L >-----<>\n\n"
         return formatted_result
 
     def is_rate(self, key: str):
-        return ('rate' in key) and (isinstance(self.results[key], float))
+        return 'rate' in key

@@ -10,8 +10,8 @@ def ccxt_ohlcv_to_dataframe(ohlcv):
 
 
 def format_float(value: float):
-    return "{:,.2f}".format(value)
+    return "{:,.2f}".format(float(value))
 
 
 def format_rate(value: float):
-    return "{:.2%}".format(value)
+    return "{:.2%}".format(float(value))
