@@ -39,7 +39,6 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         print('<>--< GENETIC ALGORITHM >--<>')
         print()
         print('Use: optimize QUANT strategy')
-        print('Indicators: Bollinger Bands - RSI')
         print('Symbol: ', self.symbol, 'Timeframe: ', self.timeframe)
         print('\n\n')
 
@@ -59,7 +58,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         self.population.population = sorted(
             self.population.population,
             key=lambda indiv: indiv.backtester.return_results(
-                symbol='-',
+                symbol=self.symbol,
                 start_date='-',
                 end_date='-',
             )['fitness_function'],

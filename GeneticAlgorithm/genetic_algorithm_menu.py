@@ -13,13 +13,9 @@ class GeneticAlgorithmMenu(AbstractMenu):
 
     def start(self):
         while self.is_menu_active:
-            try:
                 self.print_menu()
                 option = int(input(' -> Enter your choice: '))
                 self.manage_options(option)
-
-            except (SyntaxError, ValueError):
-                print("\n   404 - Option not found!")
 
     def manage_options(self, option):
         if list(backtest_menu_options.keys())[-1] == option:

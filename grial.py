@@ -1,14 +1,17 @@
+from ccxt import NetworkError
+
 from GeneticAlgorithm.genetic_algorithm_menu import GeneticAlgorithmMenu
 from Backtesting.backtester_menu import BacktesterMenu
-from Config.dictionary.grial_config_dictionary import app_version, menu_options
+from Config.dictionary.grial_config_dictionary import menu_options
+from Utils.text import *
+
 
 genetic_algorithm_submenu = GeneticAlgorithmMenu()
 backtester_submenu = BacktesterMenu()
 
 
 def print_menu():
-    print('\n<>----------< P4RZ1V4L >----------<>')
-    print('        -----< ' + app_version + ' >-----\n')
+    print_title()
     for key in menu_options.keys():
         print(' <> ' + str(key) + ' >-< ' + menu_options[key])
 
@@ -23,14 +26,12 @@ def manage_options(selected_option):
         genetic_algorithm_submenu.start()
 
     elif selected_option == 3:
-        print("\n   Not implemented yet!")
+        print_not_implemented()
 
     elif selected_option == 4:
-        print("\n\n   Wake the f*ick Up!")
-        print("We have a city to burn...")
-        exit()
+        print_exit()
     else:
-        print("\n   404 - Option not found!")
+        print_option_not_found()
 
 
 while True:
@@ -40,11 +41,9 @@ while True:
         option = int(input(' -> Enter your choice: '))
         manage_options(option)
 
-    except SyntaxError:
-        print("\n   404 - Option not found!")
-    except ValueError:
-        print("\n   404 - Option not found!")
+    except (SyntaxError, ValueError):
+        print_option_not_found()
     except KeyboardInterrupt:
-        print("\n\n   Wake the f*ick Up!")
-        print("We have a city to burn...")
-        exit()
+        print_exit()
+    except NetworkError:
+        print_connectivity_error()

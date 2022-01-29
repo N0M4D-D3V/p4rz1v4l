@@ -37,8 +37,6 @@ class BacktesterMenu(AbstractMenu):
                 option = int(input(' -> Enter your choice: '))
                 self.manage_options(option)
 
-            except (SyntaxError, ValueError):
-                print("\n   404 - Option not found!")
             except BadSymbol:
                 print("\n Binance does not have market symbol " + self.symbol)
             except KeyError:
