@@ -1,32 +1,29 @@
-import ccxt
-
 from ccxt import BadSymbol
 from pprint import pprint
 
 from Backtesting.backtester import Backtester
 from DocumentWriter.document_writer import FileWriter
-from Utils.utils import ccxt_ohlcv_to_dataframe
 from Strategy.factory.strategy_factory import StrategyFactory
 from Config.dictionary.strategy_config_dictionary import backtest_menu_options
 from Abstract.abstract_menu import AbstractMenu
 
 from Utils.text import print_option_not_found
 
+from Data.exchange_factory import ExchangeFactory
+from Data.exchange_query import ExchangeQuery
+from Data.exchange_service import ExchangeService
+
 
 class BacktesterMenu(AbstractMenu):
     def __init__(self):
-        self.symbol: str = 'SOL/USDT'
-        self.timeframe: str = '1d'
-        self.limit: int = 1000
         self.is_menu_active: bool = True
         self.initial_balance: float = 1000
         self.leverage: float = 10
         self.trailing_stop_loss: bool = True
+        self.query = ExchangeQuery()
 
     def reset_default_values(self):
-        self.symbol: str = 'SOL/USDT'
-        self.timeframe: str = '1d'
-        self.limit: int = 1000
+        self.query = ExchangeQuery()
         self.is_menu_active: bool = True
         self.initial_balance: float = 1000
         self.leverage: float = 10
@@ -40,7 +37,7 @@ class BacktesterMenu(AbstractMenu):
                 self.manage_options(option)
 
             except BadSymbol:
-                print("\n Binance does not have market symbol " + self.symbol)
+                print("\n Binance does not have market symbol " + self.query.symbol)
             except KeyError:
                 print("\n Probably u introduced an invalid timeframe. Try again >:b")
 
@@ -64,9 +61,8 @@ class BacktesterMenu(AbstractMenu):
         self.is_menu_active = False
 
     def run_test(self, strategy_name, is_setting_params=False):
-        exchange = ccxt.binance()
-        ohlcv = exchange.fetch_ohlcv(self.symbol, self.timeframe, self.limit)
-        dataframe = ccxt_ohlcv_to_dataframe(ohlcv)
+        exchange = ExchangeFactory().getInstance()
+        dataframe = ExchangeService(exchange).getAll(self.query)
         strategy = StrategyFactory(strategy_name)
 
         if is_setting_params:
@@ -77,14 +73,14 @@ class BacktesterMenu(AbstractMenu):
         backtester = self.get_backtester()
         backtester.__backtesting__(dataframe, strategy)
         print('\n')
-        results_dataset = backtester.return_results(symbol=self.symbol, start_date='', end_date='')
+        results_dataset = backtester.return_results(symbol=self.query.symbol, start_date='', end_date='')
         pprint(results_dataset)
         FileWriter(results_dataset).save_results()
 
     def set_all_params(self):
         print('Setting tester params ...')
-        self.symbol = str(input(' -> Symbol (SOL/USDT): ') or 'BTC/USDT')
-        self.timeframe = str(input(' -> Timeframe (1d): ') or '1d')
+        self.query.symbol = str(input(' -> Symbol (SOL/USDT): ') or 'BTC/USDT')
+        self.query.timeframe = str(input(' -> Timeframe (1d): ') or '1d')
         self.initial_balance = float(input(' -> Initial Balance (1000): ') or '1000')
         self.leverage = float(input(' -> Leverage (10): ') or '10')
         self.trailing_stop_loss = bool(input(' -> Stop-loss True/False (True): ') or 'True')

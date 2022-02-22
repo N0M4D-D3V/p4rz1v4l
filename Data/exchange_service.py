@@ -1,0 +1,12 @@
+from Data.exchange_query import ExchangeQuery
+from Utils.utils import ccxt_ohlcv_to_dataframe
+
+
+class ExchangeService:
+    def __init__(self, exchange):
+        self.exchange = exchange
+
+    def getAll(self, query: ExchangeQuery):
+        ohlcv = self.exchange.fetch_ohlcv(query.symbol, query.timeframe, query.limit)
+        dataframe = ccxt_ohlcv_to_dataframe(ohlcv)
+        return dataframe

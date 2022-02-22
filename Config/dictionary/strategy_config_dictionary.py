@@ -14,3 +14,10 @@ strategies = {
     "bollinger_bands": BollingerBandsStrategy(),
     "rsi_ma": RsiEmaStrategy(),
 }
+
+exchange_config = {
+    'exchange_name': 'binance',
+    'timeframe': '1h',
+    'symbol': 'SOL/USDT',
+    'limit': 1000
+}
