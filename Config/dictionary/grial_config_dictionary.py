@@ -1,4 +1,4 @@
-app_version = 'v0.0.2'
+app_version = 'v0.0.3'
 menu_options = {
     1: 'Backtest',
     2: 'Genetic Algorithm',
