@@ -1,12 +1,13 @@
-import ccxt
-
-from Utils.utils import ccxt_ohlcv_to_dataframe
 from Abstract.abstract_genetic_algorithm import AbstractGeneticAlgorithm
 
 from GeneticAlgorithm.classes.individual import Individual
 
 from GeneticAlgorithm.factory.population_factory import PopulationFactory
 from Strategy.factory.genetic_strategy_factory import GeneticStrategyFactory
+
+from Data.exchange_factory import ExchangeFactory
+from Data.exchange_query import ExchangeQuery
+from Data.exchange_service import ExchangeService
 
 
 def build_strategy(strategy_key: str, individual: Individual):
@@ -18,12 +19,9 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
 
     def __init__(self, strategy_key: str, number_of_generations=20, generation_size=50, mutation_rate=0.1):
         self.strategy_key = strategy_key
-        exchange = ccxt.binance()
-        self.symbol = 'SOL/USDT'
-        timeframe = '1d'
-        limit = 1000
-        ohlcv = exchange.fetch_ohlcv(self.symbol, timeframe, limit)
-        self.dataframe = ccxt_ohlcv_to_dataframe(ohlcv)
+        exchange = ExchangeFactory().getInstance()
+        self.query = ExchangeQuery()
+        self.dataframe = ExchangeService(exchange).getAll(self.query)
         self.number_of_generations: int = int(number_of_generations)
         self.generation_size: int = int(generation_size)
         self.n_genes: int = 5
@@ -39,7 +37,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         print('<>--< GENETIC ALGORITHM >--<>')
         print()
         print('Use: optimize QUANT strategy')
-        print('Symbol: ', self.symbol, 'Timeframe: ', self.timeframe)
+        print('Symbol: ', self.query.symbol, 'Timeframe: ', self.query.timeframe)
         print('\n\n')
 
     def run(self):
@@ -58,7 +56,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         self.population.population = sorted(
             self.population.population,
             key=lambda indiv: indiv.backtester.return_results(
-                symbol=self.symbol,
+                symbol=self.query.symbol,
                 start_date='-',
                 end_date='-',
             )['fitness_function'],
@@ -76,7 +74,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
     def print_best_individual(self):
         print('BEST INDIVIDUAL:')
         print(self.population.population[0].backtester.return_results(
-            symbol=self.symbol,
+            symbol=self.query.symbol,
             start_date='',
             end_date=''
         ))
@@ -90,7 +88,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
     def print_worst_individual(self):
         print('WORST INDIVIDUAL:')
         print(self.population.population[-1].backtester.return_results(
-            symbol=self.symbol,
+            symbol=self.query.symbol,
             start_date='',
             end_date=''
         ))

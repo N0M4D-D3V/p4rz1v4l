@@ -136,9 +136,6 @@ class Backtester(AbstractBacktester):
         fees = (abs(profit) * self.fee_cost * operations)
         profit_after_fees = profit - fees
 
-        winrate = winners / (winners + lossers)
-        fitness_function = (longs + shorts) * (profit - abs(drawdown)) * winrate / operations
-
         results = {
             'symbol': symbol,
             'start_date': start_date,
@@ -155,12 +152,15 @@ class Backtester(AbstractBacktester):
         }
 
         if operations > 0 and (winners + lossers) > 0:
+            winrate = winners / (winners + lossers)
+            fitness_function = (longs + shorts) * (profit - abs(drawdown)) * winrate / operations
             results['winrate'] = winrate
             results['fitness_function'] = fitness_function
 
         else:
             results['winrate'] = 0
             results['fitness_function'] = 0
+
         return results
 
     def __backtesting__(self, df, strategy: AbstractStrategy):
