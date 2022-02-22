@@ -1,14 +1,16 @@
-from pprint import pprint
-
 import ccxt
 
 from ccxt import BadSymbol
-from Abstract.abstract_menu import AbstractMenu
+from pprint import pprint
+
 from Backtesting.backtester import Backtester
 from DocumentWriter.document_writer import FileWriter
 from Utils.utils import ccxt_ohlcv_to_dataframe
 from Strategy.factory.strategy_factory import StrategyFactory
 from Config.dictionary.strategy_config_dictionary import backtest_menu_options
+from Abstract.abstract_menu import AbstractMenu
+
+from Utils.text import print_option_not_found
 
 
 class BacktesterMenu(AbstractMenu):
@@ -50,7 +52,7 @@ class BacktesterMenu(AbstractMenu):
             self.run_test(menu_item.strategy_key, menu_item.is_configurable)
             self.exit_menu()
         else:
-            print("\n   404 - Option not found!")
+            print_option_not_found()
 
     def print_menu(self):
         print('\n<>----------< P4RZ1V4L >----------<>')
