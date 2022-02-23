@@ -1,9 +1,10 @@
 from Data.exchange_query import ExchangeQuery
 from Utils.utils import ccxt_ohlcv_to_dataframe
+from ccxt import Exchange
 
 
 class ExchangeService:
-    def __init__(self, exchange):
+    def __init__(self, exchange: Exchange):
         self.exchange = exchange
 
     def getAll(self, query: ExchangeQuery):

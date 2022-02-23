@@ -1,5 +1,4 @@
 from ccxt import NetworkError
-
 from GeneticAlgorithm.genetic_algorithm_menu import GeneticAlgorithmMenu
 from Backtesting.backtester_menu import BacktesterMenu
 from Config.dictionary.grial_config_dictionary import menu_options

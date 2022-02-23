@@ -55,3 +55,41 @@ fitness_function: -19.84
 
 <>-----< P4RZ1V4L >-----<>
 
+2022-02-23 21:06:19.992930 
+
+symbol: SOL/USDT
+start_date: 
+end_date: 
+balance: 1,022.68
+profit: 22.68
+drawdown: -22.05
+profit_after_fees: 22.44
+num_operations: 53
+num_long: 13
+num_shorts: 14
+winner_operations: 16
+losser_operations: 10
+winrate: 61.54%
+fitness_function: 0.20
+
+<>-----< P4RZ1V4L >-----<>
+
+2022-02-23 21:14:27.969235 
+
+symbol: SOL/USDT
+start_date: 
+end_date: 
+balance: 1,022.68
+profit: 22.68
+drawdown: -22.05
+profit_after_fees: 22.44
+num_operations: 53
+num_long: 13
+num_shorts: 14
+winner_operations: 16
+losser_operations: 10
+winrate: 61.54%
+fitness_function: 0.20
+
+<>-----< P4RZ1V4L >-----<>
+

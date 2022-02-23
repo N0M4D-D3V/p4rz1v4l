@@ -19,5 +19,5 @@ exchange_config = {
     'exchange_name': 'binance',
     'timeframe': '1h',
     'symbol': 'SOL/USDT',
-    'limit': 1000
+    'limit': 9000
 }
