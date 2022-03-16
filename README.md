@@ -13,17 +13,16 @@
 - seaborn -> gráficas
 - plotly -> gráficas
 - matplotlib -> gráficas
-- pyjuque -> gestión de órdenes y estrategias
 
 # KANVAN
-| TO-DO                     | DOING | DONE                            | TESTED | PRIORITY |
-|---------------------------|-------|---------------------------------|--------|----------|
-|                           |       | Parámetros de Entrada           |        | 1        |
-|                           |       | Múltiples Estrategias           |        | 1        |
-|                           |       | Abstraer Strategies             |        | 1        |
-|                           |       | Sacar config a diccionarios     |        | 1        |
-|                           |       | Abstraer Menús                  |        | 1        |
-| Factory + Singleton       |       | Factory                         |        | 3        |
-|                           |       | No se pueden obtener más velas! |        | 1        |
-| Implementar bot funcional |       |                                 |        | 3        |
-| Graficar                  |       |                                 |        | 1        |
+| TO-DO                     | DOING    | DONE                            | TESTED | PRIORITY |
+|---------------------------|----------|---------------------------------|--------|----------|
+|                           |          | Parámetros de Entrada           |        | 1        |
+|                           |          | Múltiples Estrategias           |        | 1        |
+|                           |          | Abstraer Strategies             |        | 1        |
+|                           |          | Sacar config a diccionarios     |        | 1        |
+|                           |          | Abstraer Menús                  |        | 1        |
+| Factory + Singleton       |          | Factory                         |        | 3        |
+|                           |          | No se pueden obtener más velas! |        | 1        |
+| Implementar bot funcional |          |                                 |        | 3        |
+|                           | Graficar |                                 |        | 1        |
