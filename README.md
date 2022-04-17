@@ -2,7 +2,6 @@
 
 ![Alt text](https://www.gamersglobal.de/sites/gamersglobal.de/files/galerie/280/VirtuaVerse_03.jpg "p4rz1v4l")
 
-# KANVAN
 | TO-DO                     | DOING    | DONE                            | TESTED | PRIORITY |
 |---------------------------|----------|---------------------------------|--------|----------|
 |                           |          | Parámetros de Entrada           |        | 1        |
