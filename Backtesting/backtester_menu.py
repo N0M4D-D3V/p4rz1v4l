@@ -3,6 +3,7 @@ from pprint import pprint
 
 from Backtesting.backtester import Backtester
 from DocumentWriter.document_writer import FileWriter
+from Graphicator.classes.graph import Graph
 from Strategy.factory.strategy_factory import StrategyFactory
 from Config.dictionary.strategy_config_dictionary import backtest_menu_options
 from Abstract.abstract_menu import AbstractMenu
@@ -76,6 +77,7 @@ class BacktesterMenu(AbstractMenu):
         results_dataset = backtester.return_results(symbol=self.query.symbol, start_date='', end_date='')
         pprint(results_dataset)
         FileWriter(results_dataset).save_results()
+        Graph(dataframe).show()
 
     def set_all_params(self):
         print('Setting tester params ...')
