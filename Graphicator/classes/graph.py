@@ -9,7 +9,7 @@ class Graph:
         self._figure = None
 
     def show(self):
-        self._transform_date()
+        self._transform_dataframe()
         self._create_figure()
         self._figure.show()
 
@@ -48,6 +48,9 @@ class Graph:
             template="plotly_dark"
         )
 
-    def _transform_date(self):
+    def _transform_dataframe(self):
         self.dataset['date'] = pandas.to_datetime(self.dataset['date'])
         self.dataset = self.dataset.set_index('date')
+
+        self.dataset['mae20'] = self.dataset['close'].ewm(span=20).mean
+        self.dataset['mae150'] = self.dataset['close'].ewm(span=150).mean
