@@ -14,12 +14,15 @@ class Graph:
 
     def _create_figure(self):
         self._figure = graph_objects.Figure()
-        self._figure.add_trace(graph_objects.Scatter(
+        self._figure.add_trace(graph_objects.Candlestick(
             x=self.dataset.index,
-            y=self.dataset['close']
+            open=self.dataset['open'],
+            high=self.dataset['high'],
+            low=self.dataset['low'],
+            close=self.dataset['close']
         ))
+        self._figure.update_layout(template="plotly_dark")
 
     def _transform_date(self):
         self.dataset['date'] = pandas.to_datetime(self.dataset['date'])
         self.dataset = self.dataset.set_index('date')
-        print(self.dataset)
