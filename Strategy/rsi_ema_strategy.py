@@ -31,7 +31,7 @@ class RsiEmaStrategy(AbstractStrategy):
         close = df['close']
 
         if (current_rsi > self.rsi_oversold) and \
-            (current_fast_ema < close[candle]):
+                (current_fast_ema < close[candle]):
             return True
         return False
 

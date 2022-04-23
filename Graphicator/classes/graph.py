@@ -1,4 +1,5 @@
 import pandas
+import pandas_ta
 import plotly.graph_objects as graph_objects
 from plotly.subplots import make_subplots
 
@@ -15,13 +16,13 @@ class Graph:
 
     def _create_figure(self):
         self._figure = make_subplots(
-            rows=2, cols=1,
-            row_heights=[0.8, 0.2],
-            shared_xaxes=True
+            specs=[[{"secondary_y": True}]]
         )
 
         self._draw_price()
-        self._draw_volume()
+        #self._draw_volume()
+        self._draw_ema_9()
+        self._draw_ema_20()
         self._configure_layout()
 
     def _draw_price(self):
@@ -32,16 +33,33 @@ class Graph:
             high=self.dataset['high'],
             low=self.dataset['low'],
             close=self.dataset['close']
-        ), row=1, col=1)
+        ), secondary_y=True)
 
     def _draw_volume(self):
         self._figure.add_trace(graph_objects.Bar(
             name='Volume',
             x=self.dataset.index,
             y=self.dataset['volume']
-        ), row=2, col=1)
+        ), secondary_y=False)
+
+    def _draw_ema_9(self):
+        self._figure.add_trace(graph_objects.Scatter(
+            name='EMA9',
+            x=self.dataset.index,
+            y=self.dataset['ema9'],
+            line=dict(color='white', width=1)
+        ))
+
+    def _draw_ema_20(self):
+        self._figure.add_trace(graph_objects.Scatter(
+            name='EMA20',
+            x=self.dataset.index,
+            y=self.dataset['ema20'],
+            line=dict(color='cyan', width=1)
+        ))
 
     def _configure_layout(self):
+        self._figure.layout.yaxis.color = 'red'
         self._figure.update_layout(
             xaxis_rangeslider_visible=False,
             showlegend=True,
@@ -52,5 +70,5 @@ class Graph:
         self.dataset['date'] = pandas.to_datetime(self.dataset['date'])
         self.dataset = self.dataset.set_index('date')
 
-        self.dataset['mae20'] = self.dataset['close'].ewm(span=20).mean
-        self.dataset['mae150'] = self.dataset['close'].ewm(span=150).mean
+        self.dataset['ema9'] = pandas_ta.ema(self.dataset['close'], length=9, offset=None, append=True)
+        self.dataset['ema20'] = pandas_ta.ema(self.dataset['close'], length=20, offset=None, append=True)
