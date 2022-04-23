@@ -72,12 +72,13 @@ class BacktesterMenu(AbstractMenu):
 
         strategy.set_up(dataframe)
         backtester = self.get_backtester()
-        backtester.__backtesting__(dataframe, strategy)
+        solved_dataframe = backtester.__backtesting__(dataframe, strategy)
+
         print('\n')
         results_dataset = backtester.return_results(symbol=self.query.symbol, start_date='', end_date='')
         pprint(results_dataset)
         FileWriter(results_dataset).save_results()
-        Graph(dataframe).show()
+        Graph(solved_dataframe).show()
 
     def set_all_params(self):
         print('Setting tester params ...')

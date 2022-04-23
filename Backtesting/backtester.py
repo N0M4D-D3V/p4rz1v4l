@@ -1,3 +1,5 @@
+import numpy
+
 from Abstract.abstract_backtester import AbstractBacktester
 from Abstract.abstract_strategy import AbstractStrategy
 
@@ -164,6 +166,8 @@ class Backtester(AbstractBacktester):
         return results
 
     def __backtesting__(self, df, strategy: AbstractStrategy):
+        df.is_copy = False
+        df['signal'] = numpy.nan
 
         high = df['high']
         close = df['close']
@@ -171,13 +175,14 @@ class Backtester(AbstractBacktester):
 
         for i in range(len(df)):
             if self.balance > 0:
-
                 if strategy.check_long_signal(i):
+                    df['signal'][i] = 'long_open'
                     self.open_position(price=close[i], side='long', from_opened=i)
                     self.set_take_profit(price=close[i], tp_long=1.03)
                     self.set_stop_loss(price=close[i], sl_long=0.99)
 
                 elif strategy.check_short_signal(i):
+                    df['signal'][i] = 'short_open'
                     self.open_position(price=close[i], side='short', from_opened=i)
                     self.set_take_profit(price=close[i], tp_short=0.97)
                     self.set_stop_loss(price=close[i], sl_short=1.01)
@@ -194,13 +199,19 @@ class Backtester(AbstractBacktester):
                     if self.is_long_open:
 
                         if high[i] >= self.take_profit_price:
+                            df['signal'][i] = 'long_close'
                             self.close_position(price=self.take_profit_price)
                         elif low[i] <= self.stop_loss_price:
+                            df['signal'][i] = 'long_stoploss'
                             self.close_position(price=self.stop_loss_price)
 
                     elif self.is_short_open:
 
                         if high[i] >= self.stop_loss_price:
+                            df['signal'][i] = 'short_stoploss'
                             self.close_position(price=self.stop_loss_price)
                         elif low[i] <= self.take_profit_price:
+                            df['signal'][i] = 'short_close'
                             self.close_position(price=self.take_profit_price)
+
+        return df

@@ -58,12 +58,6 @@ class Graph:
             line=dict(color='cyan', width=1)
         ))
 
-    def draw_buy(self):
-        pass
-
-    def draw_sell(self):
-        pass
-
     def _configure_layout(self):
         self._figure.layout.yaxis.color = 'red'
         self._figure.update_layout(
