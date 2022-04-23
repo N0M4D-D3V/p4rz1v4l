@@ -21,7 +21,7 @@ class Graph:
 
         self._draw_price()
         #self._draw_volume()
-        self._draw_ema_9()
+        self._draw_ema_100()
         self._draw_ema_20()
         self._configure_layout()
 
@@ -42,11 +42,11 @@ class Graph:
             y=self.dataset['volume']
         ), secondary_y=False)
 
-    def _draw_ema_9(self):
+    def _draw_ema_100(self):
         self._figure.add_trace(graph_objects.Scatter(
-            name='EMA9',
+            name='EMA100',
             x=self.dataset.index,
-            y=self.dataset['ema9'],
+            y=self.dataset['ema100'],
             line=dict(color='white', width=1)
         ))
 
@@ -57,6 +57,12 @@ class Graph:
             y=self.dataset['ema20'],
             line=dict(color='cyan', width=1)
         ))
+
+    def draw_buy(self):
+        pass
+
+    def draw_sell(self):
+        pass
 
     def _configure_layout(self):
         self._figure.layout.yaxis.color = 'red'
@@ -70,5 +76,5 @@ class Graph:
         self.dataset['date'] = pandas.to_datetime(self.dataset['date'])
         self.dataset = self.dataset.set_index('date')
 
-        self.dataset['ema9'] = pandas_ta.ema(self.dataset['close'], length=9, offset=None, append=True)
+        self.dataset['ema100'] = pandas_ta.ema(self.dataset['close'], length=100, offset=None, append=True)
         self.dataset['ema20'] = pandas_ta.ema(self.dataset['close'], length=20, offset=None, append=True)

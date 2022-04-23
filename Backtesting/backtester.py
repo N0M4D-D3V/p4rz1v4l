@@ -174,7 +174,6 @@ class Backtester(AbstractBacktester):
 
                 if strategy.check_long_signal(i):
                     self.open_position(price=close[i], side='long', from_opened=i)
-
                     self.set_take_profit(price=close[i], tp_long=1.03)
                     self.set_stop_loss(price=close[i], sl_long=0.99)
 
@@ -183,7 +182,6 @@ class Backtester(AbstractBacktester):
                     self.set_take_profit(price=close[i], tp_short=0.97)
                     self.set_stop_loss(price=close[i], sl_short=1.01)
                 else:
-
                     if self.trailing_stop_loss and (self.is_long_open or self.is_short_open):
                         new_max = high[self.from_opened:i].max()
                         previous_stop_loss = self.stop_loss_price
