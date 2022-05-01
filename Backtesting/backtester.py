@@ -1,7 +1,6 @@
-import numpy
-
 from Abstract.abstract_backtester import AbstractBacktester
 from Abstract.abstract_strategy import AbstractStrategy
+from Config.dictionary.operation_type import OperationType
 
 
 class Backtester(AbstractBacktester):
@@ -49,10 +48,10 @@ class Backtester(AbstractBacktester):
         self.is_short_open = False
         self.from_opened = 0
 
-    def open_position(self, price, side, from_opened=0):
+    def open_position(self, price, side: OperationType, from_opened=0):
         self.num_operations += 1
 
-        if side == 'long':
+        if side == OperationType.LONG:
             self.num_longs += 1
 
             if self.is_short_open:
@@ -67,7 +66,7 @@ class Backtester(AbstractBacktester):
                 self.long_open_price = price
                 self.amount = self.inv / price
 
-        elif side == 'short':
+        elif side == OperationType.SHORT:
             self.num_shorts += 1
 
             if self.is_long_open:
@@ -166,24 +165,24 @@ class Backtester(AbstractBacktester):
         return results
 
     def __backtesting__(self, df, strategy: AbstractStrategy):
-        df.is_copy = False
-        df['signal'] = numpy.nan
+        df['operation'] = ""
 
         high = df['high']
         close = df['close']
         low = df['low']
+        operations = df['operation']
 
         for i in range(len(df)):
             if self.balance > 0:
                 if strategy.check_long_signal(i):
-                    df['signal'][i] = 'long_open'
-                    self.open_position(price=close[i], side='long', from_opened=i)
+                    operations[i] = OperationType.LONG_OPEN
+                    self.open_position(price=close[i], side=OperationType.LONG, from_opened=i)
                     self.set_take_profit(price=close[i], tp_long=1.03)
                     self.set_stop_loss(price=close[i], sl_long=0.99)
 
                 elif strategy.check_short_signal(i):
-                    df['signal'][i] = 'short_open'
-                    self.open_position(price=close[i], side='short', from_opened=i)
+                    operations[i] = OperationType.SHORT_OPEN
+                    self.open_position(price=close[i], side=OperationType.SHORT, from_opened=i)
                     self.set_take_profit(price=close[i], tp_short=0.97)
                     self.set_stop_loss(price=close[i], sl_short=1.01)
                 else:
@@ -199,19 +198,19 @@ class Backtester(AbstractBacktester):
                     if self.is_long_open:
 
                         if high[i] >= self.take_profit_price:
-                            df['signal'][i] = 'long_close'
+                            operations[i] = OperationType.LONG_CLOSE
                             self.close_position(price=self.take_profit_price)
                         elif low[i] <= self.stop_loss_price:
-                            df['signal'][i] = 'long_stoploss'
+                            operations[i] = OperationType.LONG_STOPLOSS_CLOSE
                             self.close_position(price=self.stop_loss_price)
 
                     elif self.is_short_open:
 
                         if high[i] >= self.stop_loss_price:
-                            df['signal'][i] = 'short_stoploss'
+                            operations[i] = OperationType.SHORT_STOPLOSS_CLOSE
                             self.close_position(price=self.stop_loss_price)
                         elif low[i] <= self.take_profit_price:
-                            df['signal'][i] = 'short_close'
+                            operations[i] = OperationType.SHORT_CLOSE
                             self.close_position(price=self.take_profit_price)
 
         return df
