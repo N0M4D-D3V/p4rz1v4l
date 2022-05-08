@@ -1,7 +1,7 @@
-from enum import Enum
+from strenum import StrEnum
 
 
-class OperationType(Enum):
+class OperationType(StrEnum):
     LONG = 'long'
     LONG_OPEN = 'long_open'
     LONG_CLOSE = 'long_close'

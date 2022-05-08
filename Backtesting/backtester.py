@@ -166,22 +166,26 @@ class Backtester(AbstractBacktester):
 
     def __backtesting__(self, df, strategy: AbstractStrategy):
         df['operation'] = ""
+        df['operation_price'] = ""
 
         high = df['high']
         close = df['close']
         low = df['low']
         operations = df['operation']
+        operation_prices = df['operation_price']
 
         for i in range(len(df)):
             if self.balance > 0:
                 if strategy.check_long_signal(i):
                     operations[i] = OperationType.LONG_OPEN
+                    operation_prices[i] = close[i]
                     self.open_position(price=close[i], side=OperationType.LONG, from_opened=i)
                     self.set_take_profit(price=close[i], tp_long=1.03)
                     self.set_stop_loss(price=close[i], sl_long=0.99)
 
                 elif strategy.check_short_signal(i):
                     operations[i] = OperationType.SHORT_OPEN
+                    operation_prices[i] = close[i]
                     self.open_position(price=close[i], side=OperationType.SHORT, from_opened=i)
                     self.set_take_profit(price=close[i], tp_short=0.97)
                     self.set_stop_loss(price=close[i], sl_short=1.01)
@@ -199,18 +203,22 @@ class Backtester(AbstractBacktester):
 
                         if high[i] >= self.take_profit_price:
                             operations[i] = OperationType.LONG_CLOSE
+                            operation_prices[i] = self.take_profit_price
                             self.close_position(price=self.take_profit_price)
                         elif low[i] <= self.stop_loss_price:
                             operations[i] = OperationType.LONG_STOPLOSS_CLOSE
+                            operation_prices[i] = self.stop_loss_price
                             self.close_position(price=self.stop_loss_price)
 
                     elif self.is_short_open:
 
                         if high[i] >= self.stop_loss_price:
                             operations[i] = OperationType.SHORT_STOPLOSS_CLOSE
+                            operation_prices[i] = self.stop_loss_price
                             self.close_position(price=self.stop_loss_price)
                         elif low[i] <= self.take_profit_price:
                             operations[i] = OperationType.SHORT_CLOSE
+                            operation_prices[i] = self.take_profit_price
                             self.close_position(price=self.take_profit_price)
 
         return df
