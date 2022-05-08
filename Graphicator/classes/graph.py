@@ -1,4 +1,5 @@
 import string
+from pprint import pprint
 
 import pandas
 import pandas_ta
@@ -7,7 +8,7 @@ from plotly.subplots import make_subplots
 
 from Config.dictionary.colors import Colors
 from Config.dictionary.operation_type import OperationType
-from Graphicator.classes.markers import Markers
+from Graphicator.classes.markers import Markers, get_config_by_operation, MarkerConfig, MarkerConfigOps
 
 
 class Graph:
@@ -74,34 +75,40 @@ class Graph:
         open_ops = self.dataset[self.dataset['operation'] == OperationType.LONG_OPEN]
         close_ops = self.dataset[self.dataset['operation'] == OperationType.LONG_CLOSE]
 
-        self._draw_markers(open_ops, OperationType.LONG_OPEN, Colors.WHITE, Markers.OPEN)
-        self._draw_markers(close_ops, OperationType.LONG_CLOSE, Colors.GREY, Markers.CLOSE)
+        conf: MarkerConfigOps = get_config_by_operation(OperationType.LONG)
+
+        self._draw_markers(open_ops, conf.open)
+        self._draw_markers(close_ops, conf.close)
 
     def _draw_short_ops(self):
         open_ops = self.dataset[self.dataset['operation'] == OperationType.SHORT_OPEN]
         close_ops = self.dataset[self.dataset['operation'] == OperationType.SHORT_CLOSE]
 
-        self._draw_markers(open_ops, OperationType.SHORT_OPEN, Colors.ORANGE, Markers.OPEN)
-        self._draw_markers(close_ops, OperationType.SHORT_CLOSE, Colors.DARK_ORANGE, Markers.CLOSE)
+        conf: MarkerConfigOps = get_config_by_operation(OperationType.SHORT)
+
+        self._draw_markers(open_ops, conf.open)
+        self._draw_markers(close_ops, conf.close)
 
     def _draw_stoploss_ops(self):
         long_ops = self.dataset[self.dataset['operation'] == OperationType.LONG_STOPLOSS_CLOSE]
         short_ops = self.dataset[self.dataset['operation'] == OperationType.SHORT_STOPLOSS_CLOSE]
 
-        self._draw_markers(long_ops, OperationType.LONG_STOPLOSS_CLOSE, Colors.DARK_GREY, Markers.STOPLOSS)
-        self._draw_markers(short_ops, OperationType.SHORT_STOPLOSS_CLOSE, Colors.DARK_RED, Markers.STOPLOSS)
+        conf: MarkerConfigOps = get_config_by_operation(OperationType.STOPLOSS)
 
-    def _draw_markers(self, dataset, name: string, color: string, symbol: string):
+        self._draw_markers(long_ops, conf.open)
+        self._draw_markers(short_ops, conf.close)
+
+    def _draw_markers(self, dataset, config: MarkerConfig):
         self._figure.add_trace(
             graph_objects.Scatter(
                 x=dataset.index,
                 y=dataset['operation_price'],
                 mode='markers',
-                name=name,
+                name=config.name,
                 marker=dict(
                     size=15,
-                    color=color,
-                    symbol=symbol
+                    color=config.color,
+                    symbol=config.symbol
                 )
             )
         )

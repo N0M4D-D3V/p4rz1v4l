@@ -14,7 +14,7 @@ def print_option_not_found():
 
 
 def print_exit():
-    print("\n\n   Wake the f*ick Up!")
+    print("\n\n   Wake the f*ck Up!")
     print("   We have a city to burn...")
     time.sleep(2)
     exit()
