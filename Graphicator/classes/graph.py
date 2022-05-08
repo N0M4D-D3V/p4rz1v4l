@@ -41,7 +41,7 @@ class Graph:
             high=self.dataset['high'],
             low=self.dataset['low'],
             close=self.dataset['close']
-        ), secondary_y=True)
+        ))
 
     def _draw_volume(self):
         self._figure.add_trace(graph_objects.Bar(
