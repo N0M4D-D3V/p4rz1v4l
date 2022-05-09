@@ -1,14 +1,9 @@
-import string
-from pprint import pprint
-
 import pandas
 import pandas_ta
-import plotly.graph_objects as graph_objects
 from plotly.subplots import make_subplots
 
-from Config.dictionary.colors import Colors
-from Config.dictionary.operation_type import OperationType
-from Graphicator.classes.markers import Markers, get_config_by_operation, MarkerConfig, MarkerConfigOps
+from Graphicator.classes.graph_builder import *
+from Graphicator.classes.markers import *
 
 
 class Graph:
@@ -22,9 +17,7 @@ class Graph:
         self._figure.show()
 
     def _create_figure(self):
-        self._figure = make_subplots(
-            specs=[[{"secondary_y": True}]]
-        )
+        self._figure = make_subplots(specs=[[{"secondary_y": True}]])
 
         self._draw_price()
         #self._draw_volume()
@@ -34,37 +27,16 @@ class Graph:
         self._configure_layout()
 
     def _draw_price(self):
-        self._figure.add_trace(graph_objects.Candlestick(
-            name='Open/Close',
-            x=self.dataset.index,
-            open=self.dataset['open'],
-            high=self.dataset['high'],
-            low=self.dataset['low'],
-            close=self.dataset['close']
-        ))
+        self._figure.add_trace(build_price_graph(self.dataset))
 
     def _draw_volume(self):
-        self._figure.add_trace(graph_objects.Bar(
-            name='Volume',
-            x=self.dataset.index,
-            y=self.dataset['volume']
-        ), secondary_y=False)
+        self._figure.add_trace(build_volume_graph(self.dataset), secondary_y=False)
 
     def _draw_ema_100(self):
-        self._figure.add_trace(graph_objects.Scatter(
-            name='EMA100',
-            x=self.dataset.index,
-            y=self.dataset['ema100'],
-            line=dict(color='white', width=1)
-        ))
+        self._figure.add_trace(build_ema100_graph(self.dataset))
 
     def _draw_ema_20(self):
-        self._figure.add_trace(graph_objects.Scatter(
-            name='EMA20',
-            x=self.dataset.index,
-            y=self.dataset['ema20'],
-            line=dict(color='cyan', width=1)
-        ))
+        self._figure.add_trace(build_ema20_graph(self.dataset))
 
     def _draw_operations(self):
         self._draw_short_ops()
@@ -99,19 +71,7 @@ class Graph:
         self._draw_markers(short_ops, conf.close)
 
     def _draw_markers(self, dataset, config: MarkerConfig):
-        self._figure.add_trace(
-            graph_objects.Scatter(
-                x=dataset.index,
-                y=dataset['operation_price'],
-                mode='markers',
-                name=config.name,
-                marker=dict(
-                    size=15,
-                    color=config.color,
-                    symbol=config.symbol
-                )
-            )
-        )
+        self._figure.add_trace(build_marker_graph(dataset, config))
 
     def _configure_layout(self):
         self._figure.layout.yaxis.color = 'red'
