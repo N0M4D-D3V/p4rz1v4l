@@ -1,5 +1,6 @@
 import pandas
 import pandas_ta
+from plotly.graph_objs import Figure
 from plotly.subplots import make_subplots
 
 from Graphicator.classes.graph_builder import *
@@ -17,26 +18,26 @@ class Graph:
         self._figure.show()
 
     def _create_figure(self):
-        self._figure = make_subplots(specs=[[{"secondary_y": True}]])
+        self._figure: Figure = make_subplots(rows=2, cols=1, row_heights=[0.7, 0.3])
 
         self._draw_price()
-        #self._draw_volume()
+        self._draw_volume()
         self._draw_ema_100()
         self._draw_ema_20()
         self._draw_operations()
         self._configure_layout()
 
     def _draw_price(self):
-        self._figure.add_trace(build_price_graph(self.dataset))
+        self._figure.add_trace(build_price_graph(self.dataset), row=1, col=1)
 
     def _draw_volume(self):
-        self._figure.add_trace(build_volume_graph(self.dataset), secondary_y=False)
+        self._figure.add_trace(build_volume_graph(self.dataset), row=2, col=1)
 
     def _draw_ema_100(self):
-        self._figure.add_trace(build_ema100_graph(self.dataset))
+        self._figure.add_trace(build_ema100_graph(self.dataset), row=1, col=1)
 
     def _draw_ema_20(self):
-        self._figure.add_trace(build_ema20_graph(self.dataset))
+        self._figure.add_trace(build_ema20_graph(self.dataset), row=1, col=1)
 
     def _draw_operations(self):
         self._draw_short_ops()
@@ -71,7 +72,7 @@ class Graph:
         self._draw_markers(short_ops, conf.close)
 
     def _draw_markers(self, dataset, config: MarkerConfig):
-        self._figure.add_trace(build_marker_graph(dataset, config))
+        self._figure.add_trace(build_marker_graph(dataset, config), row=1, col=1)
 
     def _configure_layout(self):
         self._figure.layout.yaxis.color = 'red'
