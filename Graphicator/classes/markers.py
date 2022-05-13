@@ -13,19 +13,19 @@ class Markers(StrEnum):
 
 
 class MarkerConfig:
-    def __init__(self, name: string, color: Colors, symbol: Markers):
+    def __init__(self, name: string, color, symbol):
         self.name = name
         self.color = color
         self.symbol = symbol
 
 
 class MarkerConfigOps:
-    def __init__(self, open: MarkerConfig, close: MarkerConfig):
-        self.open = open
+    def __init__(self, opn, close):
+        self.open = opn
         self.close = close
 
 
-_configurations: list[MarkerConfig] = [
+_configurations = [
     MarkerConfig(OperationType.LONG_OPEN, Colors.WHITE, Markers.OPEN),
     MarkerConfig(OperationType.LONG_CLOSE, Colors.GREY, Markers.CLOSE),
     MarkerConfig(OperationType.SHORT_OPEN, Colors.ORANGE, Markers.OPEN),
@@ -36,5 +36,5 @@ _configurations: list[MarkerConfig] = [
 
 
 def get_config_by_operation(operation: string) -> MarkerConfigOps:
-    items: list[MarkerConfig] = list(filter(lambda config: operation in config.name, _configurations))
+    items = list(filter(lambda config: operation in config.name, _configurations))
     return MarkerConfigOps(items[0], items[1])
