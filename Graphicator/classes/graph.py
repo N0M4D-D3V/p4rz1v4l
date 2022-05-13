@@ -18,7 +18,10 @@ class Graph:
         self._figure.show()
 
     def _create_figure(self):
-        self._figure: Figure = make_subplots(rows=2, cols=1, row_heights=[0.7, 0.3])
+        self._figure: Figure = make_subplots(
+            rows=2, cols=1, row_heights=[0.7, 0.3],
+            shared_xaxes=True
+        )
 
         self._draw_price()
         self._draw_volume()
