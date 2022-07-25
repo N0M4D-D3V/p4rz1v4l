@@ -19,9 +19,9 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
 
     def __init__(self, strategy_key: str, number_of_generations=20, generation_size=50, mutation_rate=0.1):
         self.strategy_key = strategy_key
-        exchange = ExchangeFactory().getInstance()
+        exchange = ExchangeFactory().get_instance()
         self.query = ExchangeQuery()
-        self.dataframe = ExchangeService(exchange).getAll(self.query)
+        self.dataframe = ExchangeService(exchange).get_all(self.query)
         self.number_of_generations: int = int(number_of_generations)
         self.generation_size: int = int(generation_size)
         self.n_genes: int = 5
@@ -63,7 +63,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
             reverse=True
         )
 
-    def print_result(self, generation_number):
+    def print_result(self, generation_number: int):
         print()
         print('GENERATION: ', generation_number)
         print('_________________')

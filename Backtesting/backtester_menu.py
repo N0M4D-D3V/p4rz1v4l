@@ -62,8 +62,8 @@ class BacktesterMenu(AbstractMenu):
         self.is_menu_active = False
 
     def run_test(self, strategy_name, is_setting_params=False):
-        exchange = ExchangeFactory().getInstance()
-        dataframe = ExchangeService(exchange).getAll(self.query)
+        exchange = ExchangeFactory().get_instance()
+        dataframe = ExchangeService(exchange).get_all(self.query)
         strategy = StrategyFactory(strategy_name)
 
         if is_setting_params:
