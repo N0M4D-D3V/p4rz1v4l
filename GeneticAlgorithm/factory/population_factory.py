@@ -8,7 +8,8 @@ class PopulationFactory(AbstractFactory):
         self.generation_size = generation_size
         self.mutation_rate = mutation_rate
 
-    # Params: bb_len, n_std, rsi_len, rsi_overbought, rsi_oversold
+    # Gets a Population instance for BollingerBandsStrategy.
+    # Params in gene_ranges ordered: bb_len, n_std, rsi_len, rsi_overbought, rsi_oversold
     def _get_bb_instance(self):
         return Population(
             generation_size=self.generation_size,
@@ -17,7 +18,8 @@ class PopulationFactory(AbstractFactory):
             mutation_rate=self.mutation_rate
         )
 
-    # Params: ema_fast, rsi_len, rsi_oversold
+    # Gets a population instance for RSI/EMA strategy.
+    # Params in gene_ranges ordered: ema_fast, rsi_len, rsi_oversold
     def _get_rsi_ema_instance(self):
         return Population(
             generation_size=self.generation_size,

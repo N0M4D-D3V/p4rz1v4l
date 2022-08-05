@@ -6,6 +6,7 @@ from Config.dictionary.colors import Colors
 from Config.dictionary.operation_type import OperationType
 
 
+# Defines the symbol used for mark each position type.
 class Markers(StrEnum):
     OPEN = 'star-triangle-up'
     CLOSE = 'star-triangle-down'
@@ -25,6 +26,8 @@ class MarkerConfigOps:
         self.close = close
 
 
+# Configuration for each kind of operation. It defines the
+# operation type, color and marker.
 _configurations = [
     MarkerConfig(OperationType.LONG_OPEN, Colors.WHITE, Markers.OPEN),
     MarkerConfig(OperationType.LONG_CLOSE, Colors.GREY, Markers.CLOSE),
@@ -35,6 +38,7 @@ _configurations = [
 ]
 
 
+# Gets the open/close MarkerConfig by operation type (long or short).
 def get_config_by_operation(operation: string) -> MarkerConfigOps:
     items = list(filter(lambda config: operation in config.name, _configurations))
     return MarkerConfigOps(items[0], items[1])

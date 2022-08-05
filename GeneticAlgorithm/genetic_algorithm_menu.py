@@ -13,9 +13,9 @@ class GeneticAlgorithmMenu(AbstractMenu):
 
     def start(self):
         while self.is_menu_active:
-                self.print_menu()
-                option = int(input(' -> Enter your choice: '))
-                self.manage_options(option)
+            self.print_menu()
+            option = int(input(' -> Enter your choice: '))
+            self.manage_options(option)
 
     def manage_options(self, option):
         if list(backtest_menu_options.keys())[-1] == option:

@@ -28,6 +28,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         self.mutation_rate: float = float(mutation_rate)
         self.population = self.build_population()
 
+    # Asks user for input params
     def param_request(self):
         self.number_of_generations = int(input(' -> Number of generations (20): ') or '20')
         self.generation_size = int(input(' -> Generation size (50): ') or '50')
@@ -52,6 +53,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
             self.sort_population()
             self.print_result(x)
 
+    # Sorts population by reverse fitness function order.
     def sort_population(self):
         self.population.population = sorted(
             self.population.population,
@@ -71,6 +73,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         self.print_best_individual()
         self.print_worst_individual()
 
+    # Prints the best population result on console.
     def print_best_individual(self):
         print('BEST INDIVIDUAL:')
         print(self.population.population[0].backtester.return_results(
@@ -85,6 +88,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         population_factory = PopulationFactory(self.strategy_key, self.generation_size, self.mutation_rate)
         return population_factory.get_instance()
 
+    # Prints the worst result on console.
     def print_worst_individual(self):
         print('WORST INDIVIDUAL:')
         print(self.population.population[-1].backtester.return_results(

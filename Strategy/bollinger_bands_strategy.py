@@ -12,6 +12,7 @@ class BollingerBandsStrategy(AbstractStrategy):
         self.rsi_oversold = rsi_oversold
         self.dataframe = None
 
+    # Request params for the strategy if user want to test some special values.
     def param_request(self):
         print('BB Options: ')
         self.bb_len = float(input(' -> BB Length (20): ') or '20')
@@ -21,6 +22,7 @@ class BollingerBandsStrategy(AbstractStrategy):
         self.rsi_overbought = float(input(' -> RSI Overbought (60): ') or '60')
         self.rsi_oversold = float(input(' -> RSI Oversold (40): ') or '40')
 
+    # Sets rsi and the three bollinger bands inside a provided dataframe.
     def set_up(self, df):
         bb = ta.bbands(
             close=df['close'],
@@ -36,6 +38,7 @@ class BollingerBandsStrategy(AbstractStrategy):
 
         self.dataframe = df
 
+    # Long signal checking mechanism.
     def check_long_signal(self, i=None):
         df = self.dataframe
 
@@ -49,6 +52,7 @@ class BollingerBandsStrategy(AbstractStrategy):
             return True
         return False
 
+    # Short signal checking mechanism.
     def check_short_signal(self, i=None):
         df = self.dataframe
 

@@ -12,11 +12,15 @@ class Graph:
         self.dataset = dataset
         self._figure = None
 
+    # Transform the dataframe. Then creates the figures and
+    # show it.
     def show(self):
         self._transform_dataframe()
         self._create_figure()
         self._figure.show()
 
+    # Creates all figures to draw. Includes price, volume, ema 100,
+    # ema 20 and operation markers. Layout config is included too.
     def _create_figure(self):
         self._figure: Figure = make_subplots(
             rows=2, cols=1, row_heights=[0.7, 0.3],

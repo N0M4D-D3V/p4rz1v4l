@@ -10,6 +10,7 @@ class GeneticStrategyFactory(AbstractFactory):
         super().__init__(strategy_key)
         self.individual = individual
 
+    # Creates Bollinger Bands strategy
     def _get_bb_instance(self):
         genes = self.individual.genes
         return BollingerBandsStrategy(
@@ -20,6 +21,7 @@ class GeneticStrategyFactory(AbstractFactory):
             rsi_oversold=genes[4]
         )
 
+    # Creates RSI/EMA strategy
     def _get_rsi_ema_instance(self):
         genes = self.individual.genes
         return RsiEmaStrategy(

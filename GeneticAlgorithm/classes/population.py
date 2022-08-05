@@ -13,7 +13,8 @@ class Population(AbstractPopulation):
         self.mutation_rate = mutation_rate
         self.population = [Individual(self.n_genes, gene_ranges) for _ in range(generation_size)]
 
-    def selection(self):
+    # Gets the n_best sorted individuals of a Population.
+    def selection(self) -> list[Individual]:
         return sorted(
             self.population,
             key=lambda individual: individual.backtester.return_results(
@@ -24,6 +25,7 @@ class Population(AbstractPopulation):
             reverse=True,
         )[0:self.n_best]
 
+    # Mixes genes of the bests individuals.
     def crossover(self):
         selected = self.selection()
 
@@ -36,6 +38,7 @@ class Population(AbstractPopulation):
             self.population[i].genes[:point] = father[0].genes[:point]
             self.population[i].genes[point:] = father[1].genes[point:]
 
+    # Mutates genes of the generation
     def mutation(self):
         for i in range(self.generation_size):
 
