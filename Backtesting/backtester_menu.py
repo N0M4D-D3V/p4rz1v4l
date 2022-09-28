@@ -38,7 +38,7 @@ class BacktesterMenu(AbstractMenu):
                 self.manage_options(option)
 
             except BadSymbol:
-                print("\n Binance does not have market symbol " + self.query.symbol)
+                print("\n The symbol does not exist: " + self.query.symbol)
             except KeyError:
                 print("\n Probably u introduced an invalid timeframe. Try again >:b")
 

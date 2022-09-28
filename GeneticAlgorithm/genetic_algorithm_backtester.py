@@ -34,6 +34,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         self.generation_size = int(input(' -> Generation size (50): ') or '50')
         self.mutation_rate = float(input(' -> Set mutation rate (0.1): ') or '0.1')
 
+    # Prints menu's header
     def print_header(self):
         print('<>--< GENETIC ALGORITHM >--<>')
         print()
@@ -41,6 +42,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         print('Symbol: ', self.query.symbol, 'Timeframe: ', self.query.timeframe)
         print('\n\n')
 
+    # Runs the genetic algorithm test and print the results
     def run(self):
         for x in range(self.number_of_generations):
             for individual in self.population.population:
@@ -65,6 +67,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
             reverse=True
         )
 
+    # Prints the results of one generation of the genetic algorithm.
     def print_result(self, generation_number: int):
         print()
         print('GENERATION: ', generation_number)
@@ -84,6 +87,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
         print(self.population.population[0].genes)
         print('\n')
 
+    # Build one instance of population.
     def build_population(self):
         population_factory = PopulationFactory(self.strategy_key, self.generation_size, self.mutation_rate)
         return population_factory.get_instance()

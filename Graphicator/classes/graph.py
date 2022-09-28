@@ -34,18 +34,23 @@ class Graph:
         self._draw_operations()
         self._configure_layout()
 
+    # Draws the prices main figure.
     def _draw_price(self):
         self._figure.add_trace(build_price_graph(self.dataset), row=1, col=1)
 
+    # Draws the volume figure.
     def _draw_volume(self):
         self._figure.add_trace(build_volume_graph(self.dataset), row=2, col=1)
 
+    # Draws EMA100 figure.
     def _draw_ema_100(self):
         self._figure.add_trace(build_ema100_graph(self.dataset), row=1, col=1)
 
+    # Draws EMA20 figure.
     def _draw_ema_20(self):
         self._figure.add_trace(build_ema20_graph(self.dataset), row=1, col=1)
 
+    # Draws Operations figures (short, long, stoploss).
     def _draw_operations(self):
         self._draw_short_ops()
         self._draw_long_ops()
@@ -81,6 +86,7 @@ class Graph:
     def _draw_markers(self, dataset, config: MarkerConfig):
         self._figure.add_trace(build_marker_graph(dataset, config), row=1, col=1)
 
+    # Main configuration 4 the graphs.
     def _configure_layout(self):
         self._figure.layout.yaxis.color = 'red'
         self._figure.update_layout(
@@ -89,6 +95,7 @@ class Graph:
             template="plotly_dark"
         )
 
+    # Adds EMA100 and EMA20 columns to dataset.
     def _transform_dataframe(self):
         self.dataset['date'] = pandas.to_datetime(self.dataset['date'])
         self.dataset = self.dataset.set_index('date')
