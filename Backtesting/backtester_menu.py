@@ -2,6 +2,7 @@ from ccxt import BadSymbol
 from pprint import pprint
 
 from Backtesting.backtester import Backtester
+from Backtesting.config import *
 from DocumentWriter.document_writer import FileWriter
 from Graphicator.classes.graph import Graph
 from Strategy.factory.strategy_factory import StrategyFactory
@@ -17,18 +18,18 @@ from Data.exchange_service import ExchangeService
 
 class BacktesterMenu(AbstractMenu):
     def __init__(self):
-        self.is_menu_active: bool = True
-        self.initial_balance: float = 1000
-        self.leverage: float = 10
-        self.trailing_stop_loss: bool = True
+        self.is_menu_active: bool = is_menu_active_default
+        self.initial_balance: float = initial_balance_default
+        self.leverage: float = leverage_default
+        self.trailing_stop_loss: bool = trailing_stop_loss_default
         self.query = ExchangeQuery()
 
-    def reset_default_values(self):
+    def init_default_values(self):
         self.query = ExchangeQuery()
-        self.is_menu_active: bool = True
-        self.initial_balance: float = 1000
-        self.leverage: float = 10
-        self.trailing_stop_loss: bool = True
+        self.is_menu_active: bool = is_menu_active_default
+        self.initial_balance: float = initial_balance_default
+        self.leverage: float = leverage_default
+        self.trailing_stop_loss: bool = trailing_stop_loss_default
 
     def start(self):
         while self.is_menu_active:

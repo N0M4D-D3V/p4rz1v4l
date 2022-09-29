@@ -16,11 +16,11 @@ def print_menu():
 
 def manage_options(selected_option):
     if selected_option == 1:
-        backtester_submenu.reset_default_values()
+        backtester_submenu.init_default_values()
         backtester_submenu.start()
 
     elif selected_option == 2:
-        genetic_algorithm_submenu.reset_default_values()
+        genetic_algorithm_submenu.init_default_values()
         genetic_algorithm_submenu.start()
 
     elif selected_option == 3:

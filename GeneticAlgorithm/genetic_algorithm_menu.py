@@ -8,7 +8,7 @@ class GeneticAlgorithmMenu(AbstractMenu):
     def __init__(self):
         self.is_menu_active: bool = True
 
-    def reset_default_values(self):
+    def init_default_values(self):
         self.is_menu_active: bool = True
 
     def start(self):

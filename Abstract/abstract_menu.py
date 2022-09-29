@@ -5,7 +5,7 @@ class AbstractMenu(metaclass=abc.ABCMeta):
 
     # Resets the menu values to default.
     @abc.abstractmethod
-    def reset_default_values(self):
+    def init_default_values(self):
         raise NotImplementedError
 
     # Start with the menu process.
