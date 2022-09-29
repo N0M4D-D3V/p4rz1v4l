@@ -49,7 +49,7 @@ class GeneticAlgorithmBacktester(AbstractGeneticAlgorithm):
                 individual.backtester.reset_results()
                 strategy = build_strategy(self.strategy_key, individual)
                 strategy.set_up(self.dataframe)
-                individual.backtester.__backtesting__(self.dataframe, strategy)
+                individual.backtester.backtesting(self.dataframe, strategy)
             self.population.crossover()
             self.population.mutation()
             self.sort_population()

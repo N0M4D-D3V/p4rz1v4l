@@ -5,7 +5,7 @@ class AbstractBacktester(metaclass=abc.ABCMeta):
 
     # Executes the test process
     @abc.abstractmethod
-    def __backtesting__(self, dataframe, strategy):
+    def backtesting(self, dataframe, strategy):
         raise NotImplementedError
 
     # Opens a long/short position

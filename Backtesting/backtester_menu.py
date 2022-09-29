@@ -63,18 +63,25 @@ class BacktesterMenu(AbstractMenu):
         self.is_menu_active = False
 
     def run_test(self, strategy_name, is_setting_params=False):
+        # gets exchange, dataframe and strategy
         exchange = ExchangeFactory().get_instance()
         dataframe = ExchangeService(exchange).get_all(self.query)
         strategy = StrategyFactory(strategy_name)
 
+        # ask 4 params if the user selected that option
         if is_setting_params:
             self.set_all_params()
             strategy.param_request()
 
+        # Sets the strategy dataframe
         strategy.set_up(dataframe)
-        backtester = self.get_backtester()
-        solved_dataframe = backtester.__backtesting__(dataframe, strategy)
 
+        # Executes the test
+        backtester = self.get_backtester()
+        solved_dataframe = backtester.backtesting(dataframe, strategy)
+
+        # Get the results, print it in console and write it in file.
+        # Then, creates and shows the graphic results.
         print('\n')
         results_dataset = backtester.return_results(symbol=self.query.symbol, start_date='', end_date='')
         pprint(results_dataset)

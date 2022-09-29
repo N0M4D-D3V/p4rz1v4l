@@ -190,7 +190,7 @@ class Backtester(AbstractBacktester):
     def _calc_fitness(self, profit: float, drawdown: float, winrate: float) -> float:
         return (self.num_longs + self.num_shorts) * (profit - abs(drawdown)) * winrate / self.num_operations
 
-    def __backtesting__(self, df, strategy: AbstractStrategy):
+    def backtesting(self, df, strategy: AbstractStrategy):
         df['operation'] = ""
         df['operation_price'] = ""
 
