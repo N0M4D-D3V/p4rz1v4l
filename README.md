@@ -16,7 +16,4 @@
 |       |                           |      | Grafica Open/Close/Stoploss                              | 1        |
 |       |                           |      | Ajustar los indicadores para que grafiquen adecuadamente | 2        |
 |       |                           |      | Dibujar el volumen                                       | 3        |
-|       | Implementar bot funcional |      |                                                          | 3        |
-|       | Limpiar Codigo            |      |                                                          | 5        |
-|       | Documentar                |      |                                                          | 5        |
 
