@@ -7,15 +7,16 @@
 
 <div align="center">
 
-| TO-DO                       | DOING | DONE | TESTED | PRIORITY | DEADLINE  |
-| --------------------------- | ----- | ---- | ------ | -------- | --------- |
-| Add Electron to the project |       |      |        | P0       | 2/25/2023 |
-| Diagrama de Flujo           |       |      |        | P0       | 2/25/2023 |
-| Templates (design)          |       |      |        | P1       | 2/25/2023 |
-| Templates (implement)       |       |      |        | P2       | 3/04/2023 |
-| Routing                     |       |      |        | P2       | 3/04/2023 |
-| Strategy Creator            |       |      |        | P3       | 3/31/2023 |
-| Backtesting                 |       |      |        | P3       | 3/31/2023 |
-| Genetic Algorithms          |       |      |        | P3       | 3/31/2023 |
+| TO-DO                       | DOING   | DONE | TESTED | PRIORITY | DEADLINE  |
+| --------------------------- | ------- | ---- | ------ | -------- | --------- |
+| Add Electron to the project |         |      |        | P0       | 2/25/2023 |
+| Diagrama de Flujo           | :skull: |      |        | P0       | 2/25/2023 |
+| Templates (design)          | :skull: |      |        | P1       | 2/25/2023 |
+| Templates (implement)       |         |      |        | P2       | 3/04/2023 |
+| Routing                     |         |      |        | P2       | 3/04/2023 |
+| Strategy Creator            |         |      |        | P3       | 3/31/2023 |
+| Backtesting                 |         |      |        | P3       | 3/31/2023 |
+| Genetic Algorithms          |         |      |        | P3       | 3/31/2023 |
+| Operational Bot             |         |      |        | P4       | 4/31/2023 |
 
 </div>
