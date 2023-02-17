@@ -1,27 +1,16 @@
-# P4rz1v4l
+<h1 align="center"><>------><------<\\... P4RZ1V4L .../>------><------<></h1>
+<h4 align="center">:warning: DEADLINE: 5/01/2023 :warning:</h4>
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.6.
+![Alt text](https://www.gamersglobal.de/sites/gamersglobal.de/files/galerie/280/VirtuaVerse_03.jpg "p4rz1v4l")
 
-## Development server
+| TO-DO                     | DOING | DONE | TESTED   | PRIORITY | DEADLINE |
+|---------------------------|-------|------|----------|----------|----------|
+|Add Electron to the project|       |      |          |   P0     | 2/25/2023|
+|     Diagrama de Flujo     |       |      |          |   P0     | 2/25/2023|
+|     Templates (design)    |       |      |          |   P1     | 2/25/2023|
+|   Templates (implement)   |       |      |          |   P2     | 3/04/2023|
+|          Routing          |       |      |          |   P2     | 3/04/2023|
+|      Strategy Creator     |       |      |          |   P3     | 3/31/2023|
+|        Backtesting        |       |      |          |   P3     | 3/31/2023|
+|    Genetic Algorithms     |       |      |          |   P3     | 3/31/2023|
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
