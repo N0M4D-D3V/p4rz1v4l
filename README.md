@@ -20,3 +20,13 @@
 | Operational Bot             |           |      |        | P4       | 4/31/2023 |
 
 </div>
+<div align='center'>
+```mermaid
+flowchart TD
+    A[Deploy to production] --> B{Is it Friday?};
+    B -- Yes --> C[Do not deploy!];
+    B -- No --> D[Run deploy.sh to deploy];
+    C ----> E[Enjoy your week!];
+    D ----> E[Enjoy your week!];
+```
+</div>
