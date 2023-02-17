@@ -7,7 +7,7 @@
 
 <div align="center">
 
-| TO-DO                       | DOING     | DONE | TESTED | PRIORITY | DEADLINE  |
+| TASK NAME                   | DOING     | DONE | TESTED | PRIORITY | DEADLINE  |
 | --------------------------- | --------- | ---- | ------ | -------- | --------- |
 | Add Electron to the project |           |      |        | P0       | 2/25/2023 |
 | Diagrama de Flujo           | :trident: |      |        | P0       | 2/25/2023 |
