@@ -13,7 +13,7 @@
 | Diagrama de Flujo           |       |           | :trident: | P0       | 2/25/2023 |
 | Templates (design)          |       | :trident: |           | P1       | 2/25/2023 |
 | Templates (implement)       |       |           |           | P2       | 3/04/2023 |
-| Routing                     |       |           |           | P2       | 3/04/2023 |
+| Routing                     |       | :trident: |           | P2       | 3/04/2023 |
 | Strategy Creator            |       |           |           | P3       | 3/31/2023 |
 | Backtesting                 |       |           |           | P3       | 3/31/2023 |
 | Genetic Algorithms          |       |           |           | P3       | 3/31/2023 |
