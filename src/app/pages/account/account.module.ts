@@ -1,0 +1,12 @@
+import { CommonModule } from "@angular/common";
+import { NgModule } from "@angular/core";
+import { AccountPage } from "./account.page";
+
+@NgModule({
+  declarations: [AccountPage],
+  exports: [AccountPage],
+  imports: [CommonModule],
+  providers: [],
+  bootstrap: [],
+})
+export class AccountModule {}
