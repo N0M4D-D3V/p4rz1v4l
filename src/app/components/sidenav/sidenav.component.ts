@@ -8,13 +8,14 @@ import { MediaMatcher } from "@angular/cdk/layout";
 })
 export class SidenavComponent implements OnDestroy {
   public mobileQuery: MediaQueryList;
-  public fillerNav: string[] = [
-    "Home",
-    "Backtest",
-    "Genetic Algorithms",
-    "Strategies",
-    "Account",
-    "About",
+  public fillerNav: { title: string; path: string }[] = [
+    { title: "Home", path: "/home" },
+    { title: "Backtest", path: "/backtest" },
+    { title: "Genetic Algorithms", path: "/genetic-algorithms" },
+    { title: "Strategies", path: "/strategies" },
+    { title: "Bots", path: "/bots" },
+    { title: "Account", path: "/account" },
+    { title: "About", path: "/about" },
   ];
 
   private mobileQueryListener: () => void;
