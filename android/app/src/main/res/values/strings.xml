@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">p4rz1v4l</string>
+    <string name="title_activity_main">p4rz1v4l</string>
+    <string name="package_name">com.p4rz1v4l</string>
+    <string name="custom_url_scheme">com.p4rz1v4l</string>
+</resources>
