@@ -1,1 +1,30 @@
-<h1 class="text-center">HOME PAGE!</h1>
+<div class="py-4 px-4 h-100">
+  <div class="row mb-2 h-50">
+    <app-simple-card
+      class="col"
+      label="Backtesting"
+      background="rgba(255, 0, 0, 0.2)"
+      (click)="redirect('/backtest')"
+    ></app-simple-card>
+    <app-simple-card
+      class="col"
+      label="Genetic Algorithms"
+      background="rgba(0, 255, 0, 0.2)"
+      (click)="redirect('/genetic-algorithms')"
+    ></app-simple-card>
+  </div>
+  <div class="row h-50">
+    <app-simple-card
+      class="col"
+      label="Strategies"
+      background="rgba(255, 0, 205, 0.2)"
+      (click)="redirect('/strategies')"
+    ></app-simple-card>
+    <app-simple-card
+      class="col"
+      label="Bots"
+      background="rgba(0, 0, 255, 0.2)"
+      (click)="redirect('/bots')"
+    ></app-simple-card>
+  </div>
+</div>

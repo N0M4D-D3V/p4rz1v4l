@@ -7,16 +7,16 @@
 
 <div align="center">
 
-| TASK NAME                   | DOING | DONE      | TESTED    | PRIORITY | DEADLINE  |
-| --------------------------- | ----- | --------- | --------- | -------- | --------- |
-| Add Electron to the project |       | :trident: |           | P0       | 2/25/2023 |
-| Diagrama de Flujo           |       |           | :trident: | P0       | 2/25/2023 |
-| Templates (design)          |       | :trident: |           | P1       | 2/25/2023 |
-| Templates (implement)       |       |           |           | P2       | 3/04/2023 |
-| Routing                     |       | :trident: |           | P2       | 3/04/2023 |
-| Strategy Creator            |       |           |           | P3       | 3/31/2023 |
-| Backtesting                 |       |           |           | P3       | 3/31/2023 |
-| Genetic Algorithms          |       |           |           | P3       | 3/31/2023 |
-| Operational Bot             |       |           |           | P4       | 4/31/2023 |
+| TASK NAME                   | DOING     | DONE      | TESTED    | PRIORITY | DEADLINE  |
+| --------------------------- | --------- | --------- | --------- | -------- | --------- |
+| Add Electron to the project |           | :trident: |           | P0       | 2/25/2023 |
+| Diagrama de Flujo           |           |           | :trident: | P0       | 2/25/2023 |
+| Templates (design)          |           | :trident: |           | P1       | 2/25/2023 |
+| Templates (implement)       | :trident: |           |           | P2       | 3/04/2023 |
+| Routing                     |           | :trident: |           | P2       | 3/04/2023 |
+| Strategy Creator            |           |           |           | P3       | 3/31/2023 |
+| Backtesting                 |           |           |           | P3       | 3/31/2023 |
+| Genetic Algorithms          |           |           |           | P3       | 3/31/2023 |
+| Operational Bot             |           |           |           | P4       | 4/31/2023 |
 
 </div>
