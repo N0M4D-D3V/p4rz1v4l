@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start:electron": "npx cap open @capacitor-community/electron",
+    "start:electron": "npx cap sync && npx cap open @capacitor-community/electron",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
