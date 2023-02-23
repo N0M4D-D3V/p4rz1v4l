@@ -1,1 +1,7 @@
-<h1 class="text-center">BOTS PAGE!</h1>
+<div class="card-container py-4 px-4">
+  <app-simple-card
+    *ngFor="let bot of bots"
+    class="card"
+    label="{{bot}}"
+  ></app-simple-card>
+</div>

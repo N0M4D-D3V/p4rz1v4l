@@ -1,0 +1,22 @@
+.card-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+  }
+  
+  .card {
+    border-radius: 10px;
+    overflow: hidden;
+    height: 200px;
+  
+    mat-card-content {
+      height: 100px;
+      overflow: hidden;
+    }
+  
+    mat-card-actions {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  
