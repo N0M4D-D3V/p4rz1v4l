@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
+import { BsModalService } from "ngx-bootstrap/modal";
 
 @Component({
   selector: "app-strategies",
@@ -15,4 +17,10 @@ export class StrategiesPage {
     "strat 6",
     "strat 7",
   ];
+
+  constructor(private readonly modalService: BsModalService) {}
+
+  public onStrategyTouched(): void {
+    this.modalService.show(EditStrategyModal);
+  }
 }

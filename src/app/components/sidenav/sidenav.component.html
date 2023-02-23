@@ -1,9 +1,9 @@
 <div class="sidenav-container" [class.sidenav-is-mobile]="mobileQuery.matches">
   <mat-toolbar color="primary" class="sidenav-toolbar">
-    <button mat-icon-button (click)="snav.toggle()">
-      <mat-icon>menu</mat-icon>
+    <button class="btn btn-lg" (click)="snav.toggle()">
+      <i class="bi bi-list text-light"></i>
     </button>
-    <h1 class="sidenav-app-name">Responsive App</h1>
+    <h1 class="sidenav-app-name" routerLink="/home">P4RZ1V4L</h1>
   </mat-toolbar>
 
   <mat-sidenav-container

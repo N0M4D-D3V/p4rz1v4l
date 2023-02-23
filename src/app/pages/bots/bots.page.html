@@ -3,6 +3,11 @@
     *ngFor="let bot of bots"
     class="card"
     label="{{bot}}"
+    (click)="onBotTouched()"
   ></app-simple-card>
-  <app-simple-card class="card" label="+"></app-simple-card>
+  <app-simple-card
+    class="card"
+    label="+"
+    (click)="onBotTouched()"
+  ></app-simple-card>
 </div>

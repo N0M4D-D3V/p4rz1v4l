@@ -1,4 +1,6 @@
 import { Component } from "@angular/core";
+import { EditBotModal } from "@modals/edit-bot/edit-bot.modal";
+import { BsModalService } from "ngx-bootstrap/modal";
 
 @Component({
   selector: "app-bots",
@@ -15,4 +17,10 @@ export class BotsPage {
     "bot 6",
     "bot 7",
   ];
+
+  constructor(private readonly modalService: BsModalService) {}
+
+  public onBotTouched(): void {
+    this.modalService.show(EditBotModal);
+  }
 }

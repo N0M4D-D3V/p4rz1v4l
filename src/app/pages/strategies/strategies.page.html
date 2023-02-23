@@ -3,6 +3,11 @@
     *ngFor="let strat of strategies"
     class="card"
     label="{{strat}}"
+    (click)="onStrategyTouched()"
   ></app-simple-card>
-  <app-simple-card class="card" label="+"></app-simple-card>
+  <app-simple-card
+    class="card"
+    label="+"
+    (click)="onStrategyTouched()"
+  ></app-simple-card>
 </div>
