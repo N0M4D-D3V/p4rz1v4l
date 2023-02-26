@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ExchangeService } from "@services/exchange/exchange.service";
 import { BsModalService } from "ngx-bootstrap/modal";
 
 @Component({
@@ -7,9 +8,16 @@ import { BsModalService } from "ngx-bootstrap/modal";
   styleUrls: ["./edit-bot.modal.scss"],
 })
 export class EditBotModal implements OnInit {
-  constructor(private readonly modalService: BsModalService) {}
+  public exchangeList: string[] = [];
 
-  ngOnInit(): void {}
+  constructor(
+    private readonly modalService: BsModalService,
+    private readonly exchangeService: ExchangeService
+  ) {}
+
+  ngOnInit(): void {
+    this.exchangeList = this.exchangeService.getExchanges();
+  }
 
   public onDismiss(): void {
     this.modalService.hide();

@@ -1,5 +1,6 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
+import { ExchangeService } from "@services/exchange/exchange.service";
 import { BsModalService } from "ngx-bootstrap/modal";
 
 @Component({
@@ -7,8 +8,17 @@ import { BsModalService } from "ngx-bootstrap/modal";
   templateUrl: "./backtest.page.html",
   styleUrls: ["./backtest.page.scss"],
 })
-export class BacktestPage {
-  constructor(private readonly modalService: BsModalService) {}
+export class BacktestPage implements OnInit {
+  public exchangeList: string[] = [];
+
+  constructor(
+    private readonly modalService: BsModalService,
+    private readonly exchangeService: ExchangeService
+  ) {}
+
+  ngOnInit(): void {
+    this.exchangeList = this.exchangeService.getExchanges();
+  }
 
   public onEdit(): void {
     this.modalService.show(EditStrategyModal);

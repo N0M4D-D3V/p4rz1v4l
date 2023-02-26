@@ -8,10 +8,5 @@ import { Component, OnInit } from "@angular/core";
 export class AppComponent implements OnInit {
   constructor() {}
 
-  async ngOnInit(): Promise<void> {
-    const exchange = new ccxt.binance();
-    const markets = await exchange.loadMarkets();
-
-    console.log(exchange.id, markets);
-  }
+  async ngOnInit(): Promise<void> {}
 }

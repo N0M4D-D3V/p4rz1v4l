@@ -12,10 +12,10 @@
 
     <div class="row mt-1">
       <select class="form-select col me-1">
-        <option selected>Exchange</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+        <option selected disabled>Exchange</option>
+        <option *ngFor="let exchange of exchangeList" value="{{exchange}}">
+          {{exchange | titlecase}}
+        </option>
       </select>
       <select class="form-select col ms-1">
         <option selected>Market</option>
