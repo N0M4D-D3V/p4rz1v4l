@@ -7,8 +7,9 @@
       "@interfaces/*": ["src/app/interfaces/*"],
       "@services/*": ["src/app/services/*"],
       "@components/*": ["src/app/components/*"],
-      "@custom-types/*": ["src/types/*"],
+      "@custom-types/*": ["src/app/types/*"],
       "@common/*": ["src/app/common/*"],
+      "@models/*": ["src/app/models/*"],
       "@modals/*": ["src/app/modals/*"]
     },
     "outDir": "./dist/out-tsc",
@@ -26,10 +27,7 @@
     "importHelpers": true,
     "target": "es2020",
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ]
+    "lib": ["es2020", "dom"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
