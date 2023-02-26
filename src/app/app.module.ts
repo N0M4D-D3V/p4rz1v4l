@@ -6,6 +6,8 @@ import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { SidenavModule } from "./components/sidenav/sidenav.module";
 import { ModalModule } from "ngx-bootstrap/modal";
+import { FormBuilder } from "@angular/forms";
+import { ExchangeFactoryService } from "@services/exchange/exchange-factory.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,7 +18,7 @@ import { ModalModule } from "ngx-bootstrap/modal";
     SidenavModule,
     ModalModule.forRoot(),
   ],
-  providers: [],
+  providers: [FormBuilder, ExchangeFactoryService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
