@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
-import { StrategySelectionService } from "@services/modals/strategies-modals";
+import { DataModalSelectionService } from "@services/modals/data-modals";
 import { Subscription } from "rxjs";
 
 @Component({
@@ -14,19 +14,22 @@ export class EditStrategyModal implements OnInit {
 
   constructor(
     private readonly modalService: BsModalService,
-    private readonly strategySelectionService: StrategySelectionService
+    private readonly strategySelectionService: DataModalSelectionService
   ) {}
 
   ngOnInit(): void {
-    this.selectedStrategySub = this.strategySelectionService.selectedStrategy$.subscribe(
-      (strategy) => {
+    this.getDataModal();
+  }
+
+  private getDataModal() {
+    this.selectedStrategySub =
+      this.strategySelectionService.selectedDataModal$.subscribe((strategy) => {
         this.selectedStrategy = strategy;
-      }
-    );
+      });
   }
 
   public onDismiss(): void {
-     this.selectedStrategySub.unsubscribe();
+    this.selectedStrategySub.unsubscribe();
     this.modalService.hide();
   }
 }

@@ -1,4 +1,4 @@
-export interface Strategy {
+export interface Bot {
   id: number;
   name: string;
 }

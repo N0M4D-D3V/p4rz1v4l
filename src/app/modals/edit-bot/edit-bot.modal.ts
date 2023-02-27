@@ -4,6 +4,8 @@ import { ExchangeFactoryService } from "@services/exchange/exchange-factory.serv
 import { ExchangeService } from "@services/exchange/exchange.service";
 import { Exchange } from "ccxt";
 import { BsModalService } from "ngx-bootstrap/modal";
+import { DataModalSelectionService } from "@services/modals/data-modals";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-edit-bot",
@@ -12,26 +14,38 @@ import { BsModalService } from "ngx-bootstrap/modal";
 })
 export class EditBotModal implements OnInit {
   private exchange: Exchange;
+  private selectedBotSub: Subscription;
 
   public exchangeList: string[] = [];
   public marketList: string[] = [];
 
   public form: FormGroup;
+  public selectedBot: any;
 
   constructor(
     private readonly formBuilder: FormBuilder,
     private readonly modalService: BsModalService,
     private readonly exchangeFactoryService: ExchangeFactoryService,
-    private readonly exchangeService: ExchangeService
+    private readonly exchangeService: ExchangeService,
+    private readonly dataSelectionService: DataModalSelectionService
   ) {}
 
   ngOnInit(): void {
+    this.getDataModal();
     this.exchangeList = this.exchangeService.getExchanges();
     this.createForm();
     this.onSubForm();
   }
 
+  private getDataModal() {
+    this.selectedBotSub =
+      this.dataSelectionService.selectedDataModal$.subscribe((bot) => {
+        this.selectedBot = bot;
+      });
+  }
+
   public onDismiss(): void {
+    this.selectedBotSub.unsubscribe();
     this.modalService.hide();
   }
 

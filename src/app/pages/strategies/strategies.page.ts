@@ -8,9 +8,9 @@ import {
   AbstractControl,
 } from "@angular/forms";
 import { Strategy } from "@interfaces/strategies.interface";
-import { StrategySelectionService } from "@services/modals/strategies-modals";
+import { DataModalSelectionService } from "@services/modals/data-modals";
 
-let NAME_STRATEGY: string = "Estrategia ";
+let NAME_MODULE: string = "Estrategia ";
 
 @Component({
   selector: "app-strategies",
@@ -20,12 +20,12 @@ let NAME_STRATEGY: string = "Estrategia ";
 export class StrategiesPage implements OnInit {
   public strategyForm: FormGroup;
 
-  public deleteStrategyLiteral: string = "Eliminar";
-  public addStrategyLiteral: string = "Agregar estrategia";
+  public deleteButtonLiteral: string = "Eliminar";
+  public addButtonLiteral: string = "Agregar estrategia";
 
   constructor(
     private readonly modalService: BsModalService,
-    private strategySelectionService: StrategySelectionService,
+    private strategySelectionService: DataModalSelectionService,
     private fb: FormBuilder
   ) {}
 
@@ -45,7 +45,7 @@ export class StrategiesPage implements OnInit {
 
   public onStrategyTouched(index: number): void {
     const selectedStrategy = this.strategies.at(index).value;
-    this.strategySelectionService.setSelectedStrategy(index, selectedStrategy);
+    this.strategySelectionService.setSelectedDataModal(index, selectedStrategy);
     this.modalService.show(EditStrategyModal);
   }
 
@@ -55,7 +55,7 @@ export class StrategiesPage implements OnInit {
 
   public addStrategy(): void {
     const numberOfStrategies = this.strategies.length + 1;
-    const newControl = this.fb.control(NAME_STRATEGY + numberOfStrategies);
+    const newControl = this.fb.control(NAME_MODULE + numberOfStrategies);
     this.strategies.push(newControl);
   }
 
@@ -71,7 +71,7 @@ export class StrategiesPage implements OnInit {
     for (let i = index; i <= lastIndex; i++) {
       const numberOfStrategies = i + 1;
       const controlEvaluator = this.strategies.at(i);
-      controlEvaluator.setValue(NAME_STRATEGY + numberOfStrategies);
+      controlEvaluator.setValue(NAME_MODULE + numberOfStrategies);
     }
   }
 }
