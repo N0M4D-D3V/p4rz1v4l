@@ -28,7 +28,7 @@ export class BotsPage  implements OnInit {
     private fb: FormBuilder) {}
 
     get bot(): FormArray {
-      return this.botForm.get("bot") as FormArray;
+      return this.botForm.get("bots") as FormArray;
     }
   
     ngOnInit(): void {
@@ -36,7 +36,7 @@ export class BotsPage  implements OnInit {
     }
     private createBot(): void {
       this.botForm = this.fb.group({
-        bot: this.fb.array<Bot>([]),
+        bots: this.fb.array<Bot>([]),
       });
     }
 
