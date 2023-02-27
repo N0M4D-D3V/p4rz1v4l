@@ -1,13 +1,36 @@
 <div class="card-container">
-  <app-simple-card
-    *ngFor="let strat of strategies"
-    class="card"
-    label="{{strat}}"
-    (click)="onStrategyTouched()"
-  ></app-simple-card>
-  <app-simple-card
-    class="card"
-    label="+"
-    (click)="onStrategyTouched()"
-  ></app-simple-card>
+  <form [formGroup]="strategyForm">
+    <div class="strategies" formArrayName="strategies">
+      <div
+        *ngFor="let strat of strategies.controls; let i = index; trackBy: trackByStrategy"
+        class="strategies__strategy-card-container"
+      >
+        <div
+          class="strategies__strategy-card-container--global card"
+          (click)="onStrategyTouched(i)"
+        >
+          <input class="strategies__strategy-card-container--input" />
+          <div class="strategies__strategy-card-container--input-letters">
+            {{strat.value}}
+          </div>
+        </div>
+        <button
+          type="button"
+          class="strategies__strategy-card-container--remove-btn"
+          (click)="removeStrategy(strat)"
+        >
+          {{deleteStrategyLiteral}}
+        </button>
+      </div>
+    </div>
+    <div class="strategies__strategy-card-container--add-btn-container">
+      <button
+        type="button"
+        class="strategies__strategy-card-container--add-btn-container-button"
+        (click)="addStrategy()"
+      >
+        {{addStrategyLiteral}}
+      </button>
+    </div>
+  </form>
 </div>

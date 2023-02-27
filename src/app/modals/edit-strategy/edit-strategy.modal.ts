@@ -1,5 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
+import { StrategySelectionService } from "@services/modals/strategies-modals";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-edit-strategy",
@@ -7,11 +9,24 @@ import { BsModalService } from "ngx-bootstrap/modal";
   styleUrls: ["./edit-strategy.modal.scss"],
 })
 export class EditStrategyModal implements OnInit {
-  constructor(private readonly modalService: BsModalService) {}
+  public selectedStrategy: any;
+  private selectedStrategySub: Subscription;
 
-  ngOnInit(): void {}
+  constructor(
+    private readonly modalService: BsModalService,
+    private readonly strategySelectionService: StrategySelectionService
+  ) {}
+
+  ngOnInit(): void {
+    this.selectedStrategySub = this.strategySelectionService.selectedStrategy$.subscribe(
+      (strategy) => {
+        this.selectedStrategy = strategy;
+      }
+    );
+  }
 
   public onDismiss(): void {
+     this.selectedStrategySub.unsubscribe();
     this.modalService.hide();
   }
 }

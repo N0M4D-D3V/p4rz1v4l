@@ -1,26 +1,77 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
 import { BsModalService } from "ngx-bootstrap/modal";
+import {
+  FormBuilder,
+  FormGroup,
+  FormArray,
+  AbstractControl,
+} from "@angular/forms";
+import { Strategy } from "@interfaces/strategies.interface";
+import { StrategySelectionService } from "@services/modals/strategies-modals";
+
+let NAME_STRATEGY: string = "Estrategia ";
 
 @Component({
   selector: "app-strategies",
   templateUrl: "./strategies.page.html",
   styleUrls: ["./strategies.page.scss"],
 })
-export class StrategiesPage {
-  public strategies: string[] = [
-    "strat 1",
-    "strat 2",
-    "strat 3",
-    "strat 4",
-    "strat 5",
-    "strat 6",
-    "strat 7",
-  ];
+export class StrategiesPage implements OnInit {
+  public strategyForm: FormGroup;
 
-  constructor(private readonly modalService: BsModalService) {}
+  public deleteStrategyLiteral: string = "Eliminar";
+  public addStrategyLiteral: string = "Agregar estrategia";
 
-  public onStrategyTouched(): void {
+  constructor(
+    private readonly modalService: BsModalService,
+    private strategySelectionService: StrategySelectionService,
+    private fb: FormBuilder
+  ) {}
+
+  get strategies(): FormArray {
+    return this.strategyForm.get("strategies") as FormArray;
+  }
+
+  ngOnInit(): void {
+    this.createStrategy();
+  }
+
+  private createStrategy(): void {
+    this.strategyForm = this.fb.group({
+      strategies: this.fb.array<Strategy>([]),
+    });
+  }
+
+  public onStrategyTouched(index: number): void {
+    const selectedStrategy = this.strategies.at(index).value;
+    this.strategySelectionService.setSelectedStrategy(index, selectedStrategy);
     this.modalService.show(EditStrategyModal);
+  }
+
+  public trackByStrategy(index: number, strategy: AbstractControl) {
+    return strategy.value;
+  }
+
+  public addStrategy(): void {
+    const numberOfStrategies = this.strategies.length + 1;
+    const newControl = this.fb.control(NAME_STRATEGY + numberOfStrategies);
+    this.strategies.push(newControl);
+  }
+
+  public removeStrategy(control: AbstractControl): void {
+    const index = this.strategies.controls.indexOf(control);
+    this.strategies.removeAt(index);
+    this.resetNumberStrategy(control);
+  }
+
+  private resetNumberStrategy(control: AbstractControl): void {
+    const index = this.strategies.controls.indexOf(control);
+    const lastIndex = this.strategies.length - 1;
+    for (let i = index; i <= lastIndex; i++) {
+      const numberOfStrategies = i + 1;
+      const controlEvaluator = this.strategies.at(i);
+      controlEvaluator.setValue(NAME_STRATEGY + numberOfStrategies);
+    }
   }
 }
