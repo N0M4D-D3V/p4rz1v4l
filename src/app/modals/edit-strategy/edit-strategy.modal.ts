@@ -32,4 +32,12 @@ export class EditStrategyModal implements OnInit {
     this.selectedStrategySub.unsubscribe();
     this.modalService.hide();
   }
+
+  public onDelete(): void {
+    alert("DELETE");
+  }
+
+  public onEdit(label: string): void {
+    alert("EDIT " + label);
+  }
 }
