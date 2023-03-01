@@ -9,9 +9,41 @@
       <button class="btn">{{ label }}</button>
     </div>
     <div class="col-3 text-end">
-      <button class="btn btn-info" (click)="onEditTouched()">
+      <button
+        class="btn btn-success"
+        (click)="editPopover.open()"
+        [ngbPopover]="popContent"
+        [popoverTitle]="popTitle"
+        [autoClose]="false"
+        triggers="manual"
+        placement="end"
+        #editPopover="ngbPopover"
+      >
         <i class="bi bi-pencil-square"></i>
       </button>
     </div>
   </div>
 </div>
+
+<ng-template #popContent>
+  <div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Overbought</span>
+      <input type="number" class="form-control" />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Oversold</span>
+      <input type="number" class="form-control" />
+    </div>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">Length</span>
+      <input type="number" class="form-control" />
+    </div>
+  </div>
+  <div class="w-100 text-center">
+    <button class="btn btn-lg btn-success" (click)="editPopover.close()">
+      SAVE
+    </button>
+  </div>
+</ng-template>
+<ng-template #popTitle>Edit {{ label }} </ng-template>

@@ -18,6 +18,6 @@ export class ItemComponent {
   }
 
   public onEditTouched(): void {
-    this.onEdit.emit(this.label);
+    // this.onEdit.emit(this.label);
   }
 }

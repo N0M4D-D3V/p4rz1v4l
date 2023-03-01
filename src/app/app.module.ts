@@ -8,6 +8,7 @@ import { SidenavModule } from "./components/sidenav/sidenav.module";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { FormBuilder } from "@angular/forms";
 import { ExchangeFactoryService } from "@services/exchange/exchange-factory.service";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { ExchangeFactoryService } from "@services/exchange/exchange-factory.serv
     BrowserAnimationsModule,
     SidenavModule,
     ModalModule.forRoot(),
+    NgbModule,
   ],
   providers: [FormBuilder, ExchangeFactoryService],
   bootstrap: [AppComponent],
