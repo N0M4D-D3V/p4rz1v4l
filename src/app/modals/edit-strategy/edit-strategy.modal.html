@@ -39,24 +39,28 @@
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-6">
-      <button class="btn btn-lg">
-        Buy indicator <i class="bi bi-plus-circle-fill"></i>
-      </button>
-    </div>
-
-    <div class="col-6">
-      <button class="btn btn-lg">
-        Sell indicator <i class="bi bi-plus-circle-fill"></i>
-      </button>
-    </div>
-  </div>
-
   <hr />
   <h2 class="text-center">Indicators</h2>
 
-  <app-item label="RSI" (onDelete)="onDelete()" (onEdit)="onEdit($event)"></app-item>
+  <app-item
+    label="RSI"
+    (onDelete)="onDelete()"
+    (onEdit)="onEdit($event)"
+  ></app-item>
+
+  <div class="w-100 mt-3" (click)="editPopover.open()">
+    <button
+      class="btn btn-lg btn-primary w-100"
+      [ngbPopover]="popContent"
+      [popoverTitle]="popTitle"
+      [autoClose]="false"
+      triggers="manual"
+      placement="bottom auto"
+      #editPopover="ngbPopover"
+    >
+      <i class="bi bi-plus-circle-fill"></i>
+    </button>
+  </div>
 
   <hr />
 
@@ -65,3 +69,11 @@
     <button class="btn btn-success col ms-1">SAVE</button>
   </div>
 </div>
+
+<ng-template #popContent>
+  <app-indicator-popover
+    (onDelete)="editPopover.close()"
+    (onSave)="editPopover.close()"
+  ></app-indicator-popover>
+</ng-template>
+<ng-template #popTitle>ADD INDICATOR </ng-template>

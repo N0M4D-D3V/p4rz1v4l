@@ -1,17 +1,16 @@
 <div class="card">
   <div class="row">
-    <div class="col-3">
-      <button class="btn btn-danger" (click)="onDeleteTouched()">
+    <div class="col-3 pe-pointer" (click)="onDeleteTouched()">
+      <button class="btn btn-danger">
         <i class="bi bi-trash-fill"></i>
       </button>
     </div>
-    <div class="col-6 text-center">
+    <div class="col-6 text-center pe-pointer" (click)="editPopover.open()">
       <button class="btn">{{ label }}</button>
     </div>
-    <div class="col-3 text-end">
+    <div class="col-3 text-end pe-pointer" (click)="editPopover.open()">
       <button
         class="btn btn-success"
-        (click)="editPopover.open()"
         [ngbPopover]="popContent"
         [popoverTitle]="popTitle"
         [autoClose]="false"
@@ -26,24 +25,9 @@
 </div>
 
 <ng-template #popContent>
-  <div>
-    <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1">Overbought</span>
-      <input type="number" class="form-control" />
-    </div>
-    <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1">Oversold</span>
-      <input type="number" class="form-control" />
-    </div>
-    <div class="input-group mb-3">
-      <span class="input-group-text" id="basic-addon1">Length</span>
-      <input type="number" class="form-control" />
-    </div>
-  </div>
-  <div class="w-100 text-center">
-    <button class="btn btn-lg btn-success" (click)="editPopover.close()">
-      SAVE
-    </button>
-  </div>
+  <app-indicator-popover
+    (onDelete)="editPopover.close()"
+    (onSave)="editPopover.close()"
+  ></app-indicator-popover>
 </ng-template>
 <ng-template #popTitle>Edit {{ label }} </ng-template>

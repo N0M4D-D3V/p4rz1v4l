@@ -1,0 +1,33 @@
+<div class="mb-3">
+  <select class="form-select">
+    <option selected disabled>Indicator</option>
+    <option *ngFor="let indicator of indicators" [value]="indicator">
+      {{ indicator }}
+    </option>
+  </select>
+  <select class="form-select">
+    <option selected disabled>Operation</option>
+    <option value="buy">Buy</option>
+    <option value="sell">Sell</option>
+  </select>
+  <div class="input-group mt-3">
+    <span class="input-group-text" id="basic-addon1">Overbought</span>
+    <input type="number" class="form-control" />
+  </div>
+  <div class="input-group">
+    <span class="input-group-text" id="basic-addon1">Oversold</span>
+    <input type="number" class="form-control" />
+  </div>
+  <div class="input-group">
+    <span class="input-group-text" id="basic-addon1">Length</span>
+    <input type="number" class="form-control" />
+  </div>
+</div>
+<div class="w-100 text-center row m-0">
+  <button class="btn btn-lg btn-danger col me-2" (click)="onDeleteTouched()">
+    <i class="bi bi-trash3-fill"></i>
+  </button>
+  <button class="btn btn-lg btn-success col" (click)="onSaveTouched()">
+    <i class="bi bi-save-fill"></i>
+  </button>
+</div>
