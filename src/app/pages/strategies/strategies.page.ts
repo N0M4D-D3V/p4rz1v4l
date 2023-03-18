@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
 import { BsModalService } from "ngx-bootstrap/modal";
 import {
@@ -16,6 +16,7 @@ let NAME_MODULE: string = "Estrategia ";
   selector: "app-strategies",
   templateUrl: "./strategies.page.html",
   styleUrls: ["./strategies.page.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StrategiesPage implements OnInit {
   public strategyForm: FormGroup;

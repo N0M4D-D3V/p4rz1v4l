@@ -4,6 +4,15 @@
       <i class="bi bi-list text-light"></i>
     </button>
     <h1 class="sidenav-app-name" routerLink="/home">P4RZ1V4L</h1>
+    <ng-container *ngIf="tabs$ | async as tabs">
+      <nav-tab
+        *ngFor="let tab of tabs"
+        [tab]="tab"
+        [routerLink]="tab.url"
+        routerLinkActive="tab--active"
+        (closed)="onTabClosed(tab)"
+      ></nav-tab>
+    </ng-container>
   </mat-toolbar>
 
   <mat-sidenav-container

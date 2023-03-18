@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
-import { RouterModule, Routes } from "@angular/router";
+import { RouterModule, Routes, RouteReuseStrategy } from "@angular/router";
+import { CustomRouterReuseStrategy } from "./shared/routes/custom-router-reused";
 
 const routes: Routes = [
   { path: "", redirectTo: "/home", pathMatch: "full" },
@@ -31,21 +32,32 @@ const routes: Routes = [
       ),
   },
   {
-    path: "strategies",
-    loadChildren: () =>
-      import("./pages/strategies/strategies.module").then(
-        (m) => m.StrategiesModule
-      ),
+  path: "strategies",
+  loadChildren: () =>
+    import("./pages/strategies/strategies.module").then(
+      (m) => m.StrategiesModule
+    ),
   },
   {
     path: "bots",
     loadChildren: () =>
-      import("./pages/bots/bots.module").then((m) => m.BotsModule),
+      import("./pages/bots/bot-list/bots.module").then((m) => m.BotsRoutingModule),
+  },
+  {
+    path: "bot",
+    loadChildren: () =>
+      import('./pages/bots/bot-details/bot-detail.module').then((m) => m.BotDetailsModule)
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: CustomRouterReuseStrategy,
+    },
+  ],
 })
 export class AppRoutingModule {}

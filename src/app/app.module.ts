@@ -4,11 +4,11 @@ import { BrowserModule } from "@angular/platform-browser";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { SidenavModule } from "./components/sidenav/sidenav.module";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { FormBuilder } from "@angular/forms";
 import { ExchangeFactoryService } from "@services/exchange/exchange-factory.service";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { TabBarModule } from "@components/sidenav";
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,9 +16,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    SidenavModule,
     ModalModule.forRoot(),
     NgbModule,
+    TabBarModule
   ],
   providers: [FormBuilder, ExchangeFactoryService],
   bootstrap: [AppComponent],

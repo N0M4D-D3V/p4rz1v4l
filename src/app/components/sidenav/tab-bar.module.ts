@@ -1,17 +1,17 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MatListModule } from "@angular/material/list";
 import { MatIconModule } from "@angular/material/icon";
 
-import { SidenavComponent } from "./sidenav.component";
+import { NavBarComponent } from "./nav/nav-bar.component";
+import { TabComponent } from "./tab/tab.component";
 import { RouterModule } from "@angular/router";
 
 @NgModule({
-  declarations: [SidenavComponent],
-  exports: [SidenavComponent],
+  declarations: [NavBarComponent, TabComponent],
   imports: [
     CommonModule,
     RouterModule,
@@ -20,7 +20,6 @@ import { RouterModule } from "@angular/router";
     MatIconModule,
     MatListModule,
   ],
-  providers: [],
-  bootstrap: [],
+  exports: [NavBarComponent, TabComponent],
 })
-export class SidenavModule {}
+export class TabBarModule {}
