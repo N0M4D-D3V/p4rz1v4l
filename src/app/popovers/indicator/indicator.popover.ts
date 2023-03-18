@@ -55,7 +55,7 @@ export class IndicatorPopoverComponent implements OnInit, OnDestroy {
           this.configVariables = this.indicatorFactory.getKeysBySymbol(changes);
 
           this.resetConfig();
-          this.configVariables.forEach((key) => this.addConfig(key));
+          this.configVariables.forEach(() => this.addConfig());
         }
       });
 
@@ -93,8 +93,8 @@ export class IndicatorPopoverComponent implements OnInit, OnDestroy {
     this.onSave.emit(response);
   }
 
-  private addConfig(key: string): void {
-    this.config.push(this.fb.control(key, Validators.required));
+  private addConfig(): void {
+    this.config.push(this.fb.control(null, Validators.required));
   }
 
   private resetConfig(): void {
