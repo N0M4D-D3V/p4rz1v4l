@@ -4,6 +4,7 @@ import {
   Output,
   OnInit,
   OnDestroy,
+  Input,
 } from "@angular/core";
 import { AVAILABLE_INDICATORS } from "@common/available-indicator.list";
 import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -20,6 +21,8 @@ import { Subscription } from "rxjs";
   styleUrls: ["./indicator.popover.scss"],
 })
 export class IndicatorPopoverComponent implements OnInit, OnDestroy {
+  @Input() editableIndicator: IndicatorInfo;
+
   @Output() onDelete: EventEmitter<void> = new EventEmitter<void>();
   @Output() onSave: EventEmitter<IndicatorInfo> =
     new EventEmitter<IndicatorInfo>();
@@ -29,11 +32,7 @@ export class IndicatorPopoverComponent implements OnInit, OnDestroy {
 
   public indicators: IndicatorInfo[] = AVAILABLE_INDICATORS;
   public configVariables: string[];
-  public form: FormGroup = this.fb.group({
-    indicatorName: ["", Validators.required],
-    operationType: ["", Validators.required],
-    config: this.fb.array([]),
-  });
+  public form: FormGroup;
 
   public get config() {
     return this.form.get("config") as FormArray;
@@ -47,17 +46,16 @@ export class IndicatorPopoverComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.createForm();
+    this.initFormSubscriptions();
+  }
+
+  private initFormSubscriptions(): void {
     this.subIndicatorName = this.form
       .get("indicatorName")
-      .valueChanges.subscribe((changes: string) => {
-        if (changes) {
-          this.configVariables = [];
-          this.configVariables = this.indicatorFactory.getKeysBySymbol(changes);
-
-          this.resetConfig();
-          this.configVariables.forEach(() => this.addConfig());
-        }
-      });
+      .valueChanges.subscribe((changes: string) =>
+        this.onIndicatorNameChange(changes)
+      );
 
     this.subForm = this.form.valueChanges.subscribe(() => {
       this.isValid = this.form.valid;
@@ -84,6 +82,7 @@ export class IndicatorPopoverComponent implements OnInit, OnDestroy {
 
     //build response
     const response: IndicatorInfo = {
+      provisionalID: this.editableIndicator?.provisionalID || undefined,
       name: name,
       symbol: formValue.indicatorName,
       operationType: formValue.operationType,
@@ -93,8 +92,56 @@ export class IndicatorPopoverComponent implements OnInit, OnDestroy {
     this.onSave.emit(response);
   }
 
-  private addConfig(): void {
-    this.config.push(this.fb.control(null, Validators.required));
+  private onIndicatorNameChange(symbol: string): void {
+    if (symbol) {
+      this.configVariables = [];
+      this.configVariables = this.indicatorFactory.getKeysBySymbol(symbol);
+
+      this.resetConfig();
+      this.configVariables.forEach(() => this.addConfig());
+    }
+  }
+
+  private createForm(): void {
+    if (this.editableIndicator) this.createFilledForm();
+    else this.createEmptyForm();
+  }
+
+  private createFilledForm(): void {
+    //set form
+    this.form = this.fb.group({
+      indicatorName: [this.editableIndicator?.symbol, Validators.required],
+      operationType: [
+        this.editableIndicator?.operationType,
+        Validators.required,
+      ],
+      config: this.fb.array([]),
+    });
+
+    //disable indicator name
+    this.form.controls["indicatorName"].disable();
+
+    //get the keys
+    this.configVariables = this.indicatorFactory.getKeysBySymbol(
+      this.editableIndicator?.symbol
+    );
+
+    //set the variables and their values
+    this.editableIndicator.config.forEach((option: IndicatorOption) => {
+      this.addConfig(option.value);
+    });
+  }
+
+  private createEmptyForm(): void {
+    this.form = this.fb.group({
+      indicatorName: ["", Validators.required],
+      operationType: ["", Validators.required],
+      config: this.fb.array([]),
+    });
+  }
+
+  private addConfig(value?: number): void {
+    this.config.push(this.fb.control(value || null, Validators.required));
   }
 
   private resetConfig(): void {

@@ -46,7 +46,7 @@
     *ngFor="let indicator of indicators; let index = index"
     [item]="indicator"
     (onDelete)="onDelete(index)"
-    (onEdit)="onEdit($event)"
+    (onEdit)="onEdit($event, index, editPopover)"
   ></app-item>
 
   <div class="w-100 mt-3" (click)="editPopover.open()">
@@ -73,6 +73,7 @@
 
 <ng-template #popContent>
   <app-indicator-popover
+    [editableIndicator]="indicatorToEdit"
     (onDelete)="editPopover.close()"
     (onSave)="onPopoverSave($event, editPopover)"
   ></app-indicator-popover>

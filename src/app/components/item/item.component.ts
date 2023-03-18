@@ -7,11 +7,12 @@ import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
   templateUrl: "./item.component.html",
   styleUrls: ["./item.component.scss"],
 })
-export class ItemComponent<T> {
+export class ItemComponent {
   @Input() item: IndicatorInfo;
 
   @Output() onDelete: EventEmitter<void> = new EventEmitter<void>();
-  @Output() onEdit: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onEdit: EventEmitter<IndicatorInfo> =
+    new EventEmitter<IndicatorInfo>();
 
   constructor() {}
 
@@ -19,8 +20,7 @@ export class ItemComponent<T> {
     this.onDelete.emit();
   }
 
-  public onEditTouched(popover: NgbPopover): void {
-    popover.open(this.item);
-    // this.onEdit.emit(this.label);
+  public onEditTouched(): void {
+    this.onEdit.emit(this.item);
   }
 }

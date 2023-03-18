@@ -5,29 +5,13 @@
         <i class="bi bi-trash-fill"></i>
       </button>
     </div>
-    <div class="col-6 text-center pe-pointer" (click)="editPopover.open()">
+    <div class="col-6 text-center pe-pointer" (click)="onEditTouched()">
       <button class="btn">{{ item.symbol }}</button>
     </div>
-    <div class="col-3 text-end pe-pointer" (click)="editPopover.open()">
-      <button
-        class="btn btn-success"
-        [ngbPopover]="popContent"
-        [popoverTitle]="popTitle"
-        [autoClose]="false"
-        triggers="manual"
-        placement="end auto"
-        #editPopover="ngbPopover"
-      >
+    <div class="col-3 text-end pe-pointer" (click)="onEditTouched()">
+      <button class="btn btn-success">
         <i class="bi bi-pencil-square"></i>
       </button>
     </div>
   </div>
 </div>
-
-<ng-template #popContent>
-  <app-indicator-popover
-    (onDelete)="editPopover.close()"
-    (onSave)="editPopover.close()"
-  ></app-indicator-popover>
-</ng-template>
-<ng-template #popTitle>Edit {{ item.symbol }} </ng-template>

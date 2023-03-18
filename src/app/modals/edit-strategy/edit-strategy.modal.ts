@@ -15,6 +15,7 @@ export class EditStrategyModal implements OnInit {
   private selectedStrategySub: Subscription;
   public selectedStrategy: any;
   public indicators: IndicatorInfo[];
+  public indicatorToEdit: IndicatorInfo;
 
   constructor(
     private readonly modalService: BsModalService,
@@ -38,8 +39,12 @@ export class EditStrategyModal implements OnInit {
   }
 
   public onPopoverSave(response: IndicatorInfo, popover: NgbPopover): void {
+    if (this.indicatorToEdit) this.indicatorToEdit = undefined;
     if (!this.indicators) this.indicators = [];
-    this.indicators.push(response);
+
+    if (response?.provisionalID) {
+      this.indicators[response?.provisionalID - 1] = response;
+    } else this.indicators.push(response);
     popover.close();
   }
 
@@ -47,7 +52,13 @@ export class EditStrategyModal implements OnInit {
     this.indicators.splice(index, 1);
   }
 
-  public onEdit(label: string): void {
-    alert("EDIT " + label);
+  public onEdit(
+    indicator: IndicatorInfo,
+    index: number,
+    popover: NgbPopover
+  ): void {
+    this.indicatorToEdit = indicator;
+    this.indicatorToEdit["provisionalID"] = index + 1;
+    popover.open();
   }
 }

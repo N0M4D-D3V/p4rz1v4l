@@ -3,6 +3,7 @@ export interface IndicatorInfo {
   symbol?: string;
   operationType?: "buy" | "sell";
   config?: IndicatorOption[];
+  provisionalID?: number;
 }
 
 export interface Indicator {
