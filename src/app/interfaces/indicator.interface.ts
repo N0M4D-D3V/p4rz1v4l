@@ -1,5 +1,10 @@
-export interface Indicator {
+export interface IndicatorInfo {
   name: string;
   symbol?: string;
-  available: boolean;
+  indicator?: Indicator;
+}
+
+export interface Indicator {
+  nextValue(value: number): number;
+  momentValue(value: number): number;
 }

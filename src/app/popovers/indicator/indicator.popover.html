@@ -4,7 +4,7 @@
     <option
       *ngFor="let indicator of indicators"
       [value]="indicator"
-      [disabled]="!indicator?.available"
+      [disabled]="!indicator?.indicator"
     >
       {{ indicator | indicatorFormatter }}
     </option>
