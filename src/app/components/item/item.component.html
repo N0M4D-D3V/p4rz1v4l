@@ -6,7 +6,7 @@
       </button>
     </div>
     <div class="col-6 text-center pe-pointer" (click)="editPopover.open()">
-      <button class="btn">{{ label }}</button>
+      <button class="btn">{{ item.symbol }}</button>
     </div>
     <div class="col-3 text-end pe-pointer" (click)="editPopover.open()">
       <button
@@ -30,4 +30,4 @@
     (onSave)="editPopover.close()"
   ></app-indicator-popover>
 </ng-template>
-<ng-template #popTitle>Edit {{ label }} </ng-template>
+<ng-template #popTitle>Edit {{ item.symbol }} </ng-template>

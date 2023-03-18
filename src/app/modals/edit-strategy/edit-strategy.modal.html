@@ -44,7 +44,7 @@
 
   <app-item
     *ngFor="let indicator of indicators; let index = index"
-    [label]="indicator.symbol"
+    [item]="indicator"
     (onDelete)="onDelete(index)"
     (onEdit)="onEdit($event)"
   ></app-item>
