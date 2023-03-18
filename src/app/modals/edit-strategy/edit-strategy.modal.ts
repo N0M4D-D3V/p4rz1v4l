@@ -2,6 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { DataModalSelectionService } from "@services/modals/data-modals";
 import { Subscription } from "rxjs";
+import { IndicatorInfo } from "../../interfaces/indicator.interface";
+import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-edit-strategy",
@@ -10,8 +12,9 @@ import { Subscription } from "rxjs";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditStrategyModal implements OnInit {
-  public selectedStrategy: any;
   private selectedStrategySub: Subscription;
+  public selectedStrategy: any;
+  public indicators: IndicatorInfo[];
 
   constructor(
     private readonly modalService: BsModalService,
@@ -34,8 +37,14 @@ export class EditStrategyModal implements OnInit {
     this.modalService.hide();
   }
 
-  public onDelete(): void {
-    alert("DELETE");
+  public onPopoverSave(response: IndicatorInfo, popover: NgbPopover): void {
+    if (!this.indicators) this.indicators = [];
+    this.indicators.push(response);
+    popover.close();
+  }
+
+  public onDelete(index: number): void {
+    this.indicators.splice(index, 1);
   }
 
   public onEdit(label: string): void {

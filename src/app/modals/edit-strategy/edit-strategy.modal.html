@@ -43,8 +43,9 @@
   <h2 class="text-center">Indicators</h2>
 
   <app-item
-    label="RSI"
-    (onDelete)="onDelete()"
+    *ngFor="let indicator of indicators; let index = index"
+    [label]="indicator.symbol"
+    (onDelete)="onDelete(index)"
     (onEdit)="onEdit($event)"
   ></app-item>
 
@@ -73,7 +74,7 @@
 <ng-template #popContent>
   <app-indicator-popover
     (onDelete)="editPopover.close()"
-    (onSave)="editPopover.close()"
+    (onSave)="onPopoverSave($event, editPopover)"
   ></app-indicator-popover>
 </ng-template>
 <ng-template #popTitle>ADD INDICATOR </ng-template>
