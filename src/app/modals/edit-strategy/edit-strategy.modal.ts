@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { DataModalSelectionService } from "@services/modals/data-modals";
 import { Subscription } from "rxjs";
@@ -7,6 +7,7 @@ import { Subscription } from "rxjs";
   selector: "app-edit-strategy",
   templateUrl: "./edit-strategy.modal.html",
   styleUrls: ["./edit-strategy.modal.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditStrategyModal implements OnInit {
   public selectedStrategy: any;

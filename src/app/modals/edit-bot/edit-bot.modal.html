@@ -5,12 +5,12 @@
 </div>
 
 <div class="ps-5 mt-2">
-  <h1>Bot Editor {{selectedBot.index + 1}}</h1>
+  <h1>Resume Bot {{selectedBot.index + 1}}</h1>
 </div>
 
 <div class="p-5">
   <div class="row">
-    <div class="col-6" [formGroup]="form" *ngIf="form">
+    <form class="col-6" [formGroup]="form" *ngIf="form">
       <div class="row">
         <select class="form-select col me-1" formControlName="exchange">
           <option selected disabled value="">Exchange</option>
@@ -31,13 +31,13 @@
           <option value="3">Three</option>
         </select>
       </div>
-    </div>
+    </form>
 
     <div class="col-6">
       <h1 class="text-center">Graph and results goes here!</h1>
     </div>
   </div>
-
+  <button class="btn btn-primary col me-1" (click)="goToExpandBot()">Edit</button>
   <div class="row mt-5">
     <button class="btn btn-danger col me-1">DELETE</button>
     <button class="btn btn-danger col me-1">STOP</button>

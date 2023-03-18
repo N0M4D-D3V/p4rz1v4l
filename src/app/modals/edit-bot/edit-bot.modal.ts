@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ExchangeFactoryService } from "@services/exchange/exchange-factory.service";
 import { ExchangeService } from "@services/exchange/exchange.service";
@@ -6,11 +6,13 @@ import { Exchange } from "ccxt";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { DataModalSelectionService } from "@services/modals/data-modals";
 import { Subscription } from "rxjs";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-edit-bot",
   templateUrl: "./edit-bot.modal.html",
   styleUrls: ["./edit-bot.modal.scss"],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditBotModal implements OnInit {
   private exchange: Exchange;
@@ -27,7 +29,8 @@ export class EditBotModal implements OnInit {
     private readonly modalService: BsModalService,
     private readonly exchangeFactoryService: ExchangeFactoryService,
     private readonly exchangeService: ExchangeService,
-    private readonly dataSelectionService: DataModalSelectionService
+    private readonly dataSelectionService: DataModalSelectionService,
+    private readonly router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -70,5 +73,11 @@ export class EditBotModal implements OnInit {
 
   private enableFormField(key: string): void {
     this.form.controls[key].enable();
+  }
+
+  async goToExpandBot() {
+    const routeToRedirect = `/bot/${this.selectedBot.index + 1}`
+    await this.router.navigate([routeToRedirect]);
+    this.onDismiss();
   }
 }

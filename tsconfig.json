@@ -12,7 +12,8 @@
       "@models/*": ["src/app/models/*"],
       "@modals/*": ["src/app/modals/*"],
       "@pipes/*": ["src/app/pipes/*"],
-      "@popovers/*": ["src/app/popovers/*"]
+      "@popovers/*": ["src/app/popovers/*"],
+      "@mocks/*": ["src/app/mocks/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
