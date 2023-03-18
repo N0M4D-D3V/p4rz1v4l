@@ -54,7 +54,6 @@ export const AVAILABLE_INDICATORS: IndicatorInfo[] = [
   {
     name: "Relative Strength Index",
     symbol: "RSI",
-    indicator: new RSI(),
   },
   {
     name: "Simple Moving Average",
@@ -92,5 +91,3 @@ export const AVAILABLE_INDICATORS: IndicatorInfo[] = [
     name: "Volume Profile",
   },
 ];
-
-export const test: Indicator = new RSI();

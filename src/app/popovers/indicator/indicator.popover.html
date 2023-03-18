@@ -1,30 +1,20 @@
-<div class="mb-3">
-  <select class="form-select">
-    <option selected disabled>Indicator</option>
-    <option
-      *ngFor="let indicator of indicators"
-      [value]="indicator"
-      [disabled]="!indicator?.indicator"
-    >
+<div class="mb-3" [formGroup]="form">
+  <select class="form-select" formControlName="indicatorName">
+    <option selected disabled value="">Indicator</option>
+    <option *ngFor="let indicator of indicators" [value]="indicator">
       {{ indicator | indicatorFormatter }}
     </option>
   </select>
-  <select class="form-select">
-    <option selected disabled>Operation</option>
+  <select class="form-select" formControlName="operationType">
+    <option selected disabled value="">Operation</option>
     <option value="buy">Buy</option>
     <option value="sell">Sell</option>
   </select>
-  <div class="input-group mt-3">
-    <span class="input-group-text" id="basic-addon1">Overbought</span>
-    <input type="number" class="form-control" />
-  </div>
-  <div class="input-group">
-    <span class="input-group-text" id="basic-addon1">Oversold</span>
-    <input type="number" class="form-control" />
-  </div>
-  <div class="input-group">
-    <span class="input-group-text" id="basic-addon1">Length</span>
-    <input type="number" class="form-control" />
+  <div formArrayName="config">
+    <!-- <div class="input-group mt-3">
+      <span class="input-group-text" id="basic-addon1">Overbought</span>
+      <input type="number" class="form-control" />
+    </div> -->
   </div>
 </div>
 <div class="w-100 text-center row m-0">

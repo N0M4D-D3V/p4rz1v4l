@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from "@angular/core";
 import { AVAILABLE_INDICATORS } from "@common/available-indicator.list";
 import { IndicatorInfo } from "@interfaces/indicator.interface";
+import { FormBuilder, FormGroup } from "@angular/forms";
 
 @Component({
   selector: "app-indicator-popover",
@@ -12,8 +13,13 @@ export class IndicatorPopoverComponent {
   @Output() onSave: EventEmitter<void> = new EventEmitter<void>();
 
   public indicators: IndicatorInfo[] = AVAILABLE_INDICATORS;
+  public form: FormGroup = this.fb.group({
+    indicatorName: [""],
+    operationType: [""],
+    config: null,
+  });
 
-  constructor() {}
+  constructor(private readonly fb: FormBuilder) {}
 
   public onDeleteTouched(): void {
     this.onDelete.emit();

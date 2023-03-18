@@ -11,7 +11,7 @@
       "@common/*": ["src/app/common/*"],
       "@models/*": ["src/app/models/*"],
       "@modals/*": ["src/app/modals/*"],
-      "@pipes/*": ["src/app/pipes/*"],
+      "@pipes/*": ["src/app/shared/pipes/*"],
       "@popovers/*": ["src/app/popovers/*"],
       "@mocks/*": ["src/app/mocks/*"]
     },
