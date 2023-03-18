@@ -10,7 +10,9 @@
       "@custom-types/*": ["src/app/types/*"],
       "@common/*": ["src/app/common/*"],
       "@models/*": ["src/app/models/*"],
-      "@modals/*": ["src/app/modals/*"]
+      "@modals/*": ["src/app/modals/*"],
+      "@pipes/*": ["src/app/pipes/*"],
+      "@popovers/*": ["src/app/popovers/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

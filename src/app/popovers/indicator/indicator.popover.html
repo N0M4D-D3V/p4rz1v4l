@@ -1,8 +1,12 @@
 <div class="mb-3">
   <select class="form-select">
     <option selected disabled>Indicator</option>
-    <option *ngFor="let indicator of indicators" [value]="indicator">
-      {{ indicator }}
+    <option
+      *ngFor="let indicator of indicators"
+      [value]="indicator"
+      [disabled]="!indicator?.available"
+    >
+      {{ indicator | indicatorFormatter }}
     </option>
   </select>
   <select class="form-select">

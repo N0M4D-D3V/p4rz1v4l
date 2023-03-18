@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { AVAILABLE_INDICATORS } from "@common/available-indicator.list";
+import { Indicator } from "@interfaces/indicator.interface";
 
 @Component({
   selector: "app-indicator-popover",
@@ -10,7 +11,7 @@ export class IndicatorPopoverComponent {
   @Output() onDelete: EventEmitter<void> = new EventEmitter<void>();
   @Output() onSave: EventEmitter<void> = new EventEmitter<void>();
 
-  public indicators: string[] = AVAILABLE_INDICATORS;
+  public indicators: Indicator[] = AVAILABLE_INDICATORS;
 
   constructor() {}
 
