@@ -5,6 +5,6 @@ export interface IndicatorInfo {
 }
 
 export interface Indicator {
-  nextValue(value: number): number;
-  momentValue(value: number): number;
+  nextValue(fparam?: any, sparam?: any, tparam?: any): any;
+  momentValue(fparam?: any, sparam?: any, tparam?: any): any;
 }

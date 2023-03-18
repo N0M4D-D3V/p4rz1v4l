@@ -4,6 +4,7 @@ import { NgbPopoverModule } from "@ng-bootstrap/ng-bootstrap";
 import { IndicatorPopoverComponent } from "./indicator.popover";
 import { FormatPipesModule } from "@pipes/format/format-pipes.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { IndicatorFactory } from "@services/factory/indicator-factory/indicator-factory.service";
 
 @NgModule({
   declarations: [IndicatorPopoverComponent],
@@ -15,7 +16,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
     ReactiveFormsModule,
     FormatPipesModule,
   ],
-  providers: [],
+  providers: [IndicatorFactory],
   bootstrap: [],
 })
 export class IndicatorPopoverModule {}

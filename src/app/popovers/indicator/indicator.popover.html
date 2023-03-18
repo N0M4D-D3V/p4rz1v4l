@@ -1,7 +1,7 @@
 <div class="mb-3" [formGroup]="form">
   <select class="form-select" formControlName="indicatorName">
     <option selected disabled value="">Indicator</option>
-    <option *ngFor="let indicator of indicators" [value]="indicator">
+    <option *ngFor="let indicator of indicators" [value]="indicator.symbol">
       {{ indicator | indicatorFormatter }}
     </option>
   </select>
@@ -10,11 +10,21 @@
     <option value="buy">Buy</option>
     <option value="sell">Sell</option>
   </select>
-  <div formArrayName="config">
-    <!-- <div class="input-group mt-3">
-      <span class="input-group-text" id="basic-addon1">Overbought</span>
-      <input type="number" class="form-control" />
-    </div> -->
+  <div formArrayName="config" *ngIf="config.controls.length > 0">
+    <div
+      class="input-group mt-3"
+      *ngFor="let variable of config.controls; let i=index"
+    >
+      <label class="input-group-text" for="var-{{i}}"
+        >{{variable.value | titlecase}}</label
+      >
+      <input
+        type="number"
+        class="form-control"
+        id="var-{{i}}"
+        [formControlName]="i"
+      />
+    </div>
   </div>
 </div>
 <div class="w-100 text-center row m-0">
