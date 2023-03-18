@@ -32,7 +32,7 @@
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.2.3",
     "bootstrap-icons": "^1.10.3",
-    "ccxt": "^2.8.47",
+    "ccxt": "2.8.47",
     "ng-bootstrap": "^0.46.0",
     "ngx-bootstrap": "^9.0.0",
     "rxjs": "~7.5.0",

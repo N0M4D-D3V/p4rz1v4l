@@ -9,7 +9,9 @@ export class ExchangeService {
   public getExchanges(): string[] {
     return ccxt.exchanges.filter(
       (key: string) =>
-        this.availableExchanges.findIndex((a) => a === key) !== -1
+        this.availableExchanges.findIndex(
+          (a: string) => a.toLocaleLowerCase() === key.toLocaleLowerCase()
+        ) !== -1
     );
   }
 }
