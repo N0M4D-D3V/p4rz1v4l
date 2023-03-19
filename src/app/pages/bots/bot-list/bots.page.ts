@@ -8,10 +8,10 @@ import {
   AbstractControl,
   FormControl,
 } from "@angular/forms";
-import { DataModalSelectionService } from "@services/modals/data-modals";
 import { Bot } from "@interfaces/bots.interface";
-import { BotDetailService } from "../../../services/pages/bot/bot-page.service";
+import { BotDetailService } from "@services/pages/bot/bot-page.service";
 import { combineLatest, debounceTime, map, Observable, startWith } from "rxjs";
+import { DataTransferService } from "@services/modals/dara-transfer.service";
 
 let NAME_MODULE: string = "Bot ";
 
@@ -24,14 +24,14 @@ let NAME_MODULE: string = "Bot ";
 export class BotsPage implements OnInit {
   public botForm: FormGroup;
 
-  searchControl = new FormControl('');
+  searchControl = new FormControl("");
 
   public deleteButtonLiteral: string = "Eliminar";
   public addButtonLiteral: string = "Agregar bot";
 
   constructor(
     private readonly modalService: BsModalService,
-    private botSelectionService: DataModalSelectionService,
+    private botSelectionService: DataTransferService<any>,
     private botDetailService: BotDetailService,
     private fb: FormBuilder
   ) {}
@@ -59,11 +59,11 @@ export class BotsPage implements OnInit {
     )
   );
 
-  filteredbots$: Observable<Bot[]> = combineLatest([    
+  filteredbots$: Observable<Bot[]> = combineLatest([
     this.bots$,
     this.searchControl.valueChanges.pipe<any, string>(
       debounceTime(300),
-      startWith('')
+      startWith("")
     ),
   ]).pipe(
     map(([botSelect, filter]) => {
@@ -71,9 +71,9 @@ export class BotsPage implements OnInit {
         return botSelect;
       }
 
-      return botSelect.filter(({ id, client, total, value }) => {        
+      return botSelect.filter(({ id, client, total, value }) => {
         return [id, client.name, total, value]
-          .join('¶')
+          .join("¶")
           .toLowerCase()
           .includes(filter.toLowerCase());
       });

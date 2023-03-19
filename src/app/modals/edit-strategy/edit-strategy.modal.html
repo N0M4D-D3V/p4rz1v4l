@@ -31,7 +31,7 @@
         <div class="input-group-prepend">
           <label class="input-group-text">Stoploss</label>
         </div>
-        <input type="number " class="form-control" formControlName="stoploss" />
+        <input type="number" class="form-control" formControlName="stoploss" />
       </div>
     </div>
     <div class="col-6">
@@ -54,8 +54,8 @@
   <app-item
     *ngFor="let indicator of indicators; let index = index"
     [item]="indicator"
-    (onDelete)="onDelete(index)"
-    (onEdit)="onEdit($event, index, editPopover)"
+    (onDelete)="onDeleteIndicator(index)"
+    (onEdit)="onEditIndicator($event, index, editPopover)"
   ></app-item>
 
   <div class="w-100 mt-3" (click)="editPopover.open()">
@@ -75,7 +75,13 @@
 
   <div class="row mt-5">
     <button class="btn btn-danger col me-1">DELETE</button>
-    <button class="btn btn-success col ms-1">SAVE</button>
+    <button
+      class="btn btn-success col ms-1"
+      (click)="onSaveStrategy()"
+      [disabled]="!form.valid || !indicators"
+    >
+      SAVE
+    </button>
   </div>
 </div>
 
@@ -83,7 +89,7 @@
   <app-indicator-popover
     [editableIndicator]="indicatorToEdit"
     (onClose)="editPopover.close()"
-    (onDelete)="onDelete($event.provisionalID - 1); editPopover.close()"
-    (onSave)="onPopoverSave($event, editPopover)"
+    (onDelete)="onDeleteIndicator($event.provisionalID - 1); editPopover.close()"
+    (onSave)="onSaveIndicator($event, editPopover)"
   ></app-indicator-popover>
 </ng-template>

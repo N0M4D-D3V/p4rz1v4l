@@ -4,9 +4,9 @@ import { ExchangeFactoryService } from "@services/exchange/exchange-factory.serv
 import { ExchangeService } from "@services/exchange/exchange.service";
 import { Exchange } from "ccxt";
 import { BsModalService } from "ngx-bootstrap/modal";
-import { DataModalSelectionService } from "@services/modals/data-modals";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
+import { DataTransferService } from "@services/modals/dara-transfer.service";
 
 @Component({
   selector: "app-edit-bot",
@@ -29,8 +29,8 @@ export class EditBotModal implements OnInit {
     private readonly modalService: BsModalService,
     private readonly exchangeFactoryService: ExchangeFactoryService,
     private readonly exchangeService: ExchangeService,
-    private readonly dataSelectionService: DataModalSelectionService,
-    private readonly router: Router,
+    private readonly dataSelectionService: DataTransferService<any>,
+    private readonly router: Router
   ) {}
 
   ngOnInit(): void {
@@ -76,7 +76,7 @@ export class EditBotModal implements OnInit {
   }
 
   async goToExpandBot() {
-    const routeToRedirect = `/bot/${this.selectedBot.index + 1}`
+    const routeToRedirect = `/bot/${this.selectedBot.index + 1}`;
     await this.router.navigate([routeToRedirect]);
     this.onDismiss();
   }

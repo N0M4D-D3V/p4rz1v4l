@@ -8,7 +8,7 @@ import {
   AbstractControl,
 } from "@angular/forms";
 import { Strategy } from "@interfaces/strategies.interface";
-import { DataModalSelectionService } from "@services/modals/data-modals";
+import { DataTransferService } from "@services/modals/dara-transfer.service";
 
 let NAME_MODULE: string = "Estrategia ";
 
@@ -26,7 +26,7 @@ export class StrategiesPage implements OnInit {
 
   constructor(
     private readonly modalService: BsModalService,
-    private strategySelectionService: DataModalSelectionService,
+    private strategySelectionService: DataTransferService<Strategy>,
     private fb: FormBuilder
   ) {}
 
@@ -35,10 +35,10 @@ export class StrategiesPage implements OnInit {
   }
 
   ngOnInit(): void {
-    this.createStrategy();
+    this.createStrategies();
   }
 
-  private createStrategy(): void {
+  private createStrategies(): void {
     this.strategyForm = this.fb.group({
       strategies: this.fb.array<Strategy>([]),
     });
