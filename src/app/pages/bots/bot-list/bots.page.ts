@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from "@angular/core";
 import { EditBotModal } from "@modals/edit-bot/edit-bot.modal";
 import { BsModalService } from "ngx-bootstrap/modal";
 import {
@@ -21,7 +26,7 @@ let NAME_MODULE: string = "Bot ";
   styleUrls: ["./bots.page.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BotsPage implements OnInit {
+export class BotsPage implements OnInit, OnDestroy {
   public botForm: FormGroup;
 
   searchControl = new FormControl("");
@@ -31,7 +36,7 @@ export class BotsPage implements OnInit {
 
   constructor(
     private readonly modalService: BsModalService,
-    private botSelectionService: DataTransferService<any>,
+    private dataTransferService: DataTransferService<any>,
     private botDetailService: BotDetailService,
     private fb: FormBuilder
   ) {}
@@ -82,7 +87,10 @@ export class BotsPage implements OnInit {
 
   public onBotTouched(index: number): void {
     const selectedBot = this.bot.at(index).value;
-    this.botSelectionService.setSelectedDataModal(index, selectedBot);
+    this.dataTransferService.setSelectedDataModal({
+      index: index,
+      data: selectedBot,
+    });
     this.modalService.show(EditBotModal);
   }
 
@@ -117,5 +125,9 @@ export class BotsPage implements OnInit {
       const controlEvaluator = this.bot.at(i);
       controlEvaluator.setValue(NAME_MODULE + numberOfBot);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.dataTransferService.clear();
   }
 }

@@ -10,7 +10,10 @@ import { IndicatorInfo } from "@interfaces/indicator.interface";
 import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Strategy } from "@interfaces/strategies.interface";
-import { DataTransfer } from "@interfaces/data-transfer.interface";
+import {
+  DataTransfer,
+  DataTransferAction,
+} from "@interfaces/data-transfer.interface";
 import { DataTransferService } from "@services/modals/dara-transfer.service";
 
 @Component({
@@ -35,16 +38,18 @@ export class EditStrategyModal implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.createForm();
     this.initSubscriptions();
   }
 
   private initSubscriptions() {
     this.subSelectedStrategy = this.dataTransferService
       .getObservable()
-      .subscribe((data: DataTransfer<Strategy>) => {
-        this.selectedStrategy = data;
-      });
+      .subscribe((data: DataTransfer<Strategy>) => this.onDataTransfer(data));
+  }
+
+  private onDataTransfer(data: DataTransfer<Strategy>): void {
+    this.selectedStrategy = data;
+    this.createForm();
   }
 
   public onDismiss(): void {
@@ -86,14 +91,39 @@ export class EditStrategyModal implements OnInit, OnDestroy {
     };
 
     this.selectedStrategy.data = strategy;
-    console.log(this.selectedStrategy);
+    this.selectedStrategy.action = DataTransferAction.SAVE;
+    this.onDismiss();
+    this.dataTransferService.setSelectedDataModal(this.selectedStrategy);
+  }
+
+  public onDeleteStrategy(): void {
+    this.selectedStrategy.action = DataTransferAction.DEL;
+    this.onDismiss();
+    this.dataTransferService.setSelectedDataModal(this.selectedStrategy);
   }
 
   private createForm(): void {
+    if (this.selectedStrategy?.action === DataTransferAction.EDIT)
+      this.createFilledForm();
+    else this.createEmptyForm();
+  }
+
+  private createEmptyForm(): void {
     this.form = this.fb.group({
       name: ["", Validators.required],
       stoploss: [null, Validators.required],
       takeprofit: [null, Validators.required],
+    });
+  }
+
+  private createFilledForm(): void {
+    const strat: Strategy = this.selectedStrategy.data;
+
+    this.indicators = strat.indicators;
+    this.form = this.fb.group({
+      name: [strat.name, Validators.required],
+      stoploss: [strat.stoploss, Validators.required],
+      takeprofit: [strat.takeprofit, Validators.required],
     });
   }
 

@@ -15,7 +15,11 @@ export class DataTransferService<T> {
     return this.selectedDataModal$.asObservable();
   }
 
-  public setSelectedDataModal(index: number, data: T): void {
-    this.selectedDataModal$.next({ index, data });
+  public clear(): void {
+    this.selectedDataModal$.next(null);
+  }
+
+  public setSelectedDataModal(data: DataTransfer<T>): void {
+    this.selectedDataModal$.next(data);
   }
 }
