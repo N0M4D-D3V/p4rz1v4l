@@ -23,7 +23,9 @@ import { Subscription } from "rxjs";
 export class IndicatorPopoverComponent implements OnInit, OnDestroy {
   @Input() editableIndicator: IndicatorInfo;
 
-  @Output() onDelete: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onClose: EventEmitter<void> = new EventEmitter<void>();
+  @Output() onDelete: EventEmitter<IndicatorInfo> =
+    new EventEmitter<IndicatorInfo>();
   @Output() onSave: EventEmitter<IndicatorInfo> =
     new EventEmitter<IndicatorInfo>();
 
@@ -62,8 +64,12 @@ export class IndicatorPopoverComponent implements OnInit, OnDestroy {
     });
   }
 
+  public onCloseTouched(): void {
+    this.onClose.emit();
+  }
+
   public onDeleteTouched(): void {
-    this.onDelete.emit();
+    this.onDelete.emit(this.editableIndicator);
   }
 
   public onSaveTouched(): void {

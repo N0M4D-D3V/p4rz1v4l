@@ -1,9 +1,15 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { DataModalSelectionService } from "@services/modals/data-modals";
 import { Subscription } from "rxjs";
-import { IndicatorInfo } from "../../interfaces/indicator.interface";
+import { IndicatorInfo } from "@interfaces/indicator.interface";
 import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: "app-edit-strategy",
@@ -11,30 +17,35 @@ import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
   styleUrls: ["./edit-strategy.modal.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditStrategyModal implements OnInit {
-  private selectedStrategySub: Subscription;
+export class EditStrategyModal implements OnInit, OnDestroy {
+  private subSelectedStrategy: Subscription;
+
   public selectedStrategy: any;
   public indicators: IndicatorInfo[];
   public indicatorToEdit: IndicatorInfo;
 
+  public form: FormGroup;
+
   constructor(
     private readonly modalService: BsModalService,
+    private readonly fb: FormBuilder,
     private readonly strategySelectionService: DataModalSelectionService
   ) {}
 
   ngOnInit(): void {
-    this.getDataModal();
+    this.createForm();
+    this.initSubscriptions();
   }
 
-  private getDataModal() {
-    this.selectedStrategySub =
+  private initSubscriptions() {
+    this.subSelectedStrategy =
       this.strategySelectionService.selectedDataModal$.subscribe((strategy) => {
         this.selectedStrategy = strategy;
       });
   }
 
   public onDismiss(): void {
-    this.selectedStrategySub.unsubscribe();
+    this.subSelectedStrategy.unsubscribe();
     this.modalService.hide();
   }
 
@@ -60,5 +71,17 @@ export class EditStrategyModal implements OnInit {
     this.indicatorToEdit = indicator;
     this.indicatorToEdit["provisionalID"] = index + 1;
     popover.open();
+  }
+
+  private createForm(): void {
+    this.form = this.fb.group({
+      name: ["", Validators.required],
+      stoploss: [null, Validators.required],
+      takeprofit: [null, Validators.required],
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subSelectedStrategy.unsubscribe();
   }
 }

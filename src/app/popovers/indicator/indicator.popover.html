@@ -1,4 +1,13 @@
-<div class="mb-3" [formGroup]="form" *ngIf="form">
+<div class="w-100 position-absolute">
+  <button
+    class="btn btn-lg end-0 position-absolute p-2 px-3"
+    (click)="onCloseTouched()"
+  >
+    <i class="bi bi-x-circle text-danger fw-bold"></i>
+  </button>
+</div>
+
+<div class="mb-3 mt-5" [formGroup]="form" *ngIf="form">
   <select class="form-select" formControlName="indicatorName">
     <option selected disabled value="">Indicator</option>
     <option *ngFor="let indicator of indicators" [value]="indicator.symbol">
@@ -28,7 +37,11 @@
   </div>
 </div>
 <div class="w-100 text-center row m-0">
-  <button class="btn btn-lg btn-danger col me-2" (click)="onDeleteTouched()">
+  <button
+    class="btn btn-lg btn-danger col me-2"
+    (click)="onDeleteTouched()"
+    [disabled]="!editableIndicator"
+  >
     <i class="bi bi-x-lg"></i>
   </button>
   <button

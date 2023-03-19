@@ -8,14 +8,19 @@
   <h1>Estrategy {{selectedStrategy.index + 1}}</h1>
 </div>
 
-<div class="p-5">
+<div class="p-5" [formGroup]="form">
   <div class="row">
     <div class="col-6">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text">Name</span>
+          <label class="input-group-text">Name</label>
         </div>
-        <input type="text" class="form-control" placeholder="Strategy name" />
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Strategy name"
+          formControlName="name"
+        />
       </div>
     </div>
   </div>
@@ -24,17 +29,21 @@
     <div class="col-6">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text">Stoploss</span>
+          <label class="input-group-text">Stoploss</label>
         </div>
-        <input type="number " class="form-control" />
+        <input type="number " class="form-control" formControlName="stoploss" />
       </div>
     </div>
     <div class="col-6">
       <div class="input-group mb-3">
         <div class="input-group-prepend">
-          <span class="input-group-text">Take Profit</span>
+          <label class="input-group-text">Take Profit</label>
         </div>
-        <input type="number" class="form-control" />
+        <input
+          type="number"
+          class="form-control"
+          formControlName="takeprofit"
+        />
       </div>
     </div>
   </div>
@@ -53,7 +62,6 @@
     <button
       class="btn btn-lg btn-primary w-100"
       [ngbPopover]="popContent"
-      [popoverTitle]="popTitle"
       [autoClose]="false"
       triggers="manual"
       placement="bottom auto"
@@ -74,8 +82,8 @@
 <ng-template #popContent>
   <app-indicator-popover
     [editableIndicator]="indicatorToEdit"
-    (onDelete)="editPopover.close()"
+    (onClose)="editPopover.close()"
+    (onDelete)="onDelete($event.provisionalID - 1); editPopover.close()"
     (onSave)="onPopoverSave($event, editPopover)"
   ></app-indicator-popover>
 </ng-template>
-<ng-template #popTitle>ADD INDICATOR </ng-template>
