@@ -13,7 +13,7 @@ import { dummyData } from '@mocks/dummy.data';
 
 @Injectable({ providedIn: 'root' })
 export class BotDetailService {
-  private _bots$ = new BehaviorSubject<BotDetail[]>(dummyData);
+  private _bots$ = new BehaviorSubject<BotDetail[]>([]);
   bots$ = this._bots$.asObservable();
 
   constructor() {}

@@ -4,7 +4,8 @@
       [dataSource]="bots$"
       [searchBy]="searchBy"
       [searchControl]="searchControl"
-      (filteredSearch)="filteredBots$ = $event"
+      [filteredBots]="filteredBots$"
+      (blur)="onSearchBlur()"
     ></search-bar>
   </div>
   <div class="button-column">
@@ -22,53 +23,39 @@
 <div class="card-container">
   <form [formGroup]="botForm">
     <div class="bots" formArrayName="bots">
-      <div
-        *ngFor="let bots of bot.controls; let i = index; trackBy: trackByBot"
-        class="bots__bot-card-container"
-      >
-        <div
-          class="bots__bot-card-container--global card"
-          (click)="onBotTouched(i)"
+      <ng-container *ngIf="filteredBots$ | async as filteredBots">
+        <ng-container *ngIf="filteredBots.length > 0; else notFound">
+        <ng-container
+          *ngFor="let bots of bot.controls; let i = index; trackBy: trackByBot"
         >
-          <input class="bots__bot-card-container--input" />
-          <div class="bots__bot-card-container--input-letters">
-            {{bots.value}}
-          </div>
-        </div>
-        <button
-          type="button"
-          class="bots__bot-card-container--remove-btn"
-          (click)="removeBot(bot)"
-        >
-          {{deleteButtonLiteral}}
-        </button>
-      </div>
+          <ng-container *ngIf="isBotVisible(filteredBots, bots)">
+            <div class="bots__bot-card-container">
+              <div
+                class="bots__bot-card-container--global card"
+                (click)="onBotTouched(i)"
+              >
+                <input class="bots__bot-card-container--input" />
+                <div class="bots__bot-card-container--input-letters">
+                  {{bots.value.client.name}}
+                </div>
+              </div>
+              <button
+                type="button"
+                class="bots__bot-card-container--remove-btn"
+                (click)="removeBot(bots)"
+              >
+                {{deleteButtonLiteral}}
+              </button>
+            </div>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+      </ng-container>
     </div>
     <div class="bots__bot-card-container--add-btn-container"></div>
   </form>
 </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>No.</th>
-      <th>Cliente</th>
-      <th>Fecha</th>
-      <th>Total</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody *ngIf="filteredBots$ | async as bot">
-    <tr *ngFor="let bots of bot; let i = index">
-      <td>{{ bots.value}}</td>
-      <td>{{ bots.client?.name }}</td>
-      <td>{{ bots.lastModified | date: "dd / MMM / YYYY" }}</td>
-      <td>{{ bots.total }}</td>
-      <td class="row__actions">
-        <a [routerLink]="[bots.id]">
-          <img src="assets/icons/open.svg" alt="open" />
-        </a>
-      </td>
-    </tr>
-  </tbody>
-</table>
+<ng-template #notFound>
+  <div *ngIf="searchStarted">Bot not Found!</div>
+</ng-template>

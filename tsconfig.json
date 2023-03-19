@@ -13,7 +13,9 @@
       "@modals/*": ["src/app/modals/*"],
       "@pipes/*": ["src/app/shared/pipes/*"],
       "@popovers/*": ["src/app/popovers/*"],
-      "@mocks/*": ["src/app/mocks/*"]
+      "@mocks/*": ["src/app/mocks/*"],
+      "@dictionary/*": ["src/app/shared/dictionary/*"],
+      "@directives/*": ["src/app/shared/directives/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

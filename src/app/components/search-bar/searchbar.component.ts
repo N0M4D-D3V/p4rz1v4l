@@ -25,10 +25,10 @@ export class SearchBarComponent {
   @Input() dataSource: Observable<Array<any>>;
   @Input() searchBy: Array<string>;
   @Input() searchControl: FormControl = new FormControl("");
-  @Output() filteredSearch = new EventEmitter<Observable<Array<any>>>();
+  @Input() filteredBots: Observable<Array<any>>;
 
-  constructor() {
-    this.filteredSearch.emit(this.filtered$);
+  ngOnInit() {
+    this.filteredBots = this.filtered$;
   }
 
   public filtered$: Observable<Array<any>> =
@@ -94,6 +94,6 @@ export function createFilteredSearch$(
 
 export function sortByLastModified(a: any, b: any): number {
   return (
-    new Date(b.lastModified).getTime() - new Date(a.lastModified).getTime()
+    new Date(a.lastModified).getTime() - new Date(b.lastModified).getTime()
   );
 }
