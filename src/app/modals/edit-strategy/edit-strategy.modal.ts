@@ -68,6 +68,7 @@ export class EditStrategyModal implements OnInit, OnDestroy {
   }
 
   public onDeleteIndicator(index: number): void {
+    this.indicatorToEdit = undefined;
     this.indicators.splice(index, 1);
   }
 
