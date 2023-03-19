@@ -1,9 +1,11 @@
 <div class="search-container">
   <div class="search-column">
-    <label class="search">
-      <img src="/assets/icons/search.svg" alt="Buscar" />
-      <input type="text" [formControl]="searchControl" placeholder="Buscar" />
-    </label>
+    <search-bar
+      [dataSource]="bots$"
+      [searchBy]="searchBy"
+      [searchControl]="searchControl"
+      (filteredSearch)="filteredBots$ = $event"
+    ></search-bar>
   </div>
   <div class="button-column">
     <button
@@ -15,8 +17,7 @@
     </button>
   </div>
 </div>
-<br><br><br>
-
+<br /><br /><br />
 
 <div class="card-container">
   <form [formGroup]="botForm">
@@ -43,9 +44,7 @@
         </button>
       </div>
     </div>
-    <div class="bots__bot-card-container--add-btn-container">
-    
-    </div>
+    <div class="bots__bot-card-container--add-btn-container"></div>
   </form>
 </div>
 
@@ -59,8 +58,8 @@
       <th></th>
     </tr>
   </thead>
-  <tbody *ngIf="filteredbots$ | async as bot">
-    <tr  *ngFor="let bots of bot; let i = index">
+  <tbody *ngIf="filteredBots$ | async as bot">
+    <tr *ngFor="let bots of bot; let i = index">
       <td>{{ bots.value}}</td>
       <td>{{ bots.client?.name }}</td>
       <td>{{ bots.lastModified | date: "dd / MMM / YYYY" }}</td>

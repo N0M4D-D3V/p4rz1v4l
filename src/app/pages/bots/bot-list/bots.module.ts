@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BotsPage } from '../bot-list/bots.page';
 import { BotDetailsComponent } from '../bot-details/bot-detail.component';
 import { BotResolver } from '../bot-details/resolver/bot.resolver';
+import { SearchBarModule } from '@components/search-bar/searchbar.module';
 
 
 const routes: Routes = [
@@ -25,7 +26,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
+  imports: [SearchBarModule,RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
 export class BotsRoutingModule {}

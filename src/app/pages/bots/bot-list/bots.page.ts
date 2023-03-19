@@ -15,7 +15,12 @@ import {
 } from "@angular/forms";
 import { Bot } from "@interfaces/bots.interface";
 import { BotDetailService } from "@services/pages/bot/bot-page.service";
-import { combineLatest, debounceTime, map, Observable, startWith } from "rxjs";
+import { map } from "rxjs";
+import {
+  createFilteredSearch$,
+  sortByLastModified,
+} from "@components/search-bar/searchbar.component";
+import { SearchBy } from "./config/interface";
 import { DataTransferService } from "@services/modals/dara-transfer.service";
 
 let NAME_MODULE: string = "Bot ";
@@ -28,11 +33,11 @@ let NAME_MODULE: string = "Bot ";
 })
 export class BotsPage implements OnInit, OnDestroy {
   public botForm: FormGroup;
-
-  searchControl = new FormControl("");
-
+  public searchControl = new FormControl("");
   public deleteButtonLiteral: string = "Eliminar";
   public addButtonLiteral: string = "Agregar bot";
+  public searchBotInterface: Bot;
+  public searchBy: Array<string> = SearchBy;
 
   constructor(
     private readonly modalService: BsModalService,
@@ -48,41 +53,21 @@ export class BotsPage implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.createBot();
   }
+
   private createBot(): void {
     this.botForm = this.fb.group({
       bots: this.fb.array<Bot>([]),
     });
   }
 
-  bots$ = this.botDetailService.bots$.pipe(
-    map((botSelect) =>
-      botSelect.sort(
-        (a, b) =>
-          new Date(b.lastModified).getTime() -
-          new Date(a.lastModified).getTime()
-      )
-    )
+  public bots$ = this.botDetailService.bots$.pipe(
+    map((bots) => bots.sort(sortByLastModified))
   );
 
-  filteredbots$: Observable<Bot[]> = combineLatest([
+  public filteredBots$ = createFilteredSearch$(
     this.bots$,
-    this.searchControl.valueChanges.pipe<any, string>(
-      debounceTime(300),
-      startWith("")
-    ),
-  ]).pipe(
-    map(([botSelect, filter]) => {
-      if (!filter) {
-        return botSelect;
-      }
-
-      return botSelect.filter(({ id, client, total, value }) => {
-        return [id, client.name, total, value]
-          .join("¶")
-          .toLowerCase()
-          .includes(filter.toLowerCase());
-      });
-    })
+    this.searchControl,
+    this.searchBy
   );
 
   public onBotTouched(index: number): void {
@@ -102,13 +87,13 @@ export class BotsPage implements OnInit, OnDestroy {
     const numberOfBot = this.bot.length + 1;
     const newControl = this.fb.control(NAME_MODULE + numberOfBot);
     this.bot.push(newControl);
-    /* const newBot = {
+    const newBot = {
       id: numberOfBot,
       client: { name: NAME_MODULE + numberOfBot },
       total: 0,
       lastModified: new Date().toISOString(),
     };
-    this.botDetailService.save(newBot).subscribe(); */
+    this.botDetailService.save(newBot).subscribe();
   }
 
   public removeBot(control: AbstractControl): void {
