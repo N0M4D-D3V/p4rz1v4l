@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnDestroy,
+  OnInit,
+} from "@angular/core";
 import { EditBotModal } from "@modals/edit-bot/edit-bot.modal";
 import { BsModalService } from "ngx-bootstrap/modal";
 import {
@@ -8,7 +13,6 @@ import {
   AbstractControl,
   FormControl,
 } from "@angular/forms";
-import { DataModalSelectionService } from "@services/modals/data-modals";
 import { Bot } from "@interfaces/bots.interface";
 import { BotDetailService } from "@services/pages/bot/bot-page.service";
 import { map } from "rxjs";
@@ -17,6 +21,7 @@ import {
   sortByLastModified,
 } from "@components/search-bar/searchbar.component";
 import { SearchBy } from "./config/interface";
+import { DataTransferService } from "@services/modals/dara-transfer.service";
 
 let NAME_MODULE: string = "Bot ";
 
@@ -26,7 +31,7 @@ let NAME_MODULE: string = "Bot ";
   styleUrls: ["./bots.page.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BotsPage implements OnInit {
+export class BotsPage implements OnInit, OnDestroy {
   public botForm: FormGroup;
   public searchControl = new FormControl("");
   public deleteButtonLiteral: string = "Eliminar";
@@ -35,8 +40,8 @@ export class BotsPage implements OnInit {
   public searchBy: Array<string> = SearchBy;
 
   constructor(
-    private modalService: BsModalService,
-    private botSelectionService: DataModalSelectionService,
+    private readonly modalService: BsModalService,
+    private dataTransferService: DataTransferService<any>,
     private botDetailService: BotDetailService,
     private fb: FormBuilder
   ) {}
@@ -67,7 +72,10 @@ export class BotsPage implements OnInit {
 
   public onBotTouched(index: number): void {
     const selectedBot = this.bot.at(index).value;
-    this.botSelectionService.setSelectedDataModal(index, selectedBot);
+    this.dataTransferService.setSelectedDataModal({
+      index: index,
+      data: selectedBot,
+    });
     this.modalService.show(EditBotModal);
   }
 
@@ -102,5 +110,9 @@ export class BotsPage implements OnInit {
       const controlEvaluator = this.bot.at(i);
       controlEvaluator.setValue(NAME_MODULE + numberOfBot);
     }
+  }
+
+  ngOnDestroy(): void {
+    this.dataTransferService.clear();
   }
 }

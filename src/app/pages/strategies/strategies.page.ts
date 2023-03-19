@@ -1,16 +1,21 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from "@angular/core";
 import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
 import { BsModalService } from "ngx-bootstrap/modal";
-import {
-  FormBuilder,
-  FormGroup,
-  FormArray,
-  AbstractControl,
-} from "@angular/forms";
+import { FormBuilder } from "@angular/forms";
 import { Strategy } from "@interfaces/strategies.interface";
-import { DataModalSelectionService } from "@services/modals/data-modals";
-
-let NAME_MODULE: string = "Estrategia ";
+import { DataTransferService } from "@services/modals/dara-transfer.service";
+import { Subscription } from "rxjs";
+import {
+  DataTransfer,
+  DataTransferAction,
+} from "@interfaces/data-transfer.interface";
+import { filter } from "rxjs/operators";
 
 @Component({
   selector: "app-strategies",
@@ -18,61 +23,73 @@ let NAME_MODULE: string = "Estrategia ";
   styleUrls: ["./strategies.page.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StrategiesPage implements OnInit {
-  public strategyForm: FormGroup;
+export class StrategiesPage implements OnInit, OnDestroy {
+  private subDataTransfer: Subscription;
 
-  public deleteButtonLiteral: string = "Eliminar";
-  public addButtonLiteral: string = "Agregar estrategia";
+  public strategies: Strategy[];
 
   constructor(
     private readonly modalService: BsModalService,
-    private strategySelectionService: DataModalSelectionService,
-    private fb: FormBuilder
+    private readonly dataTransferService: DataTransferService<Strategy>,
+    private readonly cdr: ChangeDetectorRef
   ) {}
 
-  get strategies(): FormArray {
-    return this.strategyForm.get("strategies") as FormArray;
-  }
-
   ngOnInit(): void {
-    this.createStrategy();
+    this.initSubscriptions();
+    this.createStrategies();
   }
 
-  private createStrategy(): void {
-    this.strategyForm = this.fb.group({
-      strategies: this.fb.array<Strategy>([]),
-    });
+  private initSubscriptions(): void {
+    this.subDataTransfer = this.dataTransferService
+      .getObservable()
+      .pipe(filter((res) => !!res))
+      .subscribe((res: DataTransfer<Strategy>) => this.onStrategyTransfer(res));
+  }
+
+  private createStrategies(): void {
+    this.strategies = [];
   }
 
   public onStrategyTouched(index: number): void {
-    const selectedStrategy = this.strategies.at(index).value;
-    this.strategySelectionService.setSelectedDataModal(index, selectedStrategy);
+    const selectedStrategy = this.strategies[index];
+    this.dataTransferService.setSelectedDataModal({
+      index: index,
+      data: selectedStrategy,
+      action: DataTransferAction.EDIT,
+    });
     this.modalService.show(EditStrategyModal);
   }
 
-  public trackByStrategy(index: number, strategy: AbstractControl) {
-    return strategy.value;
+  public createStrategy(): void {
+    if (!this.strategies) this.strategies = [];
+
+    this.dataTransferService.setSelectedDataModal({
+      index: this.strategies.length,
+      data: undefined,
+      action: DataTransferAction.ADD,
+    });
+    this.modalService.show(EditStrategyModal);
   }
 
-  public addStrategy(): void {
-    const numberOfStrategies = this.strategies.length + 1;
-    const newControl = this.fb.control(NAME_MODULE + numberOfStrategies);
-    this.strategies.push(newControl);
-  }
-
-  public removeStrategy(control: AbstractControl): void {
-    const index = this.strategies.controls.indexOf(control);
-    this.strategies.removeAt(index);
-    this.resetNumberStrategy(control);
-  }
-
-  private resetNumberStrategy(control: AbstractControl): void {
-    const index = this.strategies.controls.indexOf(control);
-    const lastIndex = this.strategies.length - 1;
-    for (let i = index; i <= lastIndex; i++) {
-      const numberOfStrategies = i + 1;
-      const controlEvaluator = this.strategies.at(i);
-      controlEvaluator.setValue(NAME_MODULE + numberOfStrategies);
+  private onStrategyTransfer(res: DataTransfer<Strategy>): void {
+    console.log(res);
+    if (!this.strategies) this.strategies = [];
+    if (res.action === DataTransferAction.DEL) {
+      this.removeStrategy(res.index);
+      this.cdr.detectChanges();
     }
+    if (res.action === DataTransferAction.SAVE) {
+      this.strategies[res?.index] = res?.data;
+      this.cdr.detectChanges();
+    }
+  }
+
+  public removeStrategy(index: number): void {
+    this.strategies.splice(index, 1);
+  }
+
+  ngOnDestroy(): void {
+    this.dataTransferService.clear();
+    this.subDataTransfer.unsubscribe();
   }
 }

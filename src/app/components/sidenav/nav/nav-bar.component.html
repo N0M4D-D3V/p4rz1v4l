@@ -3,7 +3,7 @@
     <button class="btn btn-lg" (click)="snav.toggle()">
       <i class="bi bi-list text-light"></i>
     </button>
-    <h1 class="sidenav-app-name" routerLink="/home">P4RZ1V4L</h1>
+    <h1 class="sidenav-app-name pe-pointer" routerLink="/home">P4RZ1V4L</h1>
     <ng-container *ngIf="tabs$ | async as tabs">
       <nav-tab
         *ngFor="let tab of tabs"

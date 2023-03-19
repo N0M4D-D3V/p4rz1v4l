@@ -1,4 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { IndicatorInfo } from "@interfaces/indicator.interface";
+import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
   selector: "app-item",
@@ -6,10 +8,11 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
   styleUrls: ["./item.component.scss"],
 })
 export class ItemComponent {
-  @Input() label: string;
+  @Input() item: IndicatorInfo;
 
   @Output() onDelete: EventEmitter<void> = new EventEmitter<void>();
-  @Output() onEdit: EventEmitter<string> = new EventEmitter<string>();
+  @Output() onEdit: EventEmitter<IndicatorInfo> =
+    new EventEmitter<IndicatorInfo>();
 
   constructor() {}
 
@@ -18,6 +21,6 @@ export class ItemComponent {
   }
 
   public onEditTouched(): void {
-    // this.onEdit.emit(this.label);
+    this.onEdit.emit(this.item);
   }
 }
