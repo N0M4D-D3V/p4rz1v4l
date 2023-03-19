@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
+    "deadline:update": "cd scripts && zsh update-deadline.sh",
     "start": "ng serve",
     "start:electron": "ng build --configuration production && npx cap copy electron && npx cap sync && cd electron && npm run electron:start",
     "build": "ng build",
