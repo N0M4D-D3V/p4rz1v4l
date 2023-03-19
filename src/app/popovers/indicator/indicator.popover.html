@@ -8,7 +8,7 @@
 </div>
 
 <div class="mb-3 mt-5" [formGroup]="form" *ngIf="form">
-  <select class="form-select" formControlName="indicatorName">
+  <select class="form-select" formControlName="symbol">
     <option selected disabled value="">Indicator</option>
     <option *ngFor="let indicator of indicators" [value]="indicator.symbol">
       {{ indicator | indicatorFormatter }}

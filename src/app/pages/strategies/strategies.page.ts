@@ -72,7 +72,6 @@ export class StrategiesPage implements OnInit, OnDestroy {
   }
 
   private onStrategyTransfer(res: DataTransfer<Strategy>): void {
-    console.log(res);
     if (!this.strategies) this.strategies = [];
     if (res.action === DataTransferAction.DEL) {
       this.removeStrategy(res.index);
