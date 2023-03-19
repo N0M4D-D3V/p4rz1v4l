@@ -61,6 +61,7 @@ export class IndicatorPopoverComponent implements OnInit, OnDestroy {
 
     this.subForm = this.form.valueChanges.subscribe(() => {
       this.isValid = this.form.valid;
+      console.log(this.form.valid);
     });
   }
 
@@ -146,7 +147,7 @@ export class IndicatorPopoverComponent implements OnInit, OnDestroy {
   }
 
   private addConfig(value?: number): void {
-    this.config.push(this.fb.control(value || null, Validators.required));
+    this.config.push(this.fb.control(value || null));
   }
 
   private resetConfig(): void {
