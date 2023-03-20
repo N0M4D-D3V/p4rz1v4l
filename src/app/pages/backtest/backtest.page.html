@@ -1,27 +1,24 @@
 <div class="row">
   <!-- FORM -->
-  <div class="col-4">
+  <div class="col-4" [formGroup]="form" *ngIf="form">
     <div class="row">
-      <select class="form-select">
-        <option selected disabled>Select strategy</option>
-        <option
-          *ngFor="let strat of strategiesObs$ | async; index as i"
-          [value]="i"
-        >
+      <select class="form-select" formControlName="stratID">
+        <option selected disabled [value]="null">Select strategy</option>
+        <option *ngFor="let strat of strategies; index as i" [value]="i">
           {{strat.name}}
         </option>
       </select>
     </div>
 
     <div class="row mt-1">
-      <select class="form-select col me-1">
-        <option selected disabled>Exchange</option>
+      <select class="form-select col me-1" formControlName="exchange">
+        <option selected disabled value="">Exchange</option>
         <option *ngFor="let exchange of exchangeList" value="{{exchange}}">
           {{exchange | titlecase}}
         </option>
       </select>
-      <select class="form-select col ms-1">
-        <option selected>Market</option>
+      <select class="form-select col ms-1" formControlName="market">
+        <option selected disabled value="">Market</option>
         <option value="1">One</option>
         <option value="2">Two</option>
         <option value="3">Three</option>
@@ -29,8 +26,16 @@
     </div>
 
     <div class="row mt-5">
-      <button class="btn btn-primary col me-1">TEST</button>
-      <button class="btn btn-success col ms-1" (click)="onEdit()">EDIT</button>
+      <button class="btn btn-primary col me-1" [disabled]="!form.valid">
+        TEST
+      </button>
+      <button
+        class="btn btn-success col ms-1"
+        (click)="onEdit()"
+        [disabled]="!isEditAvailable"
+      >
+        EDIT
+      </button>
     </div>
   </div>
 

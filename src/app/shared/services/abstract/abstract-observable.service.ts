@@ -14,21 +14,19 @@ export abstract class AbstractObservableService<T> {
     this.bs.next(this.bs.getValue());
   }
 
-  public updateOne(value: T, key: string): T[] {
+  public updateOne(value: T, key: string = "id"): void {
     const storedValues: T[] = this.bs.getValue();
     const foundedIndex: number = storedValues.findIndex(
       (item: T) => item[key] === value[key]
     );
 
     if (foundedIndex >= 0) storedValues[foundedIndex] = value;
-    else storedValues.push(value);
+    else storedValues.push({ ...value, id: storedValues.length });
 
     this.updateObservable(storedValues);
-
-    return this.bs.getValue();
   }
 
-  public deleteOne(value: T, key: string): T[] {
+  public deleteOne(value: T, key: string = "id"): void {
     const storedValues: T[] = this.bs.getValue();
     const foundedIndex: number = storedValues.findIndex(
       (item: T) => item[key] === value[key]
@@ -38,8 +36,6 @@ export abstract class AbstractObservableService<T> {
       storedValues.splice(foundedIndex, 1);
       this.updateObservable(storedValues);
     }
-
-    return this.bs.getValue();
   }
 
   public updateAtIndex(index: number, value: T): void {

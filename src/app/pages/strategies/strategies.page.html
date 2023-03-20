@@ -1,9 +1,9 @@
 <div class="card-container">
   <app-simple-card
-    *ngFor="let strat of strategies; let index = index"
+    *ngFor="let strat of strategies$ | async"
     class="card pe-pointer"
     label="{{strat.name}}"
-    (click)="onStrategyTouched(index)"
+    (click)="onStrategyTouched(strat)"
   ></app-simple-card>
   <app-simple-card
     class="card pe-pointer"

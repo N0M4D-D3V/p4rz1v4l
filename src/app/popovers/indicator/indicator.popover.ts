@@ -59,10 +59,9 @@ export class IndicatorPopoverComponent implements OnInit, OnDestroy {
         this.onSymbolChange(changes)
       );
 
-    this.subForm = this.form.valueChanges.subscribe(() => {
-      this.isValid = this.form.valid;
-      console.log(this.form.valid);
-    });
+    this.subForm = this.form.valueChanges.subscribe(
+      () => (this.isValid = this.form.valid)
+    );
   }
 
   public onCloseTouched(): void {

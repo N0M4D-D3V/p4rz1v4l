@@ -3,4 +3,10 @@ import { AbstractObservableService } from "../abstract/abstract-observable.servi
 import { Strategy } from "@interfaces/strategies.interface";
 
 @Injectable({ providedIn: "root" })
-export class StrategyService extends AbstractObservableService<Strategy> {}
+export class StrategyService extends AbstractObservableService<Strategy> {
+  public selectedStrategy: Strategy;
+
+  public clearSelectedStrategy(): void {
+    this.selectedStrategy = undefined;
+  }
+}

@@ -1,6 +1,6 @@
 import { IndicatorInfo } from "./indicator.interface";
 export interface Strategy {
-  id?: number;
+  id: number;
   name: string;
   stoploss: number;
   takeprofit: number;

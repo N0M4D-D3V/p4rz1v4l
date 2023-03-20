@@ -3,6 +3,7 @@ import { Strategy } from "@interfaces/strategies.interface";
 
 export const STRATEGIES_MOCK: Strategy[] = [
   {
+    id: 0,
     name: "mock 1",
     stoploss: 10,
     takeprofit: 100,
@@ -25,6 +26,7 @@ export const STRATEGIES_MOCK: Strategy[] = [
     ],
   },
   {
+    id: 1,
     name: "mock 2",
     stoploss: 30,
     takeprofit: 300,
@@ -58,6 +60,7 @@ export const STRATEGIES_MOCK: Strategy[] = [
     ],
   },
   {
+    id: 2,
     name: "mock 3",
     stoploss: 50,
     takeprofit: 500,

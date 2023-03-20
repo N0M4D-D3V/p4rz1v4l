@@ -1,31 +1,18 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  OnDestroy,
-  OnInit,
-} from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { BsModalService } from "ngx-bootstrap/modal";
-import { Subscription } from "rxjs";
 import { IndicatorInfo } from "@interfaces/indicator.interface";
 import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Strategy } from "@interfaces/strategies.interface";
-import {
-  DataTransfer,
-  DataTransferAction,
-} from "@interfaces/data-transfer.interface";
-import { DataTransferService } from "@services/modals/data-transfer.service";
+import { StrategyService } from "@services/strategy/strategy.service";
 
 @Component({
   selector: "app-edit-strategy",
   templateUrl: "./edit-strategy.modal.html",
   styleUrls: ["./edit-strategy.modal.scss"],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditStrategyModal implements OnInit, OnDestroy {
-  private subSelectedStrategy: Subscription;
-
-  public selectedStrategy: DataTransfer<Strategy>;
+  public selectedStrategy: Strategy;
   public indicators: IndicatorInfo[];
   public indicatorToEdit: IndicatorInfo;
 
@@ -34,26 +21,15 @@ export class EditStrategyModal implements OnInit, OnDestroy {
   constructor(
     private readonly modalService: BsModalService,
     private readonly fb: FormBuilder,
-    private readonly dataTransferService: DataTransferService<Strategy>
+    private readonly strategyService: StrategyService
   ) {}
 
   ngOnInit(): void {
-    this.initSubscriptions();
-  }
-
-  private initSubscriptions() {
-    this.subSelectedStrategy = this.dataTransferService
-      .getObservable()
-      .subscribe((data: DataTransfer<Strategy>) => this.onDataTransfer(data));
-  }
-
-  private onDataTransfer(data: DataTransfer<Strategy>): void {
-    this.selectedStrategy = data;
+    this.selectedStrategy = this.strategyService.selectedStrategy;
     this.createForm();
   }
 
   public onDismiss(): void {
-    this.subSelectedStrategy.unsubscribe();
     this.modalService.hide();
   }
 
@@ -85,27 +61,24 @@ export class EditStrategyModal implements OnInit, OnDestroy {
   public onSaveStrategy(): void {
     const formValue = this.form.value;
     const strategy: Strategy = {
+      id: this.selectedStrategy?.id,
       name: formValue.name,
       stoploss: formValue.stoploss,
       takeprofit: formValue.takeprofit,
       indicators: this.indicators,
     };
 
-    this.selectedStrategy.data = strategy;
-    this.selectedStrategy.action = DataTransferAction.SAVE;
     this.onDismiss();
-    this.dataTransferService.setSelectedDataModal(this.selectedStrategy);
+    this.strategyService.updateOne(strategy);
   }
 
   public onDeleteStrategy(): void {
-    this.selectedStrategy.action = DataTransferAction.DEL;
     this.onDismiss();
-    this.dataTransferService.setSelectedDataModal(this.selectedStrategy);
+    this.strategyService.deleteOne(this.selectedStrategy);
   }
 
   private createForm(): void {
-    if (this.selectedStrategy?.action === DataTransferAction.EDIT)
-      this.createFilledForm();
+    if (this.selectedStrategy) this.createFilledForm();
     else this.createEmptyForm();
   }
 
@@ -118,17 +91,15 @@ export class EditStrategyModal implements OnInit, OnDestroy {
   }
 
   private createFilledForm(): void {
-    const strat: Strategy = this.selectedStrategy.data;
-
-    this.indicators = strat.indicators;
+    this.indicators = this.selectedStrategy.indicators;
     this.form = this.fb.group({
-      name: [strat.name, Validators.required],
-      stoploss: [strat.stoploss, Validators.required],
-      takeprofit: [strat.takeprofit, Validators.required],
+      name: [this.selectedStrategy.name, Validators.required],
+      stoploss: [this.selectedStrategy.stoploss, Validators.required],
+      takeprofit: [this.selectedStrategy.takeprofit, Validators.required],
     });
   }
 
   ngOnDestroy(): void {
-    this.subSelectedStrategy.unsubscribe();
+    this.strategyService.clearSelectedStrategy();
   }
 }
