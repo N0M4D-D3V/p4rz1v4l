@@ -42,6 +42,21 @@ export abstract class AbstractObservableService<T> {
     return this.bs.getValue();
   }
 
+  public updateAtIndex(index: number, value: T): void {
+    const storedValues: T[] = this.bs.getValue();
+    storedValues[index] = value;
+    this.updateObservable(storedValues);
+  }
+
+  public deleteAtIndex(index: number): void {
+    const storedValues: T[] = this.bs.getValue();
+
+    if (index >= 0) {
+      storedValues.splice(index, 1);
+      this.updateObservable(storedValues);
+    }
+  }
+
   public getObservable(): Observable<T[]> {
     return this.observable;
   }

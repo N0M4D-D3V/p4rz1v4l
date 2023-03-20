@@ -1,26 +1,129 @@
-import { BotDetail } from '@interfaces/bot-detail.interface';
+import { BotDetail } from "@interfaces/bot-detail.interface";
+import { Strategy } from "@interfaces/strategies.interface";
+
+export const STRATEGIES_MOCK: Strategy[] = [
+  {
+    name: "mock 1",
+    stoploss: 10,
+    takeprofit: 100,
+    indicators: [
+      {
+        name: "Stochastic Oscillator",
+        symbol: "KD",
+        operationType: "buy",
+        config: [
+          {
+            variable: "perid",
+            value: 100,
+          },
+          {
+            variable: "sma period",
+            value: 30,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "mock 2",
+    stoploss: 30,
+    takeprofit: 300,
+    indicators: [
+      {
+        name: "Relative Strength Index",
+        symbol: "RSI",
+        operationType: "buy",
+        config: [
+          {
+            variable: "perid",
+            value: 100,
+          },
+        ],
+      },
+      {
+        name: "Stochastic Oscillator",
+        symbol: "KD",
+        operationType: "buy",
+        config: [
+          {
+            variable: "perid",
+            value: 100,
+          },
+          {
+            variable: "sma period",
+            value: 30,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "mock 3",
+    stoploss: 50,
+    takeprofit: 500,
+    indicators: [
+      {
+        name: "Simple Moving Average",
+        symbol: "SMA",
+        operationType: "buy",
+        config: [
+          {
+            variable: "perid",
+            value: 100,
+          },
+        ],
+      },
+      {
+        name: "Relative Strength Index",
+        symbol: "RSI",
+        operationType: "buy",
+        config: [
+          {
+            variable: "perid",
+            value: 100,
+          },
+        ],
+      },
+      {
+        name: "Stochastic Oscillator",
+        symbol: "KD",
+        operationType: "buy",
+        config: [
+          {
+            variable: "perid",
+            value: 100,
+          },
+          {
+            variable: "sma period",
+            value: 30,
+          },
+        ],
+      },
+    ],
+  },
+];
 
 export const dummyData: BotDetail[] = [
   {
     id: 1,
     client: {
-      name: 'Medhurst Group',
-      email: 'domingo@medgroup.com',
-      phone: '9948734322',
+      name: "Medhurst Group",
+      email: "domingo@medgroup.com",
+      phone: "9948734322",
     },
-    createdAt: '2021-10-01T00:00:00.000Z',
-    lastModified: '2021-10-01T00:00:00.000Z',
+    createdAt: "2021-10-01T00:00:00.000Z",
+    lastModified: "2021-10-01T00:00:00.000Z",
     items: [
       {
-        description: 'Roofing (Asphalt)',
+        description: "Roofing (Asphalt)",
         price: 2600,
       },
       {
-        description: 'Fire Sprinkler System',
+        description: "Fire Sprinkler System",
         price: 1100,
       },
       {
-        description: 'Waterproofing & Caulking',
+        description: "Waterproofing & Caulking",
         price: 600,
       },
     ],
@@ -29,19 +132,19 @@ export const dummyData: BotDetail[] = [
   {
     id: 2,
     client: {
-      name: 'Bauch, Hauck and Morissette',
-      email: 'm.smith@bhm.org',
-      phone: '98725545223',
+      name: "Bauch, Hauck and Morissette",
+      email: "m.smith@bhm.org",
+      phone: "98725545223",
     },
-    createdAt: '2021-10-21T00:00:00.000Z',
-    lastModified: '2021-10-21T00:00:00.000Z',
+    createdAt: "2021-10-21T00:00:00.000Z",
+    lastModified: "2021-10-21T00:00:00.000Z",
     items: [
       {
-        description: 'Doors, Frames & Hardware',
+        description: "Doors, Frames & Hardware",
         price: 4020,
       },
       {
-        description: 'Sitework & Site Utilities',
+        description: "Sitework & Site Utilities",
         price: 890,
       },
     ],
@@ -50,15 +153,15 @@ export const dummyData: BotDetail[] = [
   {
     id: 97003,
     client: {
-      name: 'Schuster Group',
-      email: 'alfredo@schuster.com',
-      phone: '6983666472',
+      name: "Schuster Group",
+      email: "alfredo@schuster.com",
+      phone: "6983666472",
     },
-    createdAt: '2021-11-12T00:00:00.000Z',
-    lastModified: '2021-11-12T00:00:00.000Z',
+    createdAt: "2021-11-12T00:00:00.000Z",
+    lastModified: "2021-11-12T00:00:00.000Z",
     items: [
       {
-        description: 'HVAC',
+        description: "HVAC",
         price: 2450,
       },
     ],
@@ -67,19 +170,19 @@ export const dummyData: BotDetail[] = [
   {
     id: 3,
     client: {
-      name: 'Haag Group',
-      email: 'bernd@haag.de',
-      phone: '7763345521',
+      name: "Haag Group",
+      email: "bernd@haag.de",
+      phone: "7763345521",
     },
-    createdAt: '2021-11-14T00:00:00.000Z',
-    lastModified: '2021-11-22T00:00:00.000Z',
+    createdAt: "2021-11-14T00:00:00.000Z",
+    lastModified: "2021-11-22T00:00:00.000Z",
     items: [
       {
-        description: 'Rebar & Wire Mesh Install',
+        description: "Rebar & Wire Mesh Install",
         price: 3400,
       },
       {
-        description: 'Retaining Wall and Brick Pavers',
+        description: "Retaining Wall and Brick Pavers",
         price: 1800,
       },
     ],
@@ -88,15 +191,15 @@ export const dummyData: BotDetail[] = [
   {
     id: 4,
     client: {
-      name: 'Robel LLC',
-      email: 'jan@rbl.com',
-      phone: '8765839456',
+      name: "Robel LLC",
+      email: "jan@rbl.com",
+      phone: "8765839456",
     },
-    createdAt: '2021-11-18T00:00:00.000Z',
-    lastModified: '2021-11-18T00:00:00.000Z',
+    createdAt: "2021-11-18T00:00:00.000Z",
+    lastModified: "2021-11-18T00:00:00.000Z",
     items: [
       {
-        description: 'Painting & Vinyl Wall Covering',
+        description: "Painting & Vinyl Wall Covering",
         price: 3250,
       },
     ],
@@ -105,23 +208,23 @@ export const dummyData: BotDetail[] = [
   {
     id: 5,
     client: {
-      name: 'Goodwin Inc',
-      email: 'michael@gwin.net',
-      phone: '91847588345',
+      name: "Goodwin Inc",
+      email: "michael@gwin.net",
+      phone: "91847588345",
     },
-    createdAt: '2021-11-30T00:00:00.000Z',
-    lastModified: '2021-11-30T00:00:00.000Z',
+    createdAt: "2021-11-30T00:00:00.000Z",
+    lastModified: "2021-11-30T00:00:00.000Z",
     items: [
       {
-        description: 'Drywall & Acoustical (MOB)',
+        description: "Drywall & Acoustical (MOB)",
         price: 2850,
       },
       {
-        description: 'Masonry & Precast',
+        description: "Masonry & Precast",
         price: 1700,
       },
       {
-        description: 'Soft Flooring and Base',
+        description: "Soft Flooring and Base",
         price: 1475,
       },
     ],
@@ -130,19 +233,19 @@ export const dummyData: BotDetail[] = [
   {
     id: 6,
     client: {
-      name: 'Schiller-Oberbrunner',
-      email: 'sebastian@so.de',
-      phone: '96554688123',
+      name: "Schiller-Oberbrunner",
+      email: "sebastian@so.de",
+      phone: "96554688123",
     },
-    createdAt: '2021-12-02T00:00:00.000Z',
-    lastModified: '2021-12-07T00:00:00.000Z',
+    createdAt: "2021-12-02T00:00:00.000Z",
+    lastModified: "2021-12-07T00:00:00.000Z",
     items: [
       {
-        description: 'Framing (Steel)',
+        description: "Framing (Steel)",
         price: 1950,
       },
       {
-        description: 'Fire Sprinkler System',
+        description: "Fire Sprinkler System",
         price: 975,
       },
     ],
@@ -151,15 +254,15 @@ export const dummyData: BotDetail[] = [
   {
     id: 7,
     client: {
-      name: 'Kerluke LLC',
-      email: 'marco@kerluke.it',
-      phone: '8769938475',
+      name: "Kerluke LLC",
+      email: "marco@kerluke.it",
+      phone: "8769938475",
     },
-    createdAt: '2021-12-05T00:00:00.000Z',
-    lastModified: '2021-12-05T00:00:00.000Z',
+    createdAt: "2021-12-05T00:00:00.000Z",
+    lastModified: "2021-12-05T00:00:00.000Z",
     items: [
       {
-        description: 'Electrical and Fire Alarm',
+        description: "Electrical and Fire Alarm",
         price: 1950,
       },
     ],
@@ -168,19 +271,19 @@ export const dummyData: BotDetail[] = [
   {
     id: 8,
     client: {
-      name: 'Abshire-Koss',
-      email: 'joan@akoss.com',
-      phone: '5667833456',
+      name: "Abshire-Koss",
+      email: "joan@akoss.com",
+      phone: "5667833456",
     },
-    createdAt: '2021-12-12T00:00:00.000Z',
-    lastModified: '2021-12-12T00:00:00.000Z',
+    createdAt: "2021-12-12T00:00:00.000Z",
+    lastModified: "2021-12-12T00:00:00.000Z",
     items: [
       {
-        description: 'Soft Flooring and Base',
+        description: "Soft Flooring and Base",
         price: 3050,
       },
       {
-        description: 'Framing (Steel)',
+        description: "Framing (Steel)",
         price: 5425,
       },
     ],
@@ -189,19 +292,19 @@ export const dummyData: BotDetail[] = [
   {
     id: 9,
     client: {
-      name: 'Medhurst Group',
-      email: 'domingo@medgroup.com',
-      phone: '9948734322',
+      name: "Medhurst Group",
+      email: "domingo@medgroup.com",
+      phone: "9948734322",
     },
-    createdAt: '2021-12-20T00:00:00.000Z',
-    lastModified: '2021-12-20T00:00:00.000Z',
+    createdAt: "2021-12-20T00:00:00.000Z",
+    lastModified: "2021-12-20T00:00:00.000Z",
     items: [
       {
-        description: 'Wall Protection',
+        description: "Wall Protection",
         price: 2090,
       },
       {
-        description: 'Epoxy Flooring',
+        description: "Epoxy Flooring",
         price: 3750,
       },
     ],

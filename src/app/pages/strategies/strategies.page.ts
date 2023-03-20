@@ -7,7 +7,6 @@ import {
 } from "@angular/core";
 import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
 import { BsModalService } from "ngx-bootstrap/modal";
-import { FormBuilder } from "@angular/forms";
 import { Strategy } from "@interfaces/strategies.interface";
 import { DataTransferService } from "@services/modals/data-transfer.service";
 import { Subscription } from "rxjs";
@@ -16,6 +15,7 @@ import {
   DataTransferAction,
 } from "@interfaces/data-transfer.interface";
 import { filter } from "rxjs/operators";
+import { StrategyService } from "@services/strategy/strategy.service";
 
 @Component({
   selector: "app-strategies",
@@ -24,6 +24,7 @@ import { filter } from "rxjs/operators";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StrategiesPage implements OnInit, OnDestroy {
+  private subStrategy: Subscription;
   private subDataTransfer: Subscription;
 
   public strategies: Strategy[];
@@ -31,23 +32,24 @@ export class StrategiesPage implements OnInit, OnDestroy {
   constructor(
     private readonly modalService: BsModalService,
     private readonly dataTransferService: DataTransferService<Strategy>,
+    private readonly strategyService: StrategyService,
     private readonly cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.initSubscriptions();
-    this.createStrategies();
   }
 
   private initSubscriptions(): void {
+    this.subStrategy = this.strategyService
+      .getObservable()
+      .pipe(filter((res: Strategy[]) => !!res))
+      .subscribe((res: Strategy[]) => (this.strategies = res));
+
     this.subDataTransfer = this.dataTransferService
       .getObservable()
       .pipe(filter((res) => !!res))
       .subscribe((res: DataTransfer<Strategy>) => this.onStrategyTransfer(res));
-  }
-
-  private createStrategies(): void {
-    this.strategies = [];
   }
 
   public onStrategyTouched(index: number): void {
@@ -78,17 +80,19 @@ export class StrategiesPage implements OnInit, OnDestroy {
       this.cdr.detectChanges();
     }
     if (res.action === DataTransferAction.SAVE) {
-      this.strategies[res?.index] = res?.data;
+      this.strategyService.updateAtIndex(res?.index, res?.data);
       this.cdr.detectChanges();
     }
   }
 
   public removeStrategy(index: number): void {
     this.strategies.splice(index, 1);
+    this.strategyService.deleteAtIndex(index);
   }
 
   ngOnDestroy(): void {
     this.dataTransferService.clear();
     this.subDataTransfer.unsubscribe();
+    this.subStrategy.unsubscribe();
   }
 }
