@@ -7,6 +7,8 @@ import { defaultTab, Tab } from '../model';
 export class TabManagerService {
   private _openedTabs$ = new BehaviorSubject<Tab[]>([]);
   openedTabs$ = this._openedTabs$.asObservable();
+  private _isSaved$ = new BehaviorSubject<boolean>(true);
+  isSaved$ = this._isSaved$.asObservable();
 
   get currentTabs(): Tab[] {
     return this._openedTabs$.value;
@@ -46,5 +48,9 @@ export class TabManagerService {
     const tabIndex = this.currentTabs.findIndex((item) => item.url === url);
 
     return tabIndex !== -1 ? tabIndex : null;
+  }
+
+  setSavedState(isSaved: boolean): void {
+    this._isSaved$.next(isSaved);
   }
 }

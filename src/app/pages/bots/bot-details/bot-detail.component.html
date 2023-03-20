@@ -1,14 +1,14 @@
 <h1>
-  <small>Bot de trading</small>
-  <span>{{ botDetailCopy.id }}</span>
+  <span>{{ botDetailCopy?.client.name }}</span>
 </h1>
 <p class="dates">
-  <small>Creado el {{ botDetailCopy.createdAt | date: "longDate" }}</small>
+  <small>Creado el {{ botDetailCopy.createdAt | date : "longDate" }}</small>
   <ng-container *ngIf="botDetailCopy.createdAt !== botDetailCopy.lastModified">
     <small>-</small>
     <small>
       <em>
-        Última modificación: {{ botDetailCopy.lastModified | date: "longDate" }}
+        Última modificación:
+        {{ botDetailCopy.lastModified | date : "longDate" }}
       </em>
     </small>
   </ng-container>
@@ -17,10 +17,10 @@
 <form [formGroup]="form">
   <fieldset formGroupName="client">
     <label>
-      Cliente
+      Nombre
       <input name="name" type="text" formControlName="name" />
     </label>
-    <div class="contacto">
+    <!-- <div class="contacto">
       <label>
         Email
         <input name="email" type="text" formControlName="email" />
@@ -29,7 +29,7 @@
         Teléfono
         <input name="phone" type="text" formControlName="phone" />
       </label>
-    </div>
+    </div> -->
   </fieldset>
   <fieldset formArrayName="items">
     <table class="items">
@@ -51,6 +51,8 @@
           </td>
           <td class="items__price">
             <input
+              regexInput
+              regexName="onlyNumbersAndTwoDecimals"
               name="price"
               type="text"
               inputmode="numeric"

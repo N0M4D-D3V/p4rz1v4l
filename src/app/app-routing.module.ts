@@ -32,21 +32,25 @@ const routes: Routes = [
       ),
   },
   {
-  path: "strategies",
-  loadChildren: () =>
-    import("./pages/strategies/strategies.module").then(
-      (m) => m.StrategiesModule
-    ),
+    path: "strategies",
+    loadChildren: () =>
+      import("./pages/strategies/strategies.module").then(
+        (m) => m.StrategiesModule
+      ),
   },
   {
     path: "bots",
     loadChildren: () =>
-      import("./pages/bots/bot-list/bots.module").then((m) => m.BotsRoutingModule),
+      import("./pages/bots/bot-list/bots.module").then(
+        (m) => m.BotsRoutingModule
+      ),
   },
   {
     path: "bot",
     loadChildren: () =>
-      import('./pages/bots/bot-details/bot-detail.module').then((m) => m.BotDetailsModule)
+      import("./pages/bots/bot-details/bot-detail.module").then(
+        (m) => m.BotDetailsModule
+      ),
   },
 ];
 
