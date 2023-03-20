@@ -50,17 +50,13 @@ export class NavBarComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {}
 
-   navigateHome(): void {
-    this.router.navigate(["/"]);
-  }
-
-  onHomeButtonClicked(): void {
-    this.navigateHome();
+   navigateToBotPage(): void {
+    this.router.navigate(["/bots"]);
   }
 
   async onTabClosed(tab: Tab): Promise<void> {
     this.tabManager.removeTab(tab);
-    await this.navigateHome();
+    await this.navigateToBotPage();
 
     this.deleteStoredRoute(tab.url);
   }

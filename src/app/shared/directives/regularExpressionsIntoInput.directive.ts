@@ -3,7 +3,7 @@ import { RegularExpression } from '@dictionary/regular-expression/regular-expres
 import { SpecialKeysInterface } from '@interfaces/special-key.interface';
 
 @Directive({
-	selector: '[appRegexInput]' /* Solo caracteres permitidos por la expresión regular seleccionada (dentro de un input/textarea) */
+	selector: '[regexInput]' /* Solo caracteres permitidos por la expresión regular seleccionada (dentro de un input/textarea) */
 })
 export class RegularExpressionDirective {
   @Input() public regexName: string;

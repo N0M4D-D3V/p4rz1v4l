@@ -8,6 +8,7 @@ import { BotsPage } from "../bot-list/bots.page";
 import { BotDetailsComponent } from "./bot-detail.component";
 import { EditBotModalModule } from "@modals/edit-bot/edit-bot-modal.module";
 import { SearchBarModule } from "@components/search-bar/searchbar.module";
+import { DirectivesModule } from "@directives/directives.module";
 
 @NgModule({
   declarations: [BotsPage, BotDetailsComponent],
@@ -16,7 +17,8 @@ import { SearchBarModule } from "@components/search-bar/searchbar.module";
     BotDetailsRoutingModule,
     ReactiveFormsModule,
     EditBotModalModule,
-    SearchBarModule
+    SearchBarModule,
+    DirectivesModule
   ],
 })
 export class BotDetailsModule {
