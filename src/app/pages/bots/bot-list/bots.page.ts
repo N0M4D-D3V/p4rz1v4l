@@ -21,7 +21,7 @@ import {
   sortByLastModified,
 } from "@components/search-bar/searchbar.component";
 import { SearchBy } from "./config/interface";
-import { DataTransferService } from "@services/modals/dara-transfer.service";
+import { DataTransferService } from "@services/modals/data-transfer.service";
 import { BotDetail } from "@interfaces/bot-detail.interface";
 import { BehaviorSubject } from "rxjs";
 import { Observable } from "rxjs";

@@ -4,12 +4,12 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@interfaces/*": ["src/app/interfaces/*"],
-      "@services/*": ["src/app/services/*"],
+      "@interfaces/*": ["src/app/shared/interfaces/*"],
+      "@services/*": ["src/app/shared/services/*"],
       "@components/*": ["src/app/components/*"],
       "@custom-types/*": ["src/app/types/*"],
-      "@common/*": ["src/app/common/*"],
-      "@models/*": ["src/app/models/*"],
+      "@common/*": ["src/app/shared/common/*"],
+      "@models/*": ["src/app/shared/models/*"],
       "@modals/*": ["src/app/modals/*"],
       "@pipes/*": ["src/app/shared/pipes/*"],
       "@popovers/*": ["src/app/popovers/*"],

@@ -6,7 +6,7 @@ import { Exchange } from "ccxt";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
-import { DataTransferService } from "@services/modals/dara-transfer.service";
+import { DataTransferService } from "@services/modals/data-transfer.service";
 
 @Component({
   selector: "app-edit-bot",

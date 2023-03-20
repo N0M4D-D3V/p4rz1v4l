@@ -14,7 +14,7 @@ import {
   DataTransfer,
   DataTransferAction,
 } from "@interfaces/data-transfer.interface";
-import { DataTransferService } from "@services/modals/dara-transfer.service";
+import { DataTransferService } from "@services/modals/data-transfer.service";
 
 @Component({
   selector: "app-edit-strategy",

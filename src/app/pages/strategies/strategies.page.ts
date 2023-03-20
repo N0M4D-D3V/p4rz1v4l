@@ -9,7 +9,7 @@ import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { FormBuilder } from "@angular/forms";
 import { Strategy } from "@interfaces/strategies.interface";
-import { DataTransferService } from "@services/modals/dara-transfer.service";
+import { DataTransferService } from "@services/modals/data-transfer.service";
 import { Subscription } from "rxjs";
 import {
   DataTransfer,

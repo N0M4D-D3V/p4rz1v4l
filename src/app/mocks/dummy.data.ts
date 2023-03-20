@@ -1,4 +1,4 @@
-import { BotDetail } from '../interfaces/bot-detail.interface';
+import { BotDetail } from '@interfaces/bot-detail.interface';
 
 export const dummyData: BotDetail[] = [
   {
