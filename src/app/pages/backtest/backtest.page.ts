@@ -10,7 +10,6 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormControl,
 } from "@angular/forms";
 import { Exchange } from "ccxt";
 import { ExchangeFactoryService } from "@services/exchange/exchange-factory.service";

@@ -1,37 +1,9 @@
+import {
+  BacktesterConfig,
+  BacktestResult,
+  OperationType,
+} from "@interfaces/backtest.interface";
 import { AbstractStrategy } from "../abstract/abstract-estrategy.model";
-
-export interface BacktesterConfig {
-  initialBalance: number;
-  leverage: number; //apalancamiento
-  trailingStoploss: boolean;
-  feeCostPercentage: number;
-}
-
-export interface BacktestResult {
-  symbol: string;
-  startDate: Date;
-  endDate: Date;
-
-  balance: number;
-  profit: number;
-  drawdown: number;
-  profitAfterFees: number;
-
-  totalOps: number;
-  longOps: number;
-  shortOps: number;
-  winnerOps: number;
-  losserOps: number;
-
-  winrate: number;
-  fitnessFunction: number;
-}
-
-export enum OperationType {
-  Long,
-  Short,
-  Stoploss,
-}
 
 export class Backtester {
   private config: BacktesterConfig;
@@ -303,7 +275,7 @@ export class Backtester {
    * @param dataframe
    * @param strategy
    */
-  public execute(dataframe: any, strategy: AbstractStrategy): any {
+  public execute(dataframe: any[], strategy: AbstractStrategy): any {
     // df['operation'] = ""
     // df['operation_price'] = ""
     // high_price = df['high_price']
