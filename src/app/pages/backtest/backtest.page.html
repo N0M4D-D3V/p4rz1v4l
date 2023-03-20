@@ -4,7 +4,10 @@
     <div class="row">
       <select class="form-select" formControlName="stratID">
         <option selected disabled [value]="null">Select strategy</option>
-        <option *ngFor="let strat of strategies; index as i" [value]="i">
+        <option
+          *ngFor="let strat of strategies$ | async; index as i"
+          [value]="i"
+        >
           {{strat.name}}
         </option>
       </select>
@@ -19,9 +22,12 @@
       </select>
       <select class="form-select col ms-1" formControlName="market">
         <option selected disabled value="">Market</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
+        <option
+          [value]="market?.key"
+          *ngFor="let market of exchange?.markets | keyvalue"
+        >
+          {{market?.key}}
+        </option>
       </select>
     </div>
 
