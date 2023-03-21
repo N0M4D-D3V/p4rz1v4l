@@ -4,10 +4,7 @@
     <div class="row">
       <select class="form-select" formControlName="stratID">
         <option selected disabled [value]="null">Select strategy</option>
-        <option
-          *ngFor="let strat of strategies$ | async; index as i"
-          [value]="i"
-        >
+        <option *ngFor="let strat of strategies$ | async" [value]="strat.id">
           {{strat.name}}
         </option>
       </select>
@@ -25,14 +22,37 @@
         <option
           [value]="market?.key"
           *ngFor="let market of exchange?.markets | keyvalue"
+          [value]="market?.key"
         >
           {{market?.key}}
         </option>
       </select>
     </div>
 
+    <div class="row mt-1">
+      <select class="form-select col me-1" formControlName="timeframe">
+        <option selected disabled value="">Timeframe</option>
+        <option
+          *ngFor="let timeframe of exchange?.timeframes | keyvalue"
+          value="{{timeframe.key}}"
+        >
+          {{timeframe.value }}
+        </option>
+      </select>
+      <select class="form-select col ms-1" formControlName="limit">
+        <option selected disabled value="">Candles</option>
+        <option value="100">100</option>
+        <option value="500">500</option>
+        <option value="1000">1000</option>
+      </select>
+    </div>
+
     <div class="row mt-5">
-      <button class="btn btn-primary col me-1" [disabled]="!form.valid">
+      <button
+        class="btn btn-primary col me-1"
+        [disabled]="!form.valid"
+        (click)="onTest()"
+      >
         TEST
       </button>
       <button

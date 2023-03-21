@@ -1,5 +1,6 @@
 import { IndicatorInfo } from "@interfaces/indicator.interface";
 
+export const AVAILABLE_EXCHANGES: string[] = ["binance"];
 export const AVAILABLE_INDICATORS: IndicatorInfo[] = [
   // {
   //   name: "Accelerator Oscillator",
