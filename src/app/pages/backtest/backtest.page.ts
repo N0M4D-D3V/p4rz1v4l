@@ -25,9 +25,14 @@ export class BacktestPage implements OnInit, OnDestroy {
   private subStrategies: Subscription;
   private subStratID: Subscription;
   private subExchange: Subscription;
+  private subMarket: Subscription;
 
   private get stratIDControl(): AbstractControl {
     return this.form.get("stratID");
+  }
+
+  private get exchangeControl(): AbstractControl {
+    return this.form.get("exchange");
   }
 
   private get marketControl(): AbstractControl {
@@ -40,6 +45,22 @@ export class BacktestPage implements OnInit, OnDestroy {
 
   private get timeframeControl(): AbstractControl {
     return this.form.get("timeframe");
+  }
+
+  private get balanceControl(): AbstractControl {
+    return this.form.get("balance");
+  }
+
+  private get leverageControl(): AbstractControl {
+    return this.form.get("leverage");
+  }
+
+  private get stoplossControl(): AbstractControl {
+    return this.form.get("stoploss");
+  }
+
+  private get feeControl(): AbstractControl {
+    return this.form.get("feePercentage");
   }
 
   public exchange: Exchange;
@@ -81,21 +102,29 @@ export class BacktestPage implements OnInit, OnDestroy {
         this.isEditAvailable = true;
       });
 
-    this.subExchange = this.form
-      .get("exchange")
-      .valueChanges.pipe(filter((name: string) => !!name))
-      .subscribe(async (name: string) => {
-        this.marketControl.disable();
-        this.timeframeControl.disable();
-        this.limitControl.disable();
+    this.subExchange = this.exchangeControl.valueChanges
+      .pipe(filter((name: string) => !!name))
+      .subscribe(async (name: string) => await this.onExchangeChange(name));
 
-        this.exchange = this.exchangeFactory.getInstance(name);
-        await this.exchange.loadMarkets();
-
-        this.marketControl.enable();
-        this.timeframeControl.enable();
-        this.limitControl.enable();
+    this.subMarket = this.marketControl.valueChanges
+      .pipe(filter((symbol: string) => !!symbol))
+      .subscribe(async (symbol: string) => {
+        const fee: number = this.exchange.markets[symbol].maker;
+        this.feeControl.setValue(fee * 100);
       });
+  }
+
+  private async onExchangeChange(name: string): Promise<void> {
+    this.marketControl.disable();
+    this.timeframeControl.disable();
+    this.limitControl.disable();
+
+    this.exchange = this.exchangeFactory.getInstance(name);
+    await this.exchange.loadMarkets();
+
+    this.marketControl.enable();
+    this.timeframeControl.enable();
+    this.limitControl.enable();
   }
 
   public onStrategies(strategies: Strategy[]): void {
@@ -108,9 +137,13 @@ export class BacktestPage implements OnInit, OnDestroy {
   }
 
   public async onTest(): Promise<void> {
-    const market = this.marketControl.value;
-    const timeframe = this.timeframeControl.value;
+    const market: string = this.marketControl.value;
+    const timeframe: string = this.timeframeControl.value;
     const limit = this.limitControl.value;
+    const feePercentage: number = this.feeControl.value;
+    const balance: number = this.balanceControl.value;
+    const leverage: number = this.leverageControl.value;
+    const stoploss: boolean = this.stoplossControl.value;
 
     this.exchangeService.setExchange(this.exchange);
     const candles = await this.exchangeService.getAll({
@@ -128,7 +161,11 @@ export class BacktestPage implements OnInit, OnDestroy {
       exchange: ["", Validators.required],
       market: [{ value: "", disabled: true }, Validators.required],
       timeframe: [{ value: "", disabled: true }, Validators.required],
-      limit: [{ value: "", disabled: true }, Validators.required],
+      limit: [{ value: "", disabled: true }, Validators.required], //candles
+      balance: [1000, Validators.required],
+      leverage: [1, Validators.required],
+      stoploss: [true, Validators.required],
+      feePercentage: [{ value: "", disabled: true }, Validators.required],
     });
   }
 
@@ -137,5 +174,6 @@ export class BacktestPage implements OnInit, OnDestroy {
     this.subStrategies.unsubscribe();
     this.subStratID.unsubscribe();
     this.subExchange.unsubscribe();
+    this.subMarket.unsubscribe();
   }
 }

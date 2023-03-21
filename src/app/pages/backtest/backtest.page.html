@@ -47,6 +47,57 @@
       </select>
     </div>
 
+    <div class="row mt-1">
+      <div class="input-group p-0">
+        <div class="input-group-prepend">
+          <label class="input-group-text">Fees %</label>
+        </div>
+        <input
+          type="number"
+          class="form-control"
+          formControlName="feePercentage"
+        />
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
+      <div class="form-floating mb-3 col">
+        <input
+          type="number"
+          class="form-control"
+          id="balance"
+          formControlName="balance"
+        />
+        <label for="balance">Balance</label>
+      </div>
+
+      <div class="form-floating col">
+        <input
+          type="number"
+          class="form-control"
+          id="leverage"
+          formControlName="leverage"
+        />
+        <label for="leverage">Leverage</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-check form-switch ms-3">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          id="flexSwitchCheckDefault"
+          formControlName="stoploss"
+        />
+        <label class="form-check-label" for="flexSwitchCheckDefault"
+          >Stoploss</label
+        >
+      </div>
+    </div>
+
     <div class="row mt-5">
       <button
         class="btn btn-primary col me-1"

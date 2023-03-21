@@ -5,7 +5,7 @@ import { ExchangeResponseInterpreter } from "@models/exchange/ExchangeResponseIn
 
 export interface Query {
   symbol: string;
-  timeframe?: "1h" | "1d" | "1m";
+  timeframe?: string;
   since?: number;
   limit?: number;
   params?: Params;
