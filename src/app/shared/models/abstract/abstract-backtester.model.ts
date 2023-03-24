@@ -1,8 +1,8 @@
-import { AbstractStrategy } from "./abstract-estrategy.model";
+import { Strategy } from "../strategy/estrategy.model";
 
 abstract class AbstractBacktester {
   // Executes the test process
-  public abstract backtesting(dataframe: any, strategy: AbstractStrategy): void;
+  public abstract backtesting(dataframe: any, strategy: Strategy): void;
 
   // Opens a long/short position
   public abstract open_position(

@@ -26,7 +26,14 @@ export interface BacktestResult {
 }
 
 export enum OperationType {
-  Long,
-  Short,
-  Stoploss,
+  Long = "long",
+  Short = "short",
+  Stoploss = "stoploss",
+  LongOpen = "long_open",
+  ShortOpen = "short_open",
+
+  LongClose = "long_close",
+  ShortClose = "short_close",
+  LongStopLossClose = "long_stoploss_close",
+  ShortStopLossClose = "short_stoploss_close",
 }

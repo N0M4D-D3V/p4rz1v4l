@@ -1,3 +1,5 @@
+import { OperationType } from "./backtest.interface";
+
 export interface Candle {
   timestamp: Date;
   open: number;
@@ -5,4 +7,9 @@ export interface Candle {
   high: number;
   low: number;
   volume: number;
+}
+
+export interface BacktestCandle extends Candle {
+  operation?: OperationType;
+  operationPrice?: number;
 }

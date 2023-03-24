@@ -1,109 +1,91 @@
 import { BotDetail } from "@interfaces/bot-detail.interface";
-import { Strategy } from "@interfaces/strategies.interface";
+import { Strategy } from "@models/strategy/estrategy.model";
 
 export const STRATEGIES_MOCK: Strategy[] = [
-  {
-    id: 0,
-    name: "mock 1",
-    stoploss: 10,
-    takeprofit: 100,
-    indicators: [
-      {
-        name: "Stochastic Oscillator",
-        symbol: "KD",
-        operationType: "buy",
-        config: [
-          {
-            variable: "perid",
-            value: 100,
-          },
-          {
-            variable: "sma period",
-            value: 30,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 1,
-    name: "mock 2",
-    stoploss: 30,
-    takeprofit: 300,
-    indicators: [
-      {
-        name: "Relative Strength Index",
-        symbol: "RSI",
-        operationType: "buy",
-        config: [
-          {
-            variable: "perid",
-            value: 100,
-          },
-        ],
-      },
-      {
-        name: "Stochastic Oscillator",
-        symbol: "KD",
-        operationType: "buy",
-        config: [
-          {
-            variable: "perid",
-            value: 100,
-          },
-          {
-            variable: "sma period",
-            value: 30,
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "mock 3",
-    stoploss: 50,
-    takeprofit: 500,
-    indicators: [
-      {
-        name: "Simple Moving Average",
-        symbol: "SMA",
-        operationType: "buy",
-        config: [
-          {
-            variable: "perid",
-            value: 100,
-          },
-        ],
-      },
-      {
-        name: "Relative Strength Index",
-        symbol: "RSI",
-        operationType: "buy",
-        config: [
-          {
-            variable: "perid",
-            value: 100,
-          },
-        ],
-      },
-      {
-        name: "Stochastic Oscillator",
-        symbol: "KD",
-        operationType: "buy",
-        config: [
-          {
-            variable: "perid",
-            value: 100,
-          },
-          {
-            variable: "sma period",
-            value: 30,
-          },
-        ],
-      },
-    ],
-  },
+  new Strategy(0, "mock 1", 10, 100, [
+    {
+      name: "Stochastic Oscillator",
+      symbol: "KD",
+      operationType: "buy",
+      config: [
+        {
+          variable: "perid",
+          value: 100,
+        },
+        {
+          variable: "sma period",
+          value: 30,
+        },
+      ],
+    },
+  ]),
+  new Strategy(1, "mock 2", 30, 300, [
+    {
+      name: "Relative Strength Index",
+      symbol: "RSI",
+      operationType: "buy",
+      config: [
+        {
+          variable: "perid",
+          value: 100,
+        },
+      ],
+    },
+    {
+      name: "Stochastic Oscillator",
+      symbol: "KD",
+      operationType: "buy",
+      config: [
+        {
+          variable: "perid",
+          value: 100,
+        },
+        {
+          variable: "sma period",
+          value: 30,
+        },
+      ],
+    },
+  ]),
+  new Strategy(2, "mock 3", 50, 500, [
+    {
+      name: "Simple Moving Average",
+      symbol: "SMA",
+      operationType: "buy",
+      config: [
+        {
+          variable: "perid",
+          value: 100,
+        },
+      ],
+    },
+    {
+      name: "Relative Strength Index",
+      symbol: "RSI",
+      operationType: "buy",
+      config: [
+        {
+          variable: "perid",
+          value: 100,
+        },
+      ],
+    },
+    {
+      name: "Stochastic Oscillator",
+      symbol: "KD",
+      operationType: "buy",
+      config: [
+        {
+          variable: "perid",
+          value: 100,
+        },
+        {
+          variable: "sma period",
+          value: 30,
+        },
+      ],
+    },
+  ]),
 ];
 
 export const dummyData: BotDetail[] = [

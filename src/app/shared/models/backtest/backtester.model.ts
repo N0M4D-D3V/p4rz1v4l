@@ -3,7 +3,8 @@ import {
   BacktestResult,
   OperationType,
 } from "@interfaces/backtest.interface";
-import { AbstractStrategy } from "../abstract/abstract-estrategy.model";
+import { BacktestCandle, Candle } from "@interfaces/candle";
+import { Strategy } from "../strategy/estrategy.model";
 
 export class Backtester {
   private config: BacktesterConfig;
@@ -188,8 +189,8 @@ export class Backtester {
    */
   private setTakeProfit(
     price: number,
-    tpLongMultiplicator: number = 1.05,
-    tpShortMultiplicator: number = 0.95
+    tpLongMultiplicator: number = 1.03,
+    tpShortMultiplicator: number = 0.97
   ): void {
     if (this.isLongOpen) this.takeProfitPrice = price * tpLongMultiplicator;
     if (this.isShortOpen) this.takeProfitPrice = price * tpShortMultiplicator;
@@ -203,8 +204,8 @@ export class Backtester {
    */
   private setStoploss(
     price: number,
-    slLongMultiplicator: number = 0.98,
-    slShortMultiplicator: number = 1.02
+    slLongMultiplicator: number = 0.99,
+    slShortMultiplicator: number = 1.01
   ): void {
     if (this.isLongOpen) this.stoplossPrice = price * slLongMultiplicator;
     if (this.isShortOpen) this.stoplossPrice = price * slShortMultiplicator;
@@ -275,53 +276,65 @@ export class Backtester {
    * @param dataframe
    * @param strategy
    */
-  public execute(dataframe: any[], strategy: AbstractStrategy): any {
-    // df['operation'] = ""
-    // df['operation_price'] = ""
-    // high_price = df['high_price']
-    // close_price = df['close_price']
-    // low_price = df['low_price']
-    // operations = df['operation']
-    // operation_prices = df['operation_price']
-    // for i in range(len(df)):
-    //     if self.balance > 0:
-    //         if strategy.check_long_signal(i):
-    //             operations[i] = OperationType.LONG_OPEN
-    //             operation_prices[i] = close_price[i]
-    //             self.open_position(price=close_price[i], side=OperationType.LONG, from_opened=i)
-    //             self.set_take_profit(price=close_price[i], tp_long=1.03)
-    //             self.set_stop_loss(price=close_price[i], sl_long=0.99)
-    //         elif strategy.check_short_signal(i):
-    //             operations[i] = OperationType.SHORT_OPEN
-    //             operation_prices[i] = close_price[i]
-    //             self.open_position(price=close_price[i], side=OperationType.SHORT, from_opened=i)
-    //             self.set_take_profit(price=close_price[i], tp_short=0.97)
-    //             self.set_stop_loss(price=close_price[i], sl_short=1.01)
-    //         else:
-    //             if self.trailing_stop_loss and (self.is_long_open or self.is_short_open):
-    //                 new_max = high_price[self.from_opened:i].max()
-    //                 previous_stop_loss = self.stop_loss_price
-    //                 self.set_stop_loss(price=new_max)
-    //                 if previous_stop_loss > self.stop_loss_price:
-    //                     self.stop_loss_price = previous_stop_loss
-    //             if self.is_long_open:
-    //                 if high_price[i] >= self.take_profit_price:
-    //                     operations[i] = OperationType.LONG_CLOSE
-    //                     operation_prices[i] = self.take_profit_price
-    //                     self.close_position(price=self.take_profit_price)
-    //                 elif low_price[i] <= self.stop_loss_price:
-    //                     operations[i] = OperationType.LONG_STOPLOSS_CLOSE
-    //                     operation_prices[i] = self.stop_loss_price
-    //                     self.close_position(price=self.stop_loss_price)
-    //             elif self.is_short_open:
-    //                 if high_price[i] >= self.stop_loss_price:
-    //                     operations[i] = OperationType.SHORT_STOPLOSS_CLOSE
-    //                     operation_prices[i] = self.stop_loss_price
-    //                     self.close_position(price=self.stop_loss_price)
-    //                 elif low_price[i] <= self.take_profit_price:
-    //                     operations[i] = OperationType.SHORT_CLOSE
-    //                     operation_prices[i] = self.take_profit_price
-    //                     self.close_position(price=self.take_profit_price)
-    // return df
+  public execute(dataframe: Candle[], strategy: Strategy): BacktestCandle[] {
+    strategy.set_up(dataframe);
+    return dataframe.map((candle: Candle, index: number) => {
+      const btCandle: BacktestCandle = {
+        ...candle,
+        operation: null,
+        operationPrice: null,
+      };
+
+      if (this.balance > 0) {
+        if (strategy.check_long_signal(index)) {
+          btCandle.operation = OperationType.LongOpen;
+          btCandle.operationPrice = candle.close;
+          this.openPosition(candle.close, OperationType.Long, index);
+          this.setTakeProfit(candle.close);
+          this.setStoploss(candle.close);
+        } else if (strategy.check_short_signal(index)) {
+          btCandle.operation = OperationType.ShortOpen;
+          btCandle.operationPrice = candle.close;
+          this.openPosition(candle.close, OperationType.Short, index);
+          this.setTakeProfit(candle.close);
+          this.setStoploss(candle.close);
+        } else {
+          if (this.trailingStoploss && (this.isLongOpen || this.isShortOpen)) {
+            const highPrices: number[] = dataframe
+              .slice(this.fromOpened, index)
+              .map((candle: Candle) => candle.high);
+            const newMax = Math.max(...highPrices);
+            const previousStopLoss = this.stoplossPrice;
+
+            this.setStoploss(newMax);
+            if (previousStopLoss > this.stoplossPrice)
+              this.stoplossPrice = previousStopLoss;
+          }
+
+          if (this.isLongOpen) {
+            if (candle.high >= this.takeProfitPrice) {
+              btCandle.operation = OperationType.LongClose;
+              btCandle.operationPrice = this.takeProfitPrice;
+              this.closePosition(this.takeProfitPrice);
+            } else if (candle.low <= this.stoplossPrice) {
+              btCandle.operation = OperationType.LongStopLossClose;
+              btCandle.operationPrice = this.stoplossPrice;
+              this.closePosition(this.stoplossPrice);
+            }
+          } else if (this.isShortOpen) {
+            if (candle.high >= this.stoplossPrice) {
+              btCandle.operation = OperationType.ShortStopLossClose;
+              btCandle.operationPrice = this.stoplossPrice;
+              this.closePosition(this.stoplossPrice);
+            } else if (candle.low <= this.takeProfitPrice) {
+              btCandle.operation = OperationType.ShortClose;
+              btCandle.operationPrice = this.takeProfitPrice;
+              this.closePosition(this.takeProfitPrice);
+            }
+          }
+        }
+      }
+      return btCandle;
+    });
   }
 }

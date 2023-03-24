@@ -1,5 +1,4 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Strategy } from "@interfaces/strategies.interface";
 import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
 import { ExchangeService } from "@services/exchange/exchange.service";
 import { StrategyService } from "@services/strategy/strategy.service";
@@ -15,6 +14,9 @@ import {
 import { Exchange } from "ccxt";
 import { ExchangeFactoryService } from "@services/exchange/exchange-factory.service";
 import { AVAILABLE_EXCHANGES } from "@common/available-indicator.list";
+import { BacktestCandle, Candle } from "@interfaces/candle";
+import { Backtester } from "@models/backtest/backtester.model";
+import { Strategy } from "@models/strategy/estrategy.model";
 
 @Component({
   selector: "app-backtest",
@@ -144,15 +146,28 @@ export class BacktestPage implements OnInit, OnDestroy {
     const balance: number = this.balanceControl.value;
     const leverage: number = this.leverageControl.value;
     const stoploss: boolean = this.stoplossControl.value;
+    const stratID: number = this.stratIDControl.value;
 
     this.exchangeService.setExchange(this.exchange);
-    const candles = await this.exchangeService.getAll({
+    const candles: Candle[] = await this.exchangeService.getAll({
       symbol: market,
       timeframe: timeframe,
       limit: limit,
     });
 
-    console.log(candles);
+    const backtester: Backtester = new Backtester({
+      initialBalance: balance,
+      leverage: leverage,
+      trailingStoploss: stoploss,
+      feeCostPercentage: feePercentage,
+    });
+
+    const results: BacktestCandle[] = backtester.execute(
+      candles,
+      this.strategies[stratID]
+    );
+
+    console.log(results);
   }
 
   private createForm(): void {

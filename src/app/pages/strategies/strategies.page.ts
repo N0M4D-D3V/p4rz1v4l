@@ -1,10 +1,10 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
 import { BsModalService } from "ngx-bootstrap/modal";
-import { Strategy } from "@interfaces/strategies.interface";
 import { filter } from "rxjs/operators";
 import { StrategyService } from "@services/strategy/strategy.service";
 import { Observable } from "rxjs";
+import { Strategy } from "@models/strategy/estrategy.model";
 
 @Component({
   selector: "app-strategies",

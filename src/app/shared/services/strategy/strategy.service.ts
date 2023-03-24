@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
+import { Strategy } from "@models/strategy/estrategy.model";
 import { AbstractObservableService } from "../abstract/abstract-observable.service";
-import { Strategy } from "@interfaces/strategies.interface";
 
 @Injectable({ providedIn: "root" })
 export class StrategyService extends AbstractObservableService<Strategy> {
