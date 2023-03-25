@@ -46,7 +46,7 @@ export class BotDetailsComponent implements OnInit {
     this.botDetailCopy = { ...this.route.snapshot.data?.["quotation"] };
 
     this.initForm(this.botDetailCopy);
-    this.addOrUpdateSelfTab();
+    this.addOrUpdateSelfTab()
   }
 
   private initForm(initialValue: BotDetail): void {
