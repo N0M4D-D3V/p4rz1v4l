@@ -25,6 +25,7 @@ if [[ $branch == "test-husky" ]]; then
   git fetch origin $branch
   git merge origin/$branch
   npm run deploy:tag patch
+  git push --follow-tags
 else
   echo "no"
 fi
