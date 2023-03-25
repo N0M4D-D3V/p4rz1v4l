@@ -3,8 +3,8 @@ import { BsModalService } from "ngx-bootstrap/modal";
 import { IndicatorInfo } from "@interfaces/indicator.interface";
 import { NgbPopover } from "@ng-bootstrap/ng-bootstrap";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Strategy } from "@interfaces/strategies.interface";
 import { StrategyService } from "@services/strategy/strategy.service";
+import { Strategy } from "@models/strategy/estrategy.model";
 
 @Component({
   selector: "app-edit-strategy",
@@ -60,13 +60,13 @@ export class EditStrategyModal implements OnInit, OnDestroy {
 
   public onSaveStrategy(): void {
     const formValue = this.form.value;
-    const strategy: Strategy = {
-      id: this.selectedStrategy?.id,
-      name: formValue.name,
-      stoploss: formValue.stoploss,
-      takeprofit: formValue.takeprofit,
-      indicators: this.indicators,
-    };
+    const strategy: Strategy = new Strategy(
+      this.selectedStrategy?.id,
+      formValue.name,
+      formValue.stoploss,
+      formValue.takeprofit,
+    this.indicators,
+    );
 
     this.onDismiss();
     this.strategyService.updateOne(strategy);

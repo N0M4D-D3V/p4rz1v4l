@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { ExchangeFactoryService } from "@services/exchange/exchange-factory.service";
-import { ExchangeService } from "@services/exchange/exchange.service";
 import { Exchange } from "ccxt";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { Subscription } from "rxjs";
 import { Router } from "@angular/router";
 import { DataTransferService } from "@services/modals/data-transfer.service";
+import { AVAILABLE_EXCHANGES } from "@common/available-indicator.list";
 
 @Component({
   selector: "app-edit-bot",
@@ -28,14 +28,13 @@ export class EditBotModal implements OnInit {
     private readonly formBuilder: FormBuilder,
     private readonly modalService: BsModalService,
     private readonly exchangeFactoryService: ExchangeFactoryService,
-    private readonly exchangeService: ExchangeService,
     private readonly dataSelectionService: DataTransferService<any>,
     private readonly router: Router
   ) {}
 
   ngOnInit(): void {
     this.getDataModal();
-    this.exchangeList = this.exchangeService.getExchanges();
+    this.exchangeList = AVAILABLE_EXCHANGES
     this.createForm();
     this.onSubForm();
   }
