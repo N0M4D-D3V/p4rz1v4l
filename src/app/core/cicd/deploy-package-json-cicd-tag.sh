@@ -14,8 +14,6 @@ action=$1 # patch, minor or major
 tag=$(grep -Eo '"version":\s*"[^"]+"' package.json | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
 
 git add -A
-git fetch origin $branch
-git merge --no-ff -m "CI/CD -> Create patch for $action" origin/$branch
 npm version "$action"
 # Get app version
 # Upload git changes to remote
