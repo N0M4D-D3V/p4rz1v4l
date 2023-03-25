@@ -7,6 +7,7 @@ action=$1 # patch, minor or major
 tag=$(awk -F \" '/"version": ".+"/ { print $4; exit; }' package.json)
 
 git add -A
+git pull origin $branch
 git merge --no-ff -m "CI/CD -> Create patch for $action" origin/$branch
 npm version "$action"
 # Get app version
