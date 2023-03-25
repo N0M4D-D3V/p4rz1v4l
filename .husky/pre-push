@@ -43,7 +43,7 @@ if ! git diff-index --quiet HEAD --; then
   git commit -m "CI/CD -> Create patch for $action"
 fi
 
-npm version "$action"
+npm version patch
 # Get app version
 # Upload git changes to remote
 git push

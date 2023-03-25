@@ -13,18 +13,10 @@ fi
 action=$1 # patch, minor or major
 tag=$(grep -Eo '"version":\s*"[^"]+"' package.json | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
 
-echo "tag antes de git add: $tag"
 git add -A
-
-echo "tag antes de git fetch: $tag"
 git fetch origin $branch
-
-echo "tag antes de git merge: $tag"
 git merge --no-ff -m "CI/CD -> Create patch for $action" origin/$branch
-
-echo "tag antes de npm version: $tag"
 npm version "$action"
-
-echo "tag antes de git push: $tag"
+# Get app version
 # Upload git changes to remote
 git push --follow-tags
