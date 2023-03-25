@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
+yellow="\033[1;33m"
+reset="\033[0m"
+
 
 ##################################################################################################################
 #FORMAT
@@ -9,8 +12,12 @@
 #!/npm run format &&  ng lint   
 #!/Para lo commits posteriores al inicial, ejecutar para sólo modificar los archivos modificados:
 #!/npx ng build && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint 
-echo "Ejecutando el ng build y pasando el linter"
-npx ng build  && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint --lint
+echo -e "${yellow}"
+echo "#"
+echo "# Ejecutando el ng build y pasando el linter..."
+echo "#"
+echo -e "${reset}"
+npx ng build  && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint --fix
 ##################################################################################################################
 #VERSION
 #!/
@@ -26,5 +33,9 @@ npx ng build  && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged 
 ########
 #!/
 #!/Patch en angular (branch):
-echo "elevamos versionado del proyecto"
+echo "${yellow}"
+echo "#"
+echo "Elevamos versionado del proyecto"
+echo "#"
+echo "${reset}"
 branch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD); if [[ $branch == "test-husky" ]]; then npm run deploy:tag patch; else echo \"no\"; fi;
