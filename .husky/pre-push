@@ -37,7 +37,12 @@ tag=$(awk -F \" '/"version": ".+"/ { print $4; exit; }' package.json)
 
 git add -A
 git pull --ff-only origin $branch
-git commit -m "CI/CD -> Create patch for $action"
+
+# Verifica si hay cambios en el repositorio
+if ! git diff-index --quiet HEAD --; then
+  git commit -m "CI/CD -> Create patch for $action"
+fi
+
 npm version "$action"
 # Get app version
 # Upload git changes to remote
