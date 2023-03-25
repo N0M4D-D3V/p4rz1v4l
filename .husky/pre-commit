@@ -45,3 +45,4 @@ echo "Elevamos versionado del proyecto"
 echo "#"
 echo "${reset}"
 branch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD); if [[ $branch == "test-husky" ]]; then npm run deploy:tag patch; else echo \"no\"; fi;
+exit 0

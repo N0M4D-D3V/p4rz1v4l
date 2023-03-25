@@ -1,4 +1,3 @@
-#!/bin/bash
 if [ -z "$VERSION_EXECUTED" ]; then
   echo "El script de versión no se ejecutó en este commit."
   exit 1
