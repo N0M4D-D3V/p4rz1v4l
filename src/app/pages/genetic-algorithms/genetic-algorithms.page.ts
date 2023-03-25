@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
+import { EditStrategyModalComponent } from "@modals/edit-strategy/edit-strategy.modal";
 import { BsModalService } from "ngx-bootstrap/modal";
 
 @Component({
@@ -11,6 +11,6 @@ export class GeneticAlgorithmsPage {
   constructor(private readonly modalService: BsModalService) {}
 
   public onEdit(): void {
-    this.modalService.show(EditStrategyModal);
+    this.modalService.show(EditStrategyModalComponent);
   }
 }

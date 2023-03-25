@@ -1,5 +1,5 @@
 import { IndicatorInfo } from "@interfaces/indicator.interface";
-import { Candle } from '@interfaces/candle';
+import { Candle } from "@interfaces/candle";
 
 export class Strategy {
   id: number;

@@ -19,24 +19,11 @@
       "plugin:prettier/recommended"
       ],
       "rules": {
-        "@angular-eslint/component-selector": [
-          "error",
-          {
-            "prefix": "app",
-            "style": "kebab-case",
-            "type": "element"
-          }
-        ],
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "prefix": "app",
-            "style": "camelCase",
-            "type": "attribute"
-          }
-        ],
         "@angular-eslint/component-class-suffix": [
-          "error"
+          "error",
+          {
+            "suffixes": ["Component", "Page"]
+          }
         ],
         "@angular-eslint/use-pipe-transform-interface": [
           "error"
@@ -54,12 +41,11 @@
           "error"
         ],
         "@angular-eslint/no-output-on-prefix": [
-          "error"
+          "off"
         ],
         "@angular-eslint/no-console": "off",
         "@angular-eslint/no-debugger":"off",
         "object-curly-spacing": ["error", "always"],
-        "indent": ["error", "tab"],
         "no-trailing-spaces": ["error", { "skipBlankLines": true }],
         "keyword-spacing": "error",
         "max-len": ["error", { "code": 140 }],
@@ -74,7 +60,7 @@
         }],
         "@typescript-eslint/quotes": [
           "error",
-          "single",
+          "double",
           {
             "avoidEscape": true,
             "allowTemplateLiterals": true
@@ -115,7 +101,14 @@
         "plugin:@angular-eslint/template/recommended",
         "plugin:prettier/recommended"
       ],
-      "rules": {}
+      "rules": {
+        "prettier/prettier": [
+          "error",
+          {
+            "parser": "angular"
+          }
+        ]
+      }
     }
   ]
 }

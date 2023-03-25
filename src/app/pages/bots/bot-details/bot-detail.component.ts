@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ChangeDetectionStrategy,
+  OnDestroy,
+} from "@angular/core";
 import { FormArray, FormBuilder, FormGroup } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
@@ -22,7 +27,7 @@ import { SharedService } from "@services/routing/saved.services";
   styleUrls: ["./bot-detail.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BotDetailsComponent implements OnInit {
+export class BotDetailsComponent implements OnInit, OnDestroy {
   botDetailCopy!: BotDetail;
   form!: FormGroup;
 
@@ -46,7 +51,7 @@ export class BotDetailsComponent implements OnInit {
     this.botDetailCopy = { ...this.route.snapshot.data?.["quotation"] };
 
     this.initForm(this.botDetailCopy);
-    this.addOrUpdateSelfTab()
+    this.addOrUpdateSelfTab();
   }
 
   private initForm(initialValue: BotDetail): void {

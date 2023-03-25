@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
+import { EditStrategyModalComponent } from "@modals/edit-strategy/edit-strategy.modal";
 import { BsModalService } from "ngx-bootstrap/modal";
 import { filter } from "rxjs/operators";
 import { StrategyService } from "@services/strategy/strategy.service";
@@ -32,11 +32,11 @@ export class StrategiesPage implements OnInit {
 
   public onStrategyTouched(strat: Strategy): void {
     this.strategyService.selectedStrategy = strat;
-    this.modalService.show(EditStrategyModal);
+    this.modalService.show(EditStrategyModalComponent);
   }
 
   public createStrategy(): void {
     this.strategyService.clearSelectedStrategy();
-    this.modalService.show(EditStrategyModal);
+    this.modalService.show(EditStrategyModalComponent);
   }
 }

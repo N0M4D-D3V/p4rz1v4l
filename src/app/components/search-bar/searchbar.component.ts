@@ -1,9 +1,8 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   Input,
-  Output,
+  OnInit,
 } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import {
@@ -21,15 +20,11 @@ import {
   styleUrls: ["./searchbar.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnInit {
   @Input() dataSource: Observable<Array<any>>;
   @Input() searchBy: Array<string>;
   @Input() searchControl: FormControl = new FormControl("");
   @Input() filteredBots: Observable<Array<any>>;
-
-  ngOnInit() {
-    this.filteredBots = this.filtered$;
-  }
 
   public filtered$: Observable<Array<any>> =
     this.searchControl.valueChanges.pipe(
@@ -51,6 +46,9 @@ export class SearchBarComponent {
         );
       })
     );
+  ngOnInit() {
+    this.filteredBots = this.filtered$;
+  }
 }
 
 export function filterObject(

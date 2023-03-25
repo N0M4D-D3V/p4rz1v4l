@@ -11,7 +11,7 @@ import { Strategy } from "@models/strategy/estrategy.model";
   templateUrl: "./edit-strategy.modal.html",
   styleUrls: ["./edit-strategy.modal.scss"],
 })
-export class EditStrategyModal implements OnInit, OnDestroy {
+export class EditStrategyModalComponent implements OnInit, OnDestroy {
   public selectedStrategy: Strategy;
   public indicators: IndicatorInfo[];
   public indicatorToEdit: IndicatorInfo;
@@ -65,7 +65,7 @@ export class EditStrategyModal implements OnInit, OnDestroy {
       formValue.name,
       formValue.stoploss,
       formValue.takeprofit,
-    this.indicators,
+      this.indicators
     );
 
     this.onDismiss();

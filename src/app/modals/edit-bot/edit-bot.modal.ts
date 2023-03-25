@@ -14,7 +14,7 @@ import { AVAILABLE_EXCHANGES } from "@common/available-indicator.list";
   styleUrls: ["./edit-bot.modal.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditBotModal implements OnInit {
+export class EditBotModalComponent implements OnInit {
   private exchange: Exchange;
   private selectedBotSub: Subscription;
 
@@ -34,7 +34,7 @@ export class EditBotModal implements OnInit {
 
   ngOnInit(): void {
     this.getDataModal();
-    this.exchangeList = AVAILABLE_EXCHANGES
+    this.exchangeList = AVAILABLE_EXCHANGES;
     this.createForm();
     this.onSubForm();
   }

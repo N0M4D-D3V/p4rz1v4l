@@ -4,7 +4,7 @@ import {
   OnDestroy,
   OnInit,
 } from "@angular/core";
-import { EditBotModal } from "@modals/edit-bot/edit-bot.modal";
+import { EditBotModalComponent } from "@modals/edit-bot/edit-bot.modal";
 import { BsModalService } from "ngx-bootstrap/modal";
 import {
   FormBuilder,
@@ -57,6 +57,16 @@ export class BotsPage implements OnInit, OnDestroy {
   get bot(): FormArray {
     return this.botForm.get("bots") as FormArray;
   }
+
+  public bots$ = this.botDetailService.bots$.pipe(
+    map((bots) => bots.sort(sortByLastModified))
+  );
+
+  public filteredBots$ = createFilteredSearch$(
+    this.bots$,
+    this.searchControl,
+    this.searchBy
+  );
 
   public ngOnInit(): void {
     this.createBotForm();
@@ -111,16 +121,6 @@ export class BotsPage implements OnInit, OnDestroy {
     });
   }
 
-  public bots$ = this.botDetailService.bots$.pipe(
-    map((bots) => bots.sort(sortByLastModified))
-  );
-
-  public filteredBots$ = createFilteredSearch$(
-    this.bots$,
-    this.searchControl,
-    this.searchBy
-  );
-
   public onBotTouched(index: number): void {
     this.filteredBots$.pipe(take(1)).subscribe((filteredBots) => {
       const selectedBot = filteredBots.find((bot) => bot.id === index);
@@ -128,7 +128,7 @@ export class BotsPage implements OnInit, OnDestroy {
         index: index,
         data: selectedBot,
       });
-      this.modalService.show(EditBotModal);
+      this.modalService.show(EditBotModalComponent);
     });
   }
 

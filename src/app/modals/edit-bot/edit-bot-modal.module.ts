@@ -1,11 +1,11 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { EditBotModal } from "./edit-bot.modal";
+import { EditBotModalComponent } from "./edit-bot.modal";
 
 @NgModule({
-  declarations: [EditBotModal],
-  exports: [EditBotModal],
+  declarations: [EditBotModalComponent],
+  exports: [EditBotModalComponent],
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [],

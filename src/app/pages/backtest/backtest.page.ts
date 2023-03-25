@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { EditStrategyModal } from "@modals/edit-strategy/edit-strategy.modal";
+import { EditStrategyModalComponent } from "@modals/edit-strategy/edit-strategy.modal";
 import { ExchangeService } from "@services/exchange/exchange.service";
 import { StrategyService } from "@services/strategy/strategy.service";
 import { BsModalService } from "ngx-bootstrap/modal";
@@ -135,7 +135,7 @@ export class BacktestPage implements OnInit, OnDestroy {
   }
 
   public onEdit(): void {
-    this.modalService.show(EditStrategyModal);
+    this.modalService.show(EditStrategyModalComponent);
   }
 
   public async onTest(): Promise<void> {
