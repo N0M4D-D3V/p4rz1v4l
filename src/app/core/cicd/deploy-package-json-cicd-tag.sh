@@ -1,3 +1,8 @@
+if git show-ref --tags | grep -q '\srefs/tags/origin$'; then
+  echo "Existe una etiqueta llamada 'origin' en el repositorio. Por favor, elimínela o renómbrela antes de ejecutar este script."
+  exit 1
+fi
+
 branch=$(git rev-parse --abbrev-ref HEAD)
 
 if [ -z "$VERSION_EXECUTED" ]; then
