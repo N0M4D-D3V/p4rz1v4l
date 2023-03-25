@@ -1,9 +1,9 @@
-import { ComponentRef } from '@angular/core';
+import { ComponentRef } from "@angular/core";
 import {
   ActivatedRouteSnapshot,
   DetachedRouteHandle,
   RouteReuseStrategy,
-} from '@angular/router';
+} from "@angular/router";
 
 export class CustomRouterReuseStrategy extends RouteReuseStrategy {
   private storedRoutes = new Map<string, DetachedRouteHandle>();
@@ -62,10 +62,10 @@ export class CustomRouterReuseStrategy extends RouteReuseStrategy {
 
   private generateKey(route: ActivatedRouteSnapshot): string {
     const fullPath = route.pathFromRoot
-      .map((node) => node.url.join('/'))
+      .map((node) => node.url.join("/"))
       .filter(Boolean)
-      .join('/');
+      .join("/");
 
-    return '/' + fullPath;
+    return "/" + fullPath;
   }
 }

@@ -76,7 +76,7 @@ export class EditBotModal implements OnInit {
   }
 
   async goToExpandBot() {
-    const routeToRedirect = `/bot/${this.selectedBot.index + 1}`;
+    const routeToRedirect = `/bot/${this.selectedBot.index}`;
     await this.router.navigateByUrl(routeToRedirect);
     this.onDismiss();
   }

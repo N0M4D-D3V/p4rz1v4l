@@ -25,31 +25,31 @@
     <div class="bots" formArrayName="bots">
       <ng-container *ngIf="filteredBots$ | async as filteredBots">
         <ng-container *ngIf="filteredBots.length > 0; else notFound">
-        <ng-container
-          *ngFor="let bots of bot.controls; let i = index; trackBy: trackByBot"
-        >
-          <ng-container *ngIf="isBotVisible(filteredBots, bots)">
-            <div class="bots__bot-card-container">
-              <div
-                class="bots__bot-card-container--global card"
-                (click)="onBotTouched(i)"
-              >
-                <input class="bots__bot-card-container--input" />
-                <div class="bots__bot-card-container--input-letters">
-                  {{bots.value.client.name}}
+          <ng-container
+            *ngFor="let bots of bot.controls; let i = index; trackBy: trackByBot"
+          >
+            <ng-container *ngIf="isBotVisible(filteredBots, bots)">
+              <div class="bots__bot-card-container">
+                <div
+                  class="bots__bot-card-container--global card"
+                  (click)="onBotTouched(bots.value.id)"
+                >
+                  <input class="bots__bot-card-container--input" />
+                  <div class="bots__bot-card-container--input-letters">
+                    {{bots.value.client.name}}
+                  </div>
                 </div>
+                <button
+                  type="button"
+                  class="bots__bot-card-container--remove-btn"
+                  (click)="removeBot(bots)"
+                >
+                  {{deleteButtonLiteral}}
+                </button>
               </div>
-              <button
-                type="button"
-                class="bots__bot-card-container--remove-btn"
-                (click)="removeBot(bots)"
-              >
-                {{deleteButtonLiteral}}
-              </button>
-            </div>
+            </ng-container>
           </ng-container>
         </ng-container>
-      </ng-container>
       </ng-container>
     </div>
     <div class="bots__bot-card-container--add-btn-container"></div>

@@ -18,7 +18,7 @@ import { DirectivesModule } from "@directives/directives.module";
     ReactiveFormsModule,
     EditBotModalModule,
     SearchBarModule,
-    DirectivesModule
+    DirectivesModule,
   ],
 })
 export class BotDetailsModule {

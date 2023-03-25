@@ -16,5 +16,5 @@ export interface BotDetail {
   lastModified?: string;
   items?: BotItem[];
   total?: number;
-  value?:string;
+  value?: string;
 }

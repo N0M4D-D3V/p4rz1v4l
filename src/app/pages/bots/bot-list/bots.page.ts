@@ -15,7 +15,7 @@ import {
 } from "@angular/forms";
 import { Bot } from "@interfaces/bots.interface";
 import { BotDetailService } from "@services/pages/bot/bot-page.service";
-import { map, tap } from "rxjs";
+import { map, take, tap } from "rxjs";
 import {
   createFilteredSearch$,
   sortByLastModified,
@@ -37,12 +37,15 @@ let NAME_MODULE: string = "Bot ";
 export class BotsPage implements OnInit, OnDestroy {
   public botForm: FormGroup;
   public searchControl = new FormControl("");
+  private botsSubject = new BehaviorSubject<any[]>([]);
+  public searchBy: Array<string> = SearchBy;
+  private filteredIndexToId: { [index: number]: number } = {};
+  private existingBotIds = new Set<number>();
+  public searchBotInterface: Bot;
   public deleteButtonLiteral: string = "Eliminar";
   public addButtonLiteral: string = "Agregar bot";
-  public searchBotInterface: Bot;
-  public searchBy: Array<string> = SearchBy;
-  private botsSubject = new BehaviorSubject<any[]>([]);
   public searchStarted = false;
+  public lastUsedBotId = 0;
 
   constructor(
     private readonly modalService: BsModalService,
@@ -57,6 +60,10 @@ export class BotsPage implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.createBotForm();
+    this.onSearch();
+  }
+
+  public onSearch(): void {
     this.searchControl.valueChanges.subscribe(() => {
       this.searchStarted = true;
     });
@@ -66,7 +73,7 @@ export class BotsPage implements OnInit, OnDestroy {
     this.searchStarted = false;
   }
 
-  private createBotForm(): void{
+  private createBotForm(): void {
     const sortedBots$ = this.getSortedBots$();
     this.createSortedBotForm(sortedBots$);
   }
@@ -74,10 +81,17 @@ export class BotsPage implements OnInit, OnDestroy {
   private getSortedBots$(): Observable<BotDetail[]> {
     return this.botDetailService.bots$.pipe(
       map((bots) => bots.sort(sortByLastModified)),
-      tap((bots) => this.botsSubject.next(bots))
+      tap((bots) => {
+        bots.forEach((bot) => this.existingBotIds.add(bot.id));
+        this.lastUsedBotId = Math.max(
+          this.lastUsedBotId,
+          ...bots.map((bot) => bot.id),
+          0
+        );
+      })
     );
   }
-  
+
   private createSortedBotForm(bots$: Observable<BotDetail[]>): void {
     bots$.subscribe((bots) => {
       this.botForm = this.fb.group({
@@ -105,37 +119,62 @@ export class BotsPage implements OnInit, OnDestroy {
     this.bots$,
     this.searchControl,
     this.searchBy
-  )
+  );
 
   public onBotTouched(index: number): void {
-    const selectedBot = this.bot.at(index).value;
-    this.dataTransferService.setSelectedDataModal({
-      index: index,
-      data: selectedBot,
+    this.filteredBots$.pipe(take(1)).subscribe((filteredBots) => {
+      const selectedBot = filteredBots.find((bot) => bot.id === index);
+      this.dataTransferService.setSelectedDataModal({
+        index: index,
+        data: selectedBot,
+      });
+      this.modalService.show(EditBotModal);
     });
-    this.modalService.show(EditBotModal);
   }
 
   public trackByBot(index: number, bot: AbstractControl) {
     return bot.value;
   }
 
-  public isBotVisible(filteredBots: any[], bot: any): boolean {
-    return (
-      !filteredBots ||
-      filteredBots.some((filteredBot) => filteredBot.id === bot.value.id)
-    );
+  public isBotVisible(filteredBots: any[], bots: AbstractControl) {
+    const searchTerm = this.searchControl.value;
+    const botId = bots.value.id;
+    const botName = bots.value.client.name;
+
+    if (
+      !searchTerm ||
+      botName.toLowerCase().includes(searchTerm.toLowerCase())
+    ) {
+      this.filteredIndexToId[filteredBots.length] = botId;
+      filteredBots.push(botId);
+      return true;
+    }
+
+    return false;
+  }
+
+  public getNextBotId(): number {
+    this.lastUsedBotId += 1;
+    this.existingBotIds.add(this.lastUsedBotId);
+    return this.lastUsedBotId;
   }
 
   public addBot(): void {
-    const numberOfBot = this.bot.length + 1;
+    const numberOfBot = this.getNextBotId();
     const newBot = {
       id: numberOfBot,
-      client: { name: NAME_MODULE + numberOfBot },
+      client: { name: `${NAME_MODULE}${numberOfBot}` },
       total: 0,
       lastModified: new Date().toISOString(),
     };
-    const newControl = this.fb.control(newBot);
+    const newControl = this.fb.group({
+      id: [newBot.id],
+      client: this.fb.group({
+        name: [newBot.client.name],
+      }),
+      total: [newBot.total],
+      lastModified: [newBot.lastModified],
+    });
     this.bot.push(newControl);
     this.botDetailService.save(newBot).subscribe();
     this.updateFilteredBots();
@@ -145,6 +184,9 @@ export class BotsPage implements OnInit, OnDestroy {
     const index = this.bot?.controls?.indexOf(control);
     this.bot?.removeAt(index);
     this.resetNumberBot(control);
+    const botId = control.get("id")?.value;
+    this.botDetailService.notifyBotRemoved(botId);
+    this.botDetailService.deleteBot(botId).subscribe();
     this.updateFilteredBots();
   }
 
@@ -158,7 +200,7 @@ export class BotsPage implements OnInit, OnDestroy {
     for (let i = index; i <= lastIndex; i++) {
       const numberOfBot = i + 1;
       const controlEvaluator = this.bot?.at(i);
-      controlEvaluator?.get('id')?.setValue(numberOfBot);
+      controlEvaluator?.get("id")?.setValue(numberOfBot);
     }
   }
 

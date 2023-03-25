@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Resolve, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { EMPTY, first, mergeMap, Observable, of } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Resolve, ActivatedRouteSnapshot, Router } from "@angular/router";
+import { EMPTY, first, mergeMap, Observable, of } from "rxjs";
 
-import { BotDetail } from '@interfaces/bot-detail.interface';
-import { BotDetailService } from '@services/pages/bot/bot-page.service';
+import { BotDetail } from "@interfaces/bot-detail.interface";
+import { BotDetailService } from "@services/pages/bot/bot-page.service";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class BotResolver implements Resolve<BotDetail> {
   constructor(
     private quotationsService: BotDetailService,
@@ -15,7 +15,7 @@ export class BotResolver implements Resolve<BotDetail> {
   resolve(
     route: ActivatedRouteSnapshot
   ): Observable<BotDetail> | Observable<never> {
-    const id = route.paramMap.get('id');
+    const id = route.paramMap.get("id");
 
     if (id === null) {
       return EMPTY;
@@ -25,7 +25,7 @@ export class BotResolver implements Resolve<BotDetail> {
       first(),
       mergeMap((quotation) => {
         if (quotation === null) {
-          this.router.navigateByUrl('/bot');
+          this.router.navigateByUrl("/bot");
           return EMPTY;
         }
 

@@ -5,7 +5,7 @@
 </div>
 
 <div class="ps-5 mt-2">
-  <h1>Resume Bot {{selectedBot?.index + 1}}</h1>
+  <h1>Resume Bot {{selectedBot?.index}}</h1>
 </div>
 
 <div class="p-5">
@@ -41,6 +41,8 @@
     <button class="btn btn-danger col me-1">DELETE</button>
     <button class="btn btn-danger col me-1">STOP</button>
     <button class="btn btn-success col ms-1">START</button>
-    <button class="btn btn-primary col ms-1" (click)="goToExpandBot()">EDIT</button>
+    <button class="btn btn-primary col ms-1" (click)="goToExpandBot()">
+      EDIT
+    </button>
   </div>
 </div>

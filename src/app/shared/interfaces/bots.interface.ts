@@ -6,7 +6,7 @@ export interface Bot {
   lastModified?: string;
   items?: BotItem[];
   total?: number;
-  value?:string
+  value?: string;
 }
 
 export interface ClientBot {

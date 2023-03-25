@@ -88,6 +88,7 @@ export class BotDetailsComponent implements OnInit {
     const currentUrl = this.appComponent.currentRouteUrl;
 
     this.tabManager.addOrUpdate({
+      id: this.botDetailCopy.id,
       url: this.router.url,
       title: String(this.botDetailCopy.client.name),
       dirty$: dirty$.pipe(
@@ -119,7 +120,7 @@ export class BotDetailsComponent implements OnInit {
         finalize(() => {
           form.reset(form.value);
           this.sharedService.isSaved$.next(true);
-          this.sharedService.nameBot$.next(this.botDetailCopy.client.name)
+          this.sharedService.nameBot$.next(this.botDetailCopy.client.name);
           this.tabManager.setSavedState(true);
         })
       )

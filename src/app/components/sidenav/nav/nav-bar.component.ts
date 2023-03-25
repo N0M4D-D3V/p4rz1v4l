@@ -8,6 +8,8 @@ import {
   Input,
 } from "@angular/core";
 import { Router } from "@angular/router";
+import { BotDetailService } from "@services/pages/bot/bot-page.service";
+import { Subscription } from "rxjs";
 import { CustomRouterReuseStrategy } from "src/app/shared/routes/custom-router-reused";
 
 import { Tab } from "../shared-navbar/model";
@@ -22,7 +24,7 @@ import { TabManagerService } from "../shared-navbar/services/tab-manager.service
 export class NavBarComponent implements OnInit, OnDestroy {
   @Input() canNavigate = true;
 
-  tabs$ = this.tabManager.openedTabs$;
+  public tabs$ = this.tabManager.openedTabs$;
 
   public mobileQuery: MediaQueryList;
   public fillerNav: { title: string; path: string }[] = [
@@ -36,9 +38,11 @@ export class NavBarComponent implements OnInit, OnDestroy {
   ];
 
   private mobileQueryListener: () => void;
+  private botRemovedSubscription: Subscription;
 
   constructor(
     private tabManager: TabManagerService,
+    private botDetailService: BotDetailService,
     private router: Router,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher
@@ -48,9 +52,19 @@ export class NavBarComponent implements OnInit, OnDestroy {
     this.mobileQuery.addListener(this.mobileQueryListener);
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.onSusbscriptionRemove();
+  }
 
-   navigateToBotPage(): void {
+  private onSusbscriptionRemove() {
+    this.botRemovedSubscription = this.botDetailService.botRemoved$.subscribe(
+      (botId) => {
+        this.handleBotRemoved(botId);
+      }
+    );
+  }
+
+  navigateToBotPage(): void {
     this.router.navigate(["/bots"]);
   }
 
@@ -68,7 +82,16 @@ export class NavBarComponent implements OnInit, OnDestroy {
     strategy.deleteStoredRoute(url);
   }
 
+  public handleBotRemoved(botId: number): void {
+    const botTab = this.tabManager.getTabByUrl(`/bot/${botId}`);
+
+    if (botTab) {
+      this.tabManager.removeTab(botTab);
+    }
+  }
+
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this.mobileQueryListener);
+    this.botRemovedSubscription.unsubscribe();
   }
 }

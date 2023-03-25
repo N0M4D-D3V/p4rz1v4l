@@ -8,7 +8,14 @@
     "start:electron": "ng build --configuration production && npx cap copy electron && npx cap sync && cd electron && npm run electron:start",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "lint": "ng lint",
+    "format": "prettier --write \"./src/**/*.{ts,json,html}\"",
+    "lint-format": "npm run format &&  ng lint --fix",
+    "format-pretty-quick": "pretty-quick --pattern \"src/**/*.*(ts|html|scss)\" --staged",
+    "prepare": "husky install",
+    "deploy:tag": "sh ./src/core/cicd/deploy-package-json-cicd-tag.sh",
+    "post-deploy:version": "node -p \"'export const VERSION_APP = ' + JSON.stringify(require('./package.json').version) + ';'\" > src/core/version/version.ts"
   },
   "private": true,
   "dependencies": {
@@ -46,12 +53,25 @@
     "@angular/compiler-cli": "^14.2.0",
     "@capacitor/cli": "latest",
     "@types/jasmine": "~4.0.0",
+    "@angular-eslint/builder": "~14.2.0",
+    "@angular-eslint/eslint-plugin": "~14.2.0",
+    "@angular-eslint/eslint-plugin-template": "~14.2.0",
+    "@angular-eslint/schematics": "~14.2.0",
+    "@angular-eslint/template-parser": "~14.2.0",
+    "@typescript-eslint/eslint-plugin": "5.37.0",
+    "@typescript-eslint/parser": "5.37.0",
     "jasmine-core": "~4.3.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~4.7.2"
+    "typescript": "~4.7.2",
+    "husky": "^8.0.0",
+    "prettier": "^2.7.1",
+    "pretty-quick": "^3.1.3",
+    "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-prettier": "^4.2.1"
   }
 }

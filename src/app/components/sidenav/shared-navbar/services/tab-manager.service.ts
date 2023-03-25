@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { BehaviorSubject } from "rxjs";
 
-import { defaultTab, Tab } from '../model';
+import { defaultTab, Tab } from "../model";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class TabManagerService {
   private _openedTabs$ = new BehaviorSubject<Tab[]>([]);
   openedTabs$ = this._openedTabs$.asObservable();
@@ -37,7 +37,7 @@ export class TabManagerService {
     this._openedTabs$.next([...this.currentTabs, tabFromDefault]);
   }
 
-  private updateTabAt(tabIndex: number, newTab: Tab): void {
+  public updateTabAt(tabIndex: number, newTab: Tab): void {
     const stateCopy = [...this.currentTabs];
     stateCopy.splice(tabIndex, 1, newTab);
 
@@ -52,5 +52,13 @@ export class TabManagerService {
 
   setSavedState(isSaved: boolean): void {
     this._isSaved$.next(isSaved);
+  }
+
+  getTabByUrl(url: string): Tab | null {
+    const tabIndex = this.findTabIndexByUrl(url);
+    if (tabIndex === null) {
+      return null;
+    }
+    return this.currentTabs[tabIndex];
   }
 }

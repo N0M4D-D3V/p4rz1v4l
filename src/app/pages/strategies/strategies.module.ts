@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { SimpleCardModule } from "@components/simple-card/simple-card.module";
 import { EditStrategyModalModule } from "@modals/edit-strategy/edit-strategy-modal.module";
 import { StrategiesRoutingModule } from "./strategies-routing.module";

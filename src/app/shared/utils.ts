@@ -1,8 +1,11 @@
-import { AppRoutingService } from '@services/routing/approuting.services';
+import { AppRoutingService } from "@services/routing/approuting.services";
 import { TabManagerService } from "@components/sidenav";
 
-export function updateTabCurrentUrl(appRoutingService: AppRoutingService, tabManager: TabManagerService): void {
-  let currentRouteUrl: string = '';
+export function updateTabCurrentUrl(
+  appRoutingService: AppRoutingService,
+  tabManager: TabManagerService
+): void {
+  let currentRouteUrl: string = "";
 
   appRoutingService.getCurrentRouteUrl$().subscribe((url) => {
     currentRouteUrl = url;

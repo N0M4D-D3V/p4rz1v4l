@@ -1,21 +1,21 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { BotsPage } from '../bot-list/bots.page';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { BotsPage } from "../bot-list/bots.page";
 
-import { BotDetailsComponent } from './bot-detail.component';
-import { BotResolver } from './resolver/bot.resolver';
+import { BotDetailsComponent } from "./bot-detail.component";
+import { BotResolver } from "./resolver/bot.resolver";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: BotsPage,
-    pathMatch: 'full',
+    pathMatch: "full",
     data: {
       mustBeStored: true,
     },
   },
   {
-    path: ':id',
+    path: ":id",
     component: BotDetailsComponent,
     data: {
       mustBeStored: true,

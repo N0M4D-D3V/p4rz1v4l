@@ -1,6 +1,1 @@
-export const SearchBy =  [
-    "id",
-    "lastModified",
-    "total",
-    "client.name",
-  ];
+export const SearchBy = ["id", "lastModified", "total", "client.name"];

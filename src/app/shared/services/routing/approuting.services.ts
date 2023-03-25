@@ -1,14 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { Injectable } from "@angular/core";
+import { Router, NavigationEnd } from "@angular/router";
+import { BehaviorSubject } from "rxjs";
+import { filter, map } from "rxjs/operators";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class AppRoutingService {
- 
-  private currentRouteUrl$ = new BehaviorSubject<string>('');
+  private currentRouteUrl$ = new BehaviorSubject<string>("");
 
   constructor(public router: Router) {
     router.events.subscribe((event) => {
