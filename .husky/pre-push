@@ -8,8 +8,9 @@
 #!/La primera vez ejecutamos este comando que formateará todo el código:
 #!/npm run format &&  ng lint   
 #!/Para lo commits posteriores al inicial, ejecutar para sólo modificar los archivos modificados:
-#!/npx ng build  && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint 
-npx ng build && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint --fix 
+#!/npx ng build && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint 
+echo "Ejecutando el ng build y pasando el linter"
+npx ng build  && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint --lint
 ##################################################################################################################
 #VERSION
 #!/
@@ -25,4 +26,5 @@ npx ng build && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  
 ########
 #!/
 #!/Patch en angular (branch):
-branch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD); if [[ $branch == "angular" ]]; then npm run deploy:tag patch; else echo \"no\"; fi;
+echo "elevamos versionado del proyecto"
+branch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD); if [[ $branch == "test-husky" ]]; then npm run deploy:tag patch; else echo \"no\"; fi;
