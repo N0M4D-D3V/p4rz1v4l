@@ -31,20 +31,3 @@ if [ -z "$VERSION_EXECUTED" ]; then
   echo "El script de versión no se ejecutó en este commit."
   exit 1
 fi
-
-action=$1 # patch, minor or major
-tag=$(awk -F \" '/"version": ".+"/ { print $4; exit; }' package.json)
-
-git add -A
-git pull --ff-only origin $branch >/dev/null 2>&1
-
-# Verifica si hay cambios en el repositorio
-if ! git diff-index --quiet HEAD --; then
-  git commit -m "CI/CD -> Create patch for $action"
-fi
-
-npm version patch
-# Get app version
-# Upload git changes to remote
-git push
-git push origin "v$tag"
