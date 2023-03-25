@@ -3,7 +3,7 @@
 [1] Si está en mac y recibe errores:
     -Asegurarse de que están permitidos los archivos .sh de forma como ejecutable:
 
-----`Pasos`:
+----`Pasos`: 
 [1]Homebrew instalado en tu Mac:
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
