@@ -6,7 +6,7 @@ if [ -z "$VERSION_EXECUTED" ]; then
 fi
 
 action=$1 # patch, minor or major
-tag=$(awk -F \" '/"version": ".+"/ { print $4; exit; }' package.json)
+tag=$(grep -Eo '"version":\s*"[^"]+"' package.json | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+')
 
 git add -A
 git fetch origin $branch
