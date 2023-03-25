@@ -1,4 +1,28 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npm test
+##################################################################################################################
+#FORMAT
+#!/
+########
+#!/La primera vez ejecutamos este comando que formateará todo el código:
+#!/npm run format &&  ng lint --fix  
+#!/Para lo commits posteriores al inicial, ejecutar para sólo modificar los archivos modificados:
+#!/npx ng build --prod && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint --fix
+npx ng build --prod && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint --fix
+##################################################################################################################
+#VERSION
+#!/
+########
+#!/---[[PATCH]]: Elevar la versión de la app un PATCH (0.0.1...0.0.2) Siempre y cuando se esté en angular (branch)
+#branch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD); if [[ $branch == "angular" ]]; then npm run deploy:tag patch; else echo \"no\"; fi;
+#!/
+#!/---[[MINOR]]: Elevar la versión de la app un MINOR (0.1.0...0.2.0) Siempre y cuando se esté en angular (branch)... BORRARÁ los patch (0.0.1 -> 0.1.0... 0.0.3 -> 0.2.0)
+#branch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD); if [[ $branch == "angular" ]]; then npm run deploy:tag minor; else echo \"no\"; fi;
+#!/
+#!/---[[MAJOR]]: Elevar la versión de la app un MAJOR (1.0.0...2.0.0) Siempre y cuando se esté en angular (branch)... BORRARÁ los patch y los minor (0.1.1 -> 1.0.0... 0.3.3 -> 3.0.0)
+#branch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD); if [[ $branch == "angular" ]]; then npm run deploy:tag major; else echo \"no\"; fi;
+########
+#!/
+#!/Patch en angular (branch):
+branch=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD); if [[ $branch == "angular" ]]; then npm run deploy:tag patch; else echo \"no\"; fi;
