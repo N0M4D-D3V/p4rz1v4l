@@ -4,12 +4,12 @@ if [ -z "$VERSION_EXECUTED" ]; then
 fi
 
 action=$1 # patch, minor or major
+tag=$(awk -F \" '/"version": ".+"/ { print $4; exit; }' package.json)
 
 git add -A
-git commit -m "CI/CD -> Create patch for $tag"
+git commit --amend --no-edit
 npm version "$action"
 # Get app version
-tag=$(awk -F \" '/"version": ".+"/ { print $4; exit; }' package.json)
 # Upload git changes to remote
 git push
 git push origin "v$tag"
