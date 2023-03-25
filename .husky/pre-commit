@@ -1,7 +1,6 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-npx ng build --prod && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint --fix
 ##################################################################################################################
 #FORMAT
 #!/
@@ -10,6 +9,7 @@ npx ng build --prod && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --s
 #!/npm run format &&  ng lint --fix  
 #!/Para lo commits posteriores al inicial, ejecutar para sólo modificar los archivos modificados:
 #!/npx ng build --prod && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint --fix
+npx ng build --prod && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint --fix
 ##################################################################################################################
 #VERSION
 #!/
