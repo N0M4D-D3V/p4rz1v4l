@@ -95,7 +95,9 @@
   <app-indicator-popover
     [editableIndicator]="indicatorToEdit"
     (onClose)="editPopover.close()"
-    (onDelete)="onDeleteIndicator($event.provisionalID - 1); editPopover.close()"
+    (onDelete)="
+      onDeleteIndicator($event.provisionalID - 1); editPopover.close()
+    "
     (onSave)="onSaveIndicator($event, editPopover)"
   ></app-indicator-popover>
 </ng-template>

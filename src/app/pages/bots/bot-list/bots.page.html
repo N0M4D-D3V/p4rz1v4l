@@ -14,7 +14,7 @@
       class="bots__bot-card-container--add-btn-container-button"
       (click)="addBot()"
     >
-      {{addButtonLiteral}}
+      {{ addButtonLiteral }}
     </button>
   </div>
 </div>
@@ -26,7 +26,11 @@
       <ng-container *ngIf="filteredBots$ | async as filteredBots">
         <ng-container *ngIf="filteredBots.length > 0; else notFound">
           <ng-container
-            *ngFor="let bots of bot.controls; let i = index; trackBy: trackByBot"
+            *ngFor="
+              let bots of bot.controls;
+              let i = index;
+              trackBy: trackByBot
+            "
           >
             <ng-container *ngIf="isBotVisible(filteredBots, bots)">
               <div class="bots__bot-card-container">
@@ -36,7 +40,7 @@
                 >
                   <input class="bots__bot-card-container--input" />
                   <div class="bots__bot-card-container--input-letters">
-                    {{bots.value.client.name}}
+                    {{ bots.value.client.name }}
                   </div>
                 </div>
                 <button
@@ -44,7 +48,7 @@
                   class="bots__bot-card-container--remove-btn"
                   (click)="removeBot(bots)"
                 >
-                  {{deleteButtonLiteral}}
+                  {{ deleteButtonLiteral }}
                 </button>
               </div>
             </ng-container>

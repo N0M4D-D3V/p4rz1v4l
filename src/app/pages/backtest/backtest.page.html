@@ -5,7 +5,7 @@
       <select class="form-select" formControlName="stratID">
         <option selected disabled [value]="null">Select strategy</option>
         <option *ngFor="let strat of strategies$ | async" [value]="strat.id">
-          {{strat.name}}
+          {{ strat.name }}
         </option>
       </select>
     </div>
@@ -13,8 +13,8 @@
     <div class="row mt-1">
       <select class="form-select col me-1" formControlName="exchange">
         <option selected disabled value="">Exchange</option>
-        <option *ngFor="let exchange of exchangeList" value="{{exchange}}">
-          {{exchange | titlecase}}
+        <option *ngFor="let exchange of exchangeList" value="{{ exchange }}">
+          {{ exchange | titlecase }}
         </option>
       </select>
       <select class="form-select col ms-1" formControlName="market">
@@ -24,7 +24,7 @@
           *ngFor="let market of exchange?.markets | keyvalue"
           [value]="market?.key"
         >
-          {{market?.key}}
+          {{ market?.key }}
         </option>
       </select>
     </div>
@@ -34,9 +34,9 @@
         <option selected disabled value="">Timeframe</option>
         <option
           *ngFor="let timeframe of exchange?.timeframes | keyvalue"
-          value="{{timeframe.key}}"
+          value="{{ timeframe.key }}"
         >
-          {{timeframe.value }}
+          {{ timeframe.value }}
         </option>
       </select>
       <select class="form-select col ms-1" formControlName="limit">

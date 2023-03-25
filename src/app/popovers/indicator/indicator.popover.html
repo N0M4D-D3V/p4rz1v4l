@@ -22,15 +22,15 @@
   <div formArrayName="config" *ngIf="configVariables?.length > 0">
     <div
       class="input-group mt-3"
-      *ngFor="let variable of configVariables; let i=index"
+      *ngFor="let variable of configVariables; let i = index"
     >
-      <label class="input-group-text" for="var-{{i}}"
-        >{{variable | titlecase }}</label
-      >
+      <label class="input-group-text" for="var-{{ i }}">{{
+        variable | titlecase
+      }}</label>
       <input
         type="number"
         class="form-control"
-        id="var-{{i}}"
+        id="var-{{ i }}"
         [formControlName]="i"
       />
     </div>
