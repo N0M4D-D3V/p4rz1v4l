@@ -6,10 +6,10 @@
 #!/
 ########
 #!/La primera vez ejecutamos este comando que formateará todo el código:
-#!/npm run format &&  ng lint --fix  
+#!/npm run format &&  ng lint   
 #!/Para lo commits posteriores al inicial, ejecutar para sólo modificar los archivos modificados:
-#!/npx ng build  && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint --fix
-npx ng build && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint --fix
+#!/npx ng build  && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint 
+npx ng build && npx pretty-quick --pattern "src/**/*.*(ts,html,scss)" --staged  && ng lint 
 ##################################################################################################################
 #VERSION
 #!/
