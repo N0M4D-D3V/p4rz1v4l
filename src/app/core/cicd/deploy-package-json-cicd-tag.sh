@@ -16,5 +16,3 @@ tag=$(grep -Eo '"version":\s*"[^"]+"' package.json | grep -Eo '[0-9]+\.[0-9]+\.[
 git add -A
 npm version "$action"
 # Get app version
-# Upload git changes to remote
-git push --follow-tags
