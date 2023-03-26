@@ -14,7 +14,7 @@
     "lint-format": "npm run format &&  ng lint",
     "format-pretty-quick": "pretty-quick --pattern \"src/**/*.*(ts|html|scss)\" --staged",
     "prepare": "husky install",
-    "deploy:tag": "sh src/app/core/cicd/deploy-package-json-cicd-tag.sh",
+    "deploy:tag": "sh scripts/cicd/deploy-package-json-cicd-tag.sh",
     "post-deploy:version": "node -p \"'export const VERSION_APP = ' + JSON.stringify(require('./package.json').version) + ';'\" > src/core/version/version.ts"
   },
   "private": true,
