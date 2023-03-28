@@ -12,6 +12,7 @@ echo "CURRENT  ==> $current_date"
 echo ""
 echo "Available days ==> $deadline"
 
-git add ./update-deadline.sh
+cd ..
+git add README.md
 git commit -m'<> deadline updated <>'
 git push origin angular
