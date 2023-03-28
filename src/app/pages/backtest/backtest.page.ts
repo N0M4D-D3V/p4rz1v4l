@@ -17,6 +17,7 @@ import { AVAILABLE_EXCHANGES } from "@common/available-indicator.list";
 import { BacktestCandle, Candle } from "@interfaces/candle";
 import { Backtester } from "@models/backtest/backtester.model";
 import { Strategy } from "@models/strategy/estrategy.model";
+import { BacktestResult } from "@interfaces/backtest.interface";
 
 @Component({
   selector: "app-backtest",
@@ -148,6 +149,10 @@ export class BacktestPage implements OnInit, OnDestroy {
     const stoploss: boolean = this.stoplossControl.value;
     const stratID: number = this.stratIDControl.value;
 
+    const strategy: Strategy = this.strategies.find(
+      (strat: Strategy) => +strat.id === +stratID
+    );
+
     this.exchangeService.setExchange(this.exchange);
     const candles: Candle[] = await this.exchangeService.getAll({
       symbol: market,
@@ -162,9 +167,15 @@ export class BacktestPage implements OnInit, OnDestroy {
       feeCostPercentage: feePercentage,
     });
 
-    const results: BacktestCandle[] = backtester.execute(
+    const candleResults: BacktestCandle[] = await backtester.execute(
       candles,
-      this.strategies[stratID]
+      strategy
+    );
+
+    const results: BacktestResult = backtester.getResults(
+      market,
+      candleResults[0].timestamp,
+      candleResults[candleResults.length - 1].timestamp
     );
 
     console.log(results);

@@ -16,8 +16,8 @@
   </select>
   <select class="form-select" formControlName="operationType">
     <option selected disabled value="">Operation</option>
-    <option value="buy">Buy</option>
-    <option value="sell">Sell</option>
+    <option value="long">Long</option>
+    <option value="short">Short</option>
   </select>
   <div formArrayName="config" *ngIf="configVariables?.length > 0">
     <div

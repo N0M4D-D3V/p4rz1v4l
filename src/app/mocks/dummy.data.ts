@@ -1,88 +1,20 @@
+import { OperationType } from "@interfaces/backtest.interface";
 import { BotDetail } from "@interfaces/bot-detail.interface";
 import { Strategy } from "@models/strategy/estrategy.model";
 
 export const STRATEGIES_MOCK: Strategy[] = [
-  new Strategy(0, "mock 1", 10, 100, [
-    {
-      name: "Stochastic Oscillator",
-      symbol: "KD",
-      operationType: "buy",
-      config: [
-        {
-          variable: "perid",
-          value: 100,
-        },
-        {
-          variable: "sma period",
-          value: 30,
-        },
-      ],
-    },
-  ]),
-  new Strategy(1, "mock 2", 30, 300, [
+  new Strategy(1, "mock 1", 30, 300, [
     {
       name: "Relative Strength Index",
       symbol: "RSI",
-      operationType: "buy",
+      operationType: OperationType.Long,
       config: [
         {
           variable: "perid",
           value: 100,
         },
-      ],
-    },
-    {
-      name: "Stochastic Oscillator",
-      symbol: "KD",
-      operationType: "buy",
-      config: [
-        {
-          variable: "perid",
-          value: 100,
-        },
-        {
-          variable: "sma period",
-          value: 30,
-        },
-      ],
-    },
-  ]),
-  new Strategy(2, "mock 3", 50, 500, [
-    {
-      name: "Simple Moving Average",
-      symbol: "SMA",
-      operationType: "buy",
-      config: [
-        {
-          variable: "perid",
-          value: 100,
-        },
-      ],
-    },
-    {
-      name: "Relative Strength Index",
-      symbol: "RSI",
-      operationType: "buy",
-      config: [
-        {
-          variable: "perid",
-          value: 100,
-        },
-      ],
-    },
-    {
-      name: "Stochastic Oscillator",
-      symbol: "KD",
-      operationType: "buy",
-      config: [
-        {
-          variable: "perid",
-          value: 100,
-        },
-        {
-          variable: "sma period",
-          value: 30,
-        },
+        { variable: "overbought", value: 70 },
+        { variable: "oversold", value: 30 },
       ],
     },
   ]),

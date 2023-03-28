@@ -276,8 +276,10 @@ export class Backtester {
    * @param dataframe
    * @param strategy
    */
-  public execute(dataframe: Candle[], strategy: Strategy): BacktestCandle[] {
-    strategy.set_up(dataframe);
+  public async execute(
+    dataframe: Candle[],
+    strategy: Strategy
+  ): Promise<BacktestCandle[]> {
     return dataframe.map((candle: Candle, index: number) => {
       const btCandle: BacktestCandle = {
         ...candle,
@@ -286,13 +288,13 @@ export class Backtester {
       };
 
       if (this.balance > 0) {
-        if (strategy.check_long_signal(index)) {
+        if (strategy.checkLongSignals(candle)) {
           btCandle.operation = OperationType.LongOpen;
           btCandle.operationPrice = candle.close;
           this.openPosition(candle.close, OperationType.Long, index);
           this.setTakeProfit(candle.close);
           this.setStoploss(candle.close);
-        } else if (strategy.check_short_signal(index)) {
+        } else if (strategy.checkShortSignals(candle)) {
           btCandle.operation = OperationType.ShortOpen;
           btCandle.operationPrice = candle.close;
           this.openPosition(candle.close, OperationType.Short, index);

@@ -1,12 +1,14 @@
 import { IndicatorInfo } from "@interfaces/indicator.interface";
 import { Candle } from "@interfaces/candle";
+import { AbstractIndicator } from "@models/abstract/abstract-indicator.model";
+import { IndicatorFactory } from "@services/factory/indicator-factory/indicator-factory.service";
 
 export class Strategy {
   id: number;
   name: string;
   stoploss: number;
   takeprofit: number;
-  indicators: IndicatorInfo[];
+  indicators: AbstractIndicator[];
 
   public constructor(
     id: number,
@@ -15,20 +17,17 @@ export class Strategy {
     takeprofit: number,
     indicators: IndicatorInfo[]
   ) {
+    const indicatorFactory: IndicatorFactory = new IndicatorFactory();
+
     this.id = id;
     this.name = name;
     this.stoploss = stoploss;
     this.takeprofit = takeprofit;
-    this.indicators = indicators;
-  }
 
-  /**
-   * Prepare the strategy. Sets the params in pre-executing sentences.
-   *
-   * @param dataframe
-   */
-  public set_up(dataframe: Candle[]): void {
-    console.error("not implemented method");
+    this.indicators = [];
+    indicators.forEach((ind) =>
+      this.indicators.push(indicatorFactory.getInstance(ind))
+    );
   }
 
   /**
@@ -36,9 +35,15 @@ export class Strategy {
    *
    * @param i
    */
-  public check_long_signal(i: number): boolean {
-    console.error("not implemented method");
-    return true;
+  public checkLongSignals(candle: Candle): boolean {
+    let result: boolean;
+
+    for (let ind of this.indicators) {
+      result = ind.checkLongSignal(candle);
+      if (!result) break;
+    }
+
+    return result;
   }
 
   /**
@@ -46,8 +51,14 @@ export class Strategy {
    *
    * @param i
    */
-  public check_short_signal(i: number): boolean {
-    console.error("not implemented method");
-    return true;
+  public checkShortSignals(candle: Candle): boolean {
+    let result: boolean;
+
+    for (let ind of this.indicators) {
+      result = ind.checkShortSignal(candle);
+      if (!result) break;
+    }
+
+    return result;
   }
 }

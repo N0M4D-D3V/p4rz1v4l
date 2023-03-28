@@ -1,7 +1,9 @@
+import { OperationType } from "./backtest.interface";
+
 export interface IndicatorInfo {
   name: string;
   symbol?: string;
-  operationType?: "buy" | "sell";
+  operationType?: OperationType;
   config?: IndicatorOption[];
   provisionalID?: number;
 }

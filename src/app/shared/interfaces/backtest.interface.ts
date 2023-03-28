@@ -26,6 +26,8 @@ export interface BacktestResult {
 }
 
 export enum OperationType {
+  Buy = "buy",
+  Sell = "sell",
   Long = "long",
   Short = "short",
   Stoploss = "stoploss",
