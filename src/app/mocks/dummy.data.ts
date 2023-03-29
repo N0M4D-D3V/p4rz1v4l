@@ -3,15 +3,15 @@ import { BotDetail } from "@interfaces/bot-detail.interface";
 import { Strategy } from "@models/strategy/estrategy.model";
 
 export const STRATEGIES_MOCK: Strategy[] = [
-  new Strategy(1, "mock 1", 30, 300, [
+  new Strategy(1, "mock 1", 1, 3, [
     {
       name: "Relative Strength Index",
       symbol: "RSI",
       operationType: OperationType.Long,
       config: [
         {
-          variable: "perid",
-          value: 100,
+          variable: "period",
+          value: 30,
         },
         { variable: "overbought", value: 70 },
         { variable: "oversold", value: 30 },
