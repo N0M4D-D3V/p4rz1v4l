@@ -3,7 +3,7 @@ import { BotDetail } from "@interfaces/bot-detail.interface";
 import { Strategy } from "@models/strategy/estrategy.model";
 
 export const STRATEGIES_MOCK: Strategy[] = [
-  new Strategy(1, "mock 1", 1, 3, [
+  new Strategy(0, "mock 1", 1, 3, [
     {
       name: "Relative Strength Index",
       symbol: "RSI",
