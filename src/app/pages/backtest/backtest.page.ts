@@ -66,6 +66,12 @@ export class BacktestPage implements OnInit, OnDestroy {
     return this.form.get("feePercentage");
   }
 
+  private get strategy(): Strategy {
+    return this.strategies.find(
+      (strat: Strategy) => +strat.id === +this.stratIDControl.value
+    );
+  }
+
   public exchange: Exchange;
 
   public strategies$: Observable<Strategy[]>;
@@ -137,6 +143,7 @@ export class BacktestPage implements OnInit, OnDestroy {
   }
 
   public onEdit(): void {
+    this.strategyService.selectedStrategy = this.strategy;
     this.modalService.show(EditStrategyModalComponent);
   }
 
@@ -150,11 +157,7 @@ export class BacktestPage implements OnInit, OnDestroy {
     const balance: number = this.balanceControl.value;
     const leverage: number = this.leverageControl.value;
     const stoploss: boolean = this.stoplossControl.value;
-    const stratID: number = this.stratIDControl.value;
-
-    const strategy: Strategy = this.strategies.find(
-      (strat: Strategy) => +strat.id === +stratID
-    );
+    const strategy: Strategy = this.strategy;
 
     this.exchangeService.setExchange(this.exchange);
     const candles: Candle[] = await this.exchangeService.getAll({
