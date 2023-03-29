@@ -168,6 +168,8 @@ export class BacktestPage implements OnInit, OnDestroy {
       leverage: leverage,
       trailingStoploss: stoploss,
       feeCostPercentage: feePercentage,
+      stoplossPercentage: strategy.stoploss,
+      takeprofitPercentage: strategy.takeprofit,
     });
 
     const candleResults: BacktestCandle[] = await backtester.execute(

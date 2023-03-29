@@ -21,19 +21,19 @@
     <tbody>
       <tr>
         <th scope="row">Balance</th>
-        <td colspan="2">${{ results.balance }}</td>
+        <td colspan="2">${{ results.balance | number : "1.0-2" }}</td>
       </tr>
       <tr>
         <th scope="row">Profit</th>
-        <td colspan="2">${{ results.profit }}</td>
+        <td colspan="2">${{ results.profit | number : "1.0-2" }}</td>
       </tr>
       <tr>
         <th scope="row">Drawdown</th>
-        <td colspan="2">${{ results.drawdown }}</td>
+        <td colspan="2">${{ results.drawdown | number : "1.0-2" }}</td>
       </tr>
       <tr>
         <th scope="row">Profit after fees</th>
-        <td colspan="2">${{ results.profitAfterFees }}</td>
+        <td colspan="2">${{ results.profitAfterFees | number : "1.0-2" }}</td>
       </tr>
     </tbody>
   </table>
@@ -74,15 +74,11 @@
   <hr />
 
   <table class="table text-center">
-    <tbody>
+    <thead>
       <tr>
-        <th scope="row">Winrate</th>
-        <td colspan="2">{{ results.winrate }}%</td>
+        <th scope="col">Winrate</th>
+        <th scope="col">{{ results.winrate | number : "1.0-2" }}%</th>
       </tr>
-      <tr>
-        <th scope="row">Fitness Function (GA)</th>
-        <td colspan="2">{{ results.fitnessFunction }}</td>
-      </tr>
-    </tbody>
+    </thead>
   </table>
 </div>

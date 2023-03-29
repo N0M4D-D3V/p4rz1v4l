@@ -34,6 +34,11 @@ export class Backtester {
   private stoplossPrice: number = 0;
   private fromOpened: number = 0;
 
+  private stoplossLongMultiplicator: number;
+  private stoplossShortMultiplicator: number;
+  private takeprofitLongMultiplicator: number;
+  private takeprofitShortMultiplicator: number;
+
   constructor(config: BacktesterConfig) {
     this.config = config;
 
@@ -42,6 +47,14 @@ export class Backtester {
     this.trailingStoploss = config.trailingStoploss;
     this.feeCost = config.feeCostPercentage;
     this.inv = this.balance * 0.01 * this.leverage;
+
+    const stoplossMultiplicator: number = config.stoplossPercentage / 100;
+    this.stoplossLongMultiplicator = 1 - stoplossMultiplicator;
+    this.stoplossShortMultiplicator = 1 + stoplossMultiplicator;
+
+    const takeprofitMultiplicator: number = config.takeprofitPercentage / 100;
+    this.takeprofitShortMultiplicator = 1 - takeprofitMultiplicator;
+    this.takeprofitLongMultiplicator = 1 + takeprofitMultiplicator;
   }
 
   public openPosition(
@@ -103,8 +116,6 @@ export class Backtester {
 
   /**
    * Close position management.
-   *
-   * @param price
    */
   public closePosition(price: number): void {
     let result: number = 0;
@@ -146,8 +157,6 @@ export class Backtester {
 
   /**
    * CLoses a short operation
-   *
-   * @param price
    */
   private closeShort(price: number): number {
     const result: number = this.amount * (this.shortOpenPrice - price);
@@ -158,8 +167,6 @@ export class Backtester {
 
   /**
    * Closes a long operation
-   *
-   * @param price
    */
   private closeLong(price: number): number {
     const result: number = this.amount * (price - this.longOpenPrice);
@@ -171,28 +178,21 @@ export class Backtester {
   /**
    * Updates the take profit for long/short ops while they are running
    */
-  private setTakeProfit(
-    price: number,
-    tpLongMultiplicator: number = 1.03,
-    tpShortMultiplicator: number = 0.97
-  ): void {
-    if (this.isLongOpen) this.takeProfitPrice = price * tpLongMultiplicator;
-    if (this.isShortOpen) this.takeProfitPrice = price * tpShortMultiplicator;
+  private setTakeProfit(price: number): void {
+    if (this.isLongOpen)
+      this.takeProfitPrice = price * this.takeprofitLongMultiplicator;
+    if (this.isShortOpen)
+      this.takeProfitPrice = price * this.takeprofitShortMultiplicator;
   }
 
   /**
    * Updates the stoploss for long/short ops while they are running
-   * @param price
-   * @param slLongMultiplicator
-   * @param slShortMultiplicator
    */
-  private setStoploss(
-    price: number,
-    slLongMultiplicator: number = 0.99,
-    slShortMultiplicator: number = 1.01
-  ): void {
-    if (this.isLongOpen) this.stoplossPrice = price * slLongMultiplicator;
-    if (this.isShortOpen) this.stoplossPrice = price * slShortMultiplicator;
+  private setStoploss(price: number): void {
+    if (this.isLongOpen)
+      this.stoplossPrice = price * this.stoplossLongMultiplicator;
+    if (this.isShortOpen)
+      this.stoplossPrice = price * this.stoplossShortMultiplicator;
   }
 
   /**

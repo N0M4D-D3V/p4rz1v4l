@@ -3,6 +3,9 @@ export interface BacktesterConfig {
   leverage: number; //apalancamiento
   trailingStoploss: boolean;
   feeCostPercentage: number;
+
+  stoplossPercentage?: number;
+  takeprofitPercentage?: number;
 }
 
 export interface BacktestResult {
