@@ -40,24 +40,8 @@ export class Backtester {
     this.balance = config.initialBalance;
     this.leverage = config.leverage;
     this.trailingStoploss = config.trailingStoploss;
-    this.feeCost = config.feeCostPercentage / 100;
+    this.feeCost = config.feeCostPercentage;
     this.inv = this.balance * 0.01 * this.leverage;
-  }
-
-  public reset(): void {
-    this.balance = this.config.initialBalance;
-    this.leverage = this.config.leverage;
-    this.trailingStoploss = this.config.trailingStoploss;
-
-    this.totalOperation = 0;
-    this.winnerOperation = 0;
-    this.loserOperation = 0;
-    this.longOperation = 0;
-    this.shortOperation = 0;
-
-    this.isLongOpen = false;
-    this.isShortOpen = false;
-    this.fromOpened = 0;
   }
 
   public openPosition(
@@ -232,7 +216,7 @@ export class Backtester {
       longOps: this.longOperation,
       shortOps: this.shortOperation,
       winnerOps: this.winnerOperation,
-      losserOps: this.loserOperation,
+      loserOps: this.loserOperation,
       winrate: 0,
       fitnessFunction: 0,
     };
@@ -254,7 +238,10 @@ export class Backtester {
   }
 
   private calcWinrate(): number {
-    return this.winnerOperation / (this.winnerOperation + this.loserOperation);
+    return (
+      (this.winnerOperation / (this.winnerOperation + this.loserOperation)) *
+      100
+    );
   }
 
   private calcFitness(
@@ -288,51 +275,62 @@ export class Backtester {
       };
 
       if (this.balance > 0) {
-        if (strategy.checkLongSignals(candle)) {
+        // open long
+        if (strategy.checkLongSignals(candle) && !this.isLongOpen) {
           btCandle.operation = OperationType.LongOpen;
           btCandle.operationPrice = candle.close;
           this.openPosition(candle.close, OperationType.Long, index);
           this.setTakeProfit(candle.close);
           this.setStoploss(candle.close);
-        } else if (strategy.checkShortSignals(candle)) {
+        }
+
+        // open short
+        if (strategy.checkShortSignals(candle) && !this.isShortOpen) {
           btCandle.operation = OperationType.ShortOpen;
           btCandle.operationPrice = candle.close;
           this.openPosition(candle.close, OperationType.Short, index);
           this.setTakeProfit(candle.close);
           this.setStoploss(candle.close);
-        } else {
-          if (this.trailingStoploss && (this.isLongOpen || this.isShortOpen)) {
-            const highPrices: number[] = dataframe
-              .slice(this.fromOpened, index)
-              .map((candle: Candle) => candle.high);
-            const newMax = Math.max(...highPrices);
-            const previousStopLoss = this.stoplossPrice;
+        }
 
-            this.setStoploss(newMax);
-            if (previousStopLoss > this.stoplossPrice)
-              this.stoplossPrice = previousStopLoss;
+        // update stoploss
+        if (this.trailingStoploss && (this.isLongOpen || this.isShortOpen)) {
+          const highPrices: number[] = dataframe
+            .slice(this.fromOpened, index)
+            .map((candle: Candle) => candle.high);
+          const newMax = Math.max(...highPrices);
+          const previousStopLoss = this.stoplossPrice;
+
+          this.setStoploss(newMax);
+          if (previousStopLoss > this.stoplossPrice)
+            this.stoplossPrice = previousStopLoss;
+        }
+
+        if (this.isLongOpen) {
+          // take profit
+          if (candle.high >= this.takeProfitPrice) {
+            btCandle.operation = OperationType.LongClose;
+            btCandle.operationPrice = this.takeProfitPrice;
+            this.closePosition(this.takeProfitPrice);
+
+            // stoploss
+          } else if (candle.low <= this.stoplossPrice) {
+            btCandle.operation = OperationType.LongStopLossClose;
+            btCandle.operationPrice = this.stoplossPrice;
+            this.closePosition(this.stoplossPrice);
           }
+        } else if (this.isShortOpen) {
+          // take profit
+          if (candle.high >= this.stoplossPrice) {
+            btCandle.operation = OperationType.ShortStopLossClose;
+            btCandle.operationPrice = this.stoplossPrice;
+            this.closePosition(this.stoplossPrice);
 
-          if (this.isLongOpen) {
-            if (candle.high >= this.takeProfitPrice) {
-              btCandle.operation = OperationType.LongClose;
-              btCandle.operationPrice = this.takeProfitPrice;
-              this.closePosition(this.takeProfitPrice);
-            } else if (candle.low <= this.stoplossPrice) {
-              btCandle.operation = OperationType.LongStopLossClose;
-              btCandle.operationPrice = this.stoplossPrice;
-              this.closePosition(this.stoplossPrice);
-            }
-          } else if (this.isShortOpen) {
-            if (candle.high >= this.stoplossPrice) {
-              btCandle.operation = OperationType.ShortStopLossClose;
-              btCandle.operationPrice = this.stoplossPrice;
-              this.closePosition(this.stoplossPrice);
-            } else if (candle.low <= this.takeProfitPrice) {
-              btCandle.operation = OperationType.ShortClose;
-              btCandle.operationPrice = this.takeProfitPrice;
-              this.closePosition(this.takeProfitPrice);
-            }
+            //stoploss
+          } else if (candle.low <= this.takeProfitPrice) {
+            btCandle.operation = OperationType.ShortClose;
+            btCandle.operationPrice = this.takeProfitPrice;
+            this.closePosition(this.takeProfitPrice);
           }
         }
       }

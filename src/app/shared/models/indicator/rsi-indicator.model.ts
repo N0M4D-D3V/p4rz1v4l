@@ -5,13 +5,7 @@ import { IndicatorInfo } from "@interfaces/indicator.interface";
 import { RSI } from "@debut/indicators";
 import { Candle } from "@interfaces/candle";
 
-export class RSIIndicator implements AbstractIndicator {
-  name: string;
-  symbol?: string;
-  provisionalID?: number;
-  operationType?: OperationType;
-  config?: IndicatorOption[];
-
+export class RSIIndicator extends AbstractIndicator {
   private period: number = 30;
   private oversold: number = 30;
   private overbought: number = 70;
@@ -19,6 +13,7 @@ export class RSIIndicator implements AbstractIndicator {
   private rsi: RSI;
 
   constructor(ind: IndicatorInfo) {
+    super();
     this.name = ind.name;
     this.symbol = ind.symbol;
     this.provisionalID = ind.provisionalID;
@@ -33,7 +28,7 @@ export class RSIIndicator implements AbstractIndicator {
   }
 
   public checkLongSignal(candle: Candle): boolean {
-    if (this.operationType === OperationType.Short) return false;
+    if (this.isShortMode()) return false;
 
     const momentValue: number = this.rsi.momentValue(candle.close);
     let result: boolean = false;
@@ -45,7 +40,7 @@ export class RSIIndicator implements AbstractIndicator {
   }
 
   public checkShortSignal(candle: Candle): boolean {
-    if (this.operationType === OperationType.Long) return false;
+    if (this.isLongMode()) return false;
 
     const rsiValue = this.rsi.nextValue(candle.close);
     let result: boolean = false;

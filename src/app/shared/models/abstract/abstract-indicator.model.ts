@@ -12,4 +12,12 @@ export abstract class AbstractIndicator implements IndicatorInfo {
 
   public abstract checkLongSignal(df: Candle): boolean;
   public abstract checkShortSignal(df: Candle): boolean;
+
+  protected isShortMode(): boolean{
+    return this.operationType === OperationType.Short
+  }
+
+  protected isLongMode(): boolean{
+    return this.operationType === OperationType.Long
+  }
 }

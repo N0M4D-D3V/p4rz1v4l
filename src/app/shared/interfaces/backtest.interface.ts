@@ -19,7 +19,7 @@ export interface BacktestResult {
   longOps: number;
   shortOps: number;
   winnerOps: number;
-  losserOps: number;
+  loserOps: number;
 
   winrate: number;
   fitnessFunction: number;

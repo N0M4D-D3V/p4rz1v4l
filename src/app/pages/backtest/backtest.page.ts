@@ -75,6 +75,7 @@ export class BacktestPage implements OnInit, OnDestroy {
   public isEditAvailable: boolean = false;
 
   public markets: string[];
+  public results: BacktestResult;
 
   constructor(
     private readonly modalService: BsModalService,
@@ -140,6 +141,8 @@ export class BacktestPage implements OnInit, OnDestroy {
   }
 
   public async onTest(): Promise<void> {
+    this.results = undefined;
+
     const market: string = this.marketControl.value;
     const timeframe: string = this.timeframeControl.value;
     const limit = this.limitControl.value;
@@ -172,13 +175,11 @@ export class BacktestPage implements OnInit, OnDestroy {
       strategy
     );
 
-    const results: BacktestResult = backtester.getResults(
+    this.results = backtester.getResults(
       market,
       candleResults[0].timestamp,
       candleResults[candleResults.length - 1].timestamp
     );
-
-    console.log(results);
   }
 
   private createForm(): void {
