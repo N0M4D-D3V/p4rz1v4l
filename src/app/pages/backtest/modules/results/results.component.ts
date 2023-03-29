@@ -1,9 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from "@angular/core";
+import { Component, Input } from "@angular/core";
 import { BacktestResult } from "@interfaces/backtest.interface";
 
 @Component({
@@ -11,10 +6,8 @@ import { BacktestResult } from "@interfaces/backtest.interface";
   templateUrl: "./results.component.html",
   styleUrls: ["./results.component.scss"],
 })
-export class ResultsComponent implements OnInit {
+export class ResultsComponent {
   @Input() results: BacktestResult;
 
   constructor() {}
-
-  ngOnInit(): void {}
 }
