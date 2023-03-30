@@ -1,4 +1,3 @@
-import { OperationType } from "@interfaces/backtest.interface";
 import { IndicatorOption } from "@interfaces/indicator.interface";
 import { AbstractIndicator } from "@models/abstract/abstract-indicator.model";
 import { IndicatorInfo } from "@interfaces/indicator.interface";
@@ -42,7 +41,7 @@ export class RSIIndicator extends AbstractIndicator {
   public checkShortSignal(candle: Candle): boolean {
     if (this.isLongMode()) return false;
 
-    const rsiValue = this.rsi.nextValue(candle.close);
+    const rsiValue = this.rsi.momentValue(candle.close);
     let result: boolean = false;
 
     if (rsiValue >= this.overbought) result = true;

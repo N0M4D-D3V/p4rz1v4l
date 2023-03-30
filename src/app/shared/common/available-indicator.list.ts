@@ -40,10 +40,10 @@ export const AVAILABLE_INDICATORS: IndicatorInfo[] = [
   //   name: "Exponential Weighted Moving Average",
   //   symbol: "EWMA",
   // },
-  // {
-  //   name: "Moving Average Convergence Divergence",
-  //   symbol: "MACD",
-  // },
+  {
+    name: "Moving Average Convergence Divergence",
+    symbol: "MACD",
+  },
   // {
   //   name: "Pivot Point Levels (classic/woodie/camarilla/fibonacci",
   // },
@@ -55,18 +55,18 @@ export const AVAILABLE_INDICATORS: IndicatorInfo[] = [
     name: "Relative Strength Index",
     symbol: "RSI",
   },
-  {
-    name: "Simple Moving Average",
-    symbol: "SMA",
-  },
+  // {
+  //   name: "Simple Moving Average",
+  //   symbol: "SMA",
+  // },
   // {
   //   name: "Smoothed Moving Average",
   //   symbol: "SMMA",
   // },
-  {
-    name: "Stochastic Oscillator",
-    symbol: "KD",
-  },
+  // {
+  //   name: "Stochastic Oscillator",
+  //   symbol: "KD",
+  // },
   // {
   //   name: "SuperTrend MTF",
   //   symbol: "ST MTF",

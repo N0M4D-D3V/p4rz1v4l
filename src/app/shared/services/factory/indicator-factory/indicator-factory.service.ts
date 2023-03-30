@@ -2,6 +2,7 @@ import { Injectable } from "@angular/core";
 import { IndicatorInfo } from "@interfaces/indicator.interface";
 import { AbstractIndicator } from "@models/abstract/abstract-indicator.model";
 import { RSIIndicator } from "@models/indicator/rsi-indicator.model";
+import { MACDIndicator } from "../../../models/indicator/macd-indicator.model";
 
 @Injectable({ providedIn: "root" })
 export class IndicatorFactory {
@@ -11,6 +12,8 @@ export class IndicatorFactory {
     switch (ind.symbol.toLowerCase()) {
       case "rsi":
         return new RSIIndicator(ind);
+      case "macd":
+        return new MACDIndicator(ind);
       default:
         return undefined;
     }
@@ -20,10 +23,8 @@ export class IndicatorFactory {
     switch (symbol.toLowerCase()) {
       case "rsi":
         return ["period", "overbought", "oversold"];
-      case "sma":
-        return ["period"];
-      case "kd":
-        return ["period", "SMA period"];
+      case "macd":
+        return ["periodEmaFast", "periodEmaSlow", "periodSignal"];
       default:
         alert("Indicator not implemented yet!");
         return [];
