@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { TabManagerService } from "@components/sidenav";
+import { TabManagerService } from "@components/tab/shared-tab/services/tab-manager.service";
 import { STRATEGIES_MOCK } from "@mocks/dummy.data";
 import { AppRoutingService } from "@services/routing/approuting.services";
 import { StrategyService } from "@services/strategy/strategy.service";

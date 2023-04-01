@@ -17,7 +17,7 @@ import {
 } from "rxjs";
 import { BotDetailService } from "@services/pages/bot/bot-page.service";
 import { BotDetail, BotItem } from "@interfaces/bot-detail.interface";
-import { TabManagerService } from "@components/sidenav";
+import { TabManagerService } from "@components/tab/shared-tab/services/tab-manager.service";
 import { AppComponent } from "src/app/app.component";
 import { SharedService } from "@services/routing/saved.services";
 

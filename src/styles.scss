@@ -2,19 +2,7 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~bootstrap-icons/font/bootstrap-icons";
 
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}
-
-.pe-pointer {
-  cursor: pointer;
-}
-
 /* Importing Bootstrap SCSS file. */
 @import "~bootstrap/scss/bootstrap";
-@import "./app/styles/animations.scss";
+@import "assets/styles/animations.scss";
+@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800');
