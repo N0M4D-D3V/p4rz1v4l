@@ -9,7 +9,6 @@ import { Router } from "@angular/router";
   styleUrls: ["./full.component.scss"],
 })
 export class FullComponent implements OnInit {
-
   constructor(public router: Router) {}
   public isCollapsed = false;
   public innerWidth: number = 0;

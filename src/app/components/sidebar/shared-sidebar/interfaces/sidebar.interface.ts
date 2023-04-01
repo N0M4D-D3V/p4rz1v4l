@@ -2,12 +2,12 @@ import { RoutesMenu } from "../models/routes-sidebar.model";
 
 export const ROUTES_MENU: RoutesMenu[] = [
   {
-    path: '/dashboard',
-    title: 'Dashboard',
-    icon: 'bi bi-speedometer2',
-    class: '',
+    path: "/dashboard",
+    title: "Dashboard",
+    icon: "bi bi-speedometer2",
+    class: "",
     extralink: false,
-    submenu: []
+    submenu: [],
   },
   {
     path: "/home",

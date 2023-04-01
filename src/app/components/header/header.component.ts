@@ -20,58 +20,9 @@ import { Tab } from "../tab/shared-tab/models";
 export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
   @Output() toggleSidebar = new EventEmitter<void>();
 
-  private botRemovedSubscription: Subscription;
-  public tabs$ = this.tabManager.openedTabs$;
-
-  constructor(
-    private tabManager: TabManagerService,
-    private botDetailService: BotDetailService,
-    private router: Router
-  ) {}
-
-  ngOnInit(): void {
-    this.onSusbscriptionRemove();
-  }
-
-  async onTabClosed(tab: Tab): Promise<void> {
-    this.tabManager.removeTab(tab);
-    await this.navigateToBotPage();
-
-    this.deleteStoredRoute(tab.url);
-  }
-
-  private onSusbscriptionRemove() {
-    this.botRemovedSubscription = this.botDetailService.botRemoved$.subscribe(
-      (botId) => {
-        this.handleBotRemoved(botId);
-      }
-    );
-  }
-
-  private navigateToBotPage(): void {
-    this.router.navigate(["/bots"]);
-  }
-
-  private deleteStoredRoute(url: string): void {
-    const strategy = this.router
-      .routeReuseStrategy as CustomRouterReuseStrategy;
-
-    strategy.deleteStoredRoute(url);
-  }
-
-  public handleBotRemoved(botId: number): void {
-    const botTab = this.tabManager.getTabByUrl(`/bot/${botId}`);
-
-    if (botTab) {
-      this.tabManager.removeTab(botTab);
-    }
-  }
-  ngOnDestroy(): void {
-    this.botRemovedSubscription.unsubscribe();
-  }
 
   // This is for Notifications
-  notifications: Object[] = [
+/*   notifications: Object[] = [
     {
       btn: "btn-danger",
       icon: "ti-link",
@@ -163,7 +114,58 @@ export class HeaderComponent implements OnInit, OnDestroy, AfterViewInit {
       code: "de",
       icon: "de",
     },
-  ];
+  ]; */
+
+  private botRemovedSubscription: Subscription;
+  public tabs$ = this.tabManager.openedTabs$;
+
+  constructor(
+    private tabManager: TabManagerService,
+    private botDetailService: BotDetailService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.onSusbscriptionRemove();
+  }
+
+  async onTabClosed(tab: Tab): Promise<void> {
+    this.tabManager.removeTab(tab);
+    await this.navigateToBotPage();
+
+    this.deleteStoredRoute(tab.url);
+  }
+
+  private onSusbscriptionRemove() {
+    this.botRemovedSubscription = this.botDetailService.botRemoved$.subscribe(
+      (botId) => {
+        this.handleBotRemoved(botId);
+      }
+    );
+  }
+
+  private navigateToBotPage(): void {
+    this.router.navigate(["/bots"]);
+  }
+
+  private deleteStoredRoute(url: string): void {
+    const strategy = this.router
+      .routeReuseStrategy as CustomRouterReuseStrategy;
+
+    strategy.deleteStoredRoute(url);
+  }
+
+  public handleBotRemoved(botId: number): void {
+    const botTab = this.tabManager.getTabByUrl(`/bot/${botId}`);
+
+    if (botTab) {
+      this.tabManager.removeTab(botTab);
+    }
+  }
+  ngOnDestroy(): void {
+    this.botRemovedSubscription.unsubscribe();
+  }
+
 
   ngAfterViewInit() {}
 }

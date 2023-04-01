@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from "@angular/core";
 import {
   ApexAxisChartSeries,
   ApexChart,
@@ -9,8 +9,8 @@ import {
   ApexXAxis,
   ApexTooltip,
   ApexTheme,
-  ApexGrid
-} from 'ng-apexcharts';
+  ApexGrid,
+} from "ng-apexcharts";
 
 export type salesChartOptions = {
   series: ApexAxisChartSeries;
@@ -28,11 +28,10 @@ export type salesChartOptions = {
 };
 
 @Component({
-  selector: 'app-sales-summary',
-  templateUrl: './sales-summary.component.html'
+  selector: "app-sales-summary",
+  templateUrl: "./sales-summary.component.html",
 })
-export class SalesSummaryComponent implements OnInit {
-
+export class SalesSummaryComponent  {
   @ViewChild("chart") chart: ChartComponent = Object.create(null);
   public salesChartOptions: Partial<salesChartOptions>;
   constructor() {
@@ -48,19 +47,19 @@ export class SalesSummaryComponent implements OnInit {
         },
       ],
       chart: {
-        fontFamily: 'Nunito Sans,sans-serif',
+        fontFamily: "Nunito Sans,sans-serif",
         height: 250,
-        type: 'area',
+        type: "area",
         toolbar: {
-          show: false
-        }
+          show: false,
+        },
       },
       dataLabels: {
-        enabled: false
+        enabled: false,
       },
       stroke: {
-        curve: 'smooth',
-        width: '1',
+        curve: "smooth",
+        width: "1",
       },
       grid: {
         strokeDashArray: 3,
@@ -79,12 +78,9 @@ export class SalesSummaryComponent implements OnInit {
         ],
       },
       tooltip: {
-        theme: 'dark'
-      }
+        theme: "dark",
+      },
     };
-  }
-
-  ngOnInit(): void {
   }
 
 }

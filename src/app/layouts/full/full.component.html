@@ -28,7 +28,11 @@
           class="nav-toggler waves-effect waves-light d-block d-lg-none"
           href="javascript:void(0)"
         >
-          <i [ngClass]="showMobileMenu ? 'bi bi-text-left fs-6' : 'bi bi-text-left fs-6'"></i>
+          <i
+            [ngClass]="
+              showMobileMenu ? 'bi bi-text-left fs-6' : 'bi bi-text-left fs-6'
+            "
+          ></i>
         </a>
         <a class="navbar-brand" href="/">
           <b class="logo-icon">
@@ -37,7 +41,6 @@
               alt="homepage"
               class="dark-logo"
             />
-           
           </b>
           <span class="logo-text">
             <!-- <img
@@ -45,7 +48,7 @@
               class="dark-logo"
               alt="homepage"
             /> -->
-            <h1 class="dark-logo">P4rz1v4l</h1> 
+            <h1 class="dark-logo">P4rz1v4l</h1>
           </span>
         </a>
         <!-- ============================================================== -->
@@ -87,7 +90,7 @@
     (mouseover)="Logo()"
     (mouseout)="Logo()"
   >
-      <app-sidebar></app-sidebar>
+    <app-sidebar></app-sidebar>
   </aside>
   <div class="page-wrapper">
     <div class="container-fluid">
