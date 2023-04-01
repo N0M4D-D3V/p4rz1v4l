@@ -11,5 +11,4 @@ export class BlogCardsComponent {
   constructor() {
     this.blogcards = blogcards;
   }
-
 }

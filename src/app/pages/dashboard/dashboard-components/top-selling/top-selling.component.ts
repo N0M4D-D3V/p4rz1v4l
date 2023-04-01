@@ -11,5 +11,4 @@ export class TopSellingComponent {
   constructor() {
     this.topSelling = TopSelling;
   }
-
 }

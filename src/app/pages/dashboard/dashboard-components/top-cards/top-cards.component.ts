@@ -11,5 +11,4 @@ export class TopCardsComponent {
   constructor() {
     this.topcards = topcards;
   }
-
 }

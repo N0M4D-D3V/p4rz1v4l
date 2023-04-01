@@ -5,11 +5,10 @@ import { Feeds, Feed } from "./feeds-data";
   selector: "app-feeds",
   templateUrl: "./feeds.component.html",
 })
-export class FeedsComponent  {
+export class FeedsComponent {
   feeds: Feed[];
 
   constructor() {
     this.feeds = Feeds;
   }
-
 }

@@ -31,7 +31,7 @@ export type salesChartOptions = {
   selector: "app-sales-summary",
   templateUrl: "./sales-summary.component.html",
 })
-export class SalesSummaryComponent  {
+export class SalesSummaryComponent {
   @ViewChild("chart") chart: ChartComponent = Object.create(null);
   public salesChartOptions: Partial<salesChartOptions>;
   constructor() {
@@ -82,5 +82,4 @@ export class SalesSummaryComponent  {
       },
     };
   }
-
 }
