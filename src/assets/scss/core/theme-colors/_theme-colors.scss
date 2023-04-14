@@ -4,7 +4,7 @@
     /*This is for the logo bg*/
     .topbar .top-navbar .navbar-header {
       &[data-logobg="skin6"] {
-        background: $skin6;
+        background: $skin2;
         .navbar-brand {
           .dark-logo {
             display: inline;
@@ -21,23 +21,25 @@
     }
     .topbar .navbar-collapse,
     .topbar {
-      &[data-navbarbg="skin1"] {
-        background: $skin1;
+      &[data-navbarbg="skin2"] {
+        background: $skin2;
       }
     }
     /*This is for the sidebar bg*/
     .left-sidebar {
       &[data-sidebarbg="skin6"] {
-        background: $skin6;
+        background: linear-gradient($skin2, $skin2);
+        background-size: 100% 70px;
+        background-repeat: no-repeat;
         .sidebar-nav {
           ul {
             background: $skin6;
             .sidebar-item {
               &.active {
                 > .sidebar-link {
-                  color: $primary;
+                  color: $skin5;
                   i {
-                    color: $primary;
+                    color: $skin2;
                   }
                 }
               }
@@ -60,5 +62,11 @@
         }
       }
     }
+  }
+}
+
+@media (min-width: 992px) {
+  .navbar-brand {
+    position: fixed;
   }
 }

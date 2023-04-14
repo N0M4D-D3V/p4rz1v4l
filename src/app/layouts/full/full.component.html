@@ -71,10 +71,11 @@
       <div
         class="navbar-collapse collapse"
         id="navbarSupportedContent"
-        data-navbarbg="skin1"
+        data-navbarbg="skin2"
         [ngbCollapse]="!isCollapsed"
       >
         <app-header
+          (menuToggled)="onMenuToggled()"
           (toggleSidebar)="toggleSidebarType()"
           class="w-100"
         ></app-header>
@@ -89,6 +90,7 @@
     data-sidebarbg="skin6"
     (mouseover)="Logo()"
     (mouseout)="Logo()"
+    [class.collapsed]="isMenuCollapsed"
   >
     <app-sidebar></app-sidebar>
   </aside>

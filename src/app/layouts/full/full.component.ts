@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from "@angular/core";
+import { Component, OnInit, HostListener, ElementRef, Renderer2 } from "@angular/core";
 import { Router } from "@angular/router";
 
 //declare var $: any;
@@ -9,13 +9,14 @@ import { Router } from "@angular/router";
   styleUrls: ["./full.component.scss"],
 })
 export class FullComponent implements OnInit {
-  constructor(public router: Router) {}
+  constructor(public router: Router, private elRef: ElementRef, private renderer: Renderer2) {}
   public isCollapsed = false;
   public innerWidth: number = 0;
   public defaultSidebar: string = "";
   public showMobileMenu = false;
   public expandLogo = false;
   public sidebartype = "full";
+  public isMenuCollapsed = false;
 
   Logo() {
     this.expandLogo = !this.expandLogo;
@@ -51,9 +52,13 @@ export class FullComponent implements OnInit {
 
       case "mini-sidebar":
         this.sidebartype = "full";
+        this.isMenuCollapsed = !this.isMenuCollapsed;
         break;
 
       default:
     }
+  }
+  public onMenuToggled() {
+    this.isMenuCollapsed = !this.isMenuCollapsed;
   }
 }

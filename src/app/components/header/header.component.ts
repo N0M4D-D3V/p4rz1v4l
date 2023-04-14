@@ -19,6 +19,7 @@ import { Tab } from "../tab/shared-tab/models";
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   @Output() toggleSidebar = new EventEmitter<void>();
+  @Output() menuToggled = new EventEmitter<void>();
 
   private botRemovedSubscription: Subscription;
   public tabs$ = this.tabManager.openedTabs$;
@@ -66,6 +67,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.tabManager.removeTab(botTab);
     }
   }
+
+  toggleSidebarComunication() {
+    this.menuToggled.emit();
+  }
+
   ngOnDestroy(): void {
     this.botRemovedSubscription.unsubscribe();
   }

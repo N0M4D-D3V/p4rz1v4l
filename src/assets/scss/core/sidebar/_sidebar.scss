@@ -5,12 +5,34 @@ $sidebar-first-level-padding: 0 0 10px 0;
 $sidebar-first-level-link-padding: 10px 15px;
 $sidebar-first-level-icon-size: 14px;
 
+.profile-section {
+  position: static;
+  background: $skin2;
+  padding: 50px 20px 70px 20px;
+  width: $sidebar-width-full;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
+  z-index: 99999 !important;
+}
+
+.profile-picture {
+  border: 3px solid $skin6;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+}
+
+
 /*******************
 Main sidebar
 ******************/
 
 .left-sidebar {
-  position: absolute;
+  position: fixed;
   width: $sidebar-width-full;
   height: 100%;
   top: 0px;
@@ -26,6 +48,10 @@ sidebar navigation
 ******************/
 
 .sidebar-nav {
+  position: static;
+  top: 200px;
+  overflow-y: auto;
+  z-index: 99999 !important;
   ul {
     .sidebar-item {
       width: $sidebar-width-full;
@@ -59,6 +85,17 @@ sidebar navigation
         /*background: rgba(0, 0, 0, 0.04);*/
         opacity: 1;
       }
+    }
+  }
+}
+
+.upgrade-btn {
+  a {
+    background: $skin2;
+    color: white;
+    &:hover {
+      background: #d35400cf;
+      color: white;
     }
   }
 }

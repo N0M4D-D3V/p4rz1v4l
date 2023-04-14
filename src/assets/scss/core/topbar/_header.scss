@@ -70,7 +70,7 @@ Topbar Responsive
     .navbar-collapse.collapsing {
       display: block;
       width: 100%;
-      border-top: 1px solid $border-color;
+      border-top: -2px solid $border-color;
       position: fixed;
     }
     .navbar-nav {
@@ -115,7 +115,7 @@ Topbar Responsive
 @media (max-width: 991px) {
   .topbar .navbar-collapse {
     position: relative;
-    top: 64px;
+    top: 50px;
   }
   .topbar .top-navbar .navbar-header {
     position: fixed;
