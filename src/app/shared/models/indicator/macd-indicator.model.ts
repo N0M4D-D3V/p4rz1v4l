@@ -65,8 +65,8 @@ export class MACDIndicator extends AbstractIndicator {
     const nextValue: MACDValues = this.macd.nextValue(candle.close);
     let result: boolean = false;
 
-    if (momentValue?.histogram <= 0 && nextValue?.histogram > 0) result = true;
-    if (momentValue?.signal <= 0 && nextValue?.signal > 0) result = true;
+    if (momentValue?.histogram <= 0 && nextValue?.histogram < 0) result = true;
+    if (momentValue?.signal <= 0 && nextValue?.signal < 0) result = true;
 
     return result;
   }

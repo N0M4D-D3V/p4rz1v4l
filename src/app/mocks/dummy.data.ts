@@ -3,7 +3,7 @@ import { BotDetail } from "@interfaces/bot-detail.interface";
 import { Strategy } from "@models/strategy/estrategy.model";
 
 export const STRATEGIES_MOCK: Strategy[] = [
-  new Strategy(0, "mock 1", 1, 3, [
+  new Strategy(0, "mock 1 RSI", 1, 3, [
     {
       name: "Relative Strength Index",
       symbol: "RSI",
@@ -15,6 +15,27 @@ export const STRATEGIES_MOCK: Strategy[] = [
         },
         { variable: "overbought", value: 70 },
         { variable: "oversold", value: 30 },
+      ],
+    },
+  ]),
+  new Strategy(1, "mock 2 MACD", 1, 3, [
+    {
+      name: "Moving Average Convergence Divergence",
+      symbol: "MACD",
+      operationType: OperationType.Long,
+      config: [
+        {
+          variable: "periodEmaFast",
+          value: 12,
+        },
+        {
+          variable: "periodEmaSlow",
+          value: 26,
+        },
+        {
+          variable: "periodSignal",
+          value: 9,
+        },
       ],
     },
   ]),
