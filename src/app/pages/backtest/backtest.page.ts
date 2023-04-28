@@ -66,6 +66,14 @@ export class BacktestPage implements OnInit, OnDestroy {
     return this.form.get("feePercentage");
   }
 
+  private get from(): AbstractControl {
+    return this.form.get("from");
+  }
+
+  private get to(): AbstractControl {
+    return this.form.get("to");
+  }
+
   private get strategy(): Strategy {
     return this.strategies.find(
       (strat: Strategy) => +strat.id === +this.stratIDControl.value
@@ -157,14 +165,20 @@ export class BacktestPage implements OnInit, OnDestroy {
     const balance: number = this.balanceControl.value;
     const leverage: number = this.leverageControl.value;
     const stoploss: boolean = this.stoplossControl.value;
+    const from: string = this.from.value;
+    const to: string = this.to.value;
     const strategy: Strategy = this.strategy;
 
     this.exchangeService.setExchange(this.exchange);
-    const candles: Candle[] = await this.exchangeService.getAll({
-      symbol: market,
-      timeframe: timeframe,
-      limit: limit,
-    });
+    const candles: Candle[] = await this.exchangeService.getBetween(
+      {
+        symbol: market,
+        timeframe: timeframe,
+        limit: limit,
+      },
+      from,
+      to
+    );
 
     const backtester: Backtester = new Backtester({
       initialBalance: balance,
@@ -182,8 +196,8 @@ export class BacktestPage implements OnInit, OnDestroy {
 
     this.results = backtester.getResults(
       market,
-      candleResults[0].timestamp,
-      candleResults[candleResults.length - 1].timestamp
+      candleResults[0]?.timestamp,
+      candleResults[candleResults.length - 1]?.timestamp
     );
   }
 
@@ -198,6 +212,8 @@ export class BacktestPage implements OnInit, OnDestroy {
       leverage: [1, Validators.required],
       stoploss: [true, Validators.required],
       feePercentage: [{ value: "", disabled: true }, Validators.required],
+      from: [null],
+      to: [null],
     });
   }
 

@@ -2,6 +2,26 @@
   <!-- FORM -->
   <div class="col-4" [formGroup]="form" *ngIf="form">
     <div class="row">
+      <div class="input-group p-0">
+        <div class="input-group-prepend">
+          <label class="input-group-text">From</label>
+        </div>
+        <input type="date" class="form-control" formControlName="from" />
+      </div>
+    </div>
+
+    <div class="row mt-1">
+      <div class="input-group p-0">
+        <div class="input-group-prepend">
+          <label class="input-group-text">To</label>
+        </div>
+        <input type="date" class="form-control" formControlName="to" />
+      </div>
+    </div>
+
+    <hr />
+
+    <div class="row">
       <select class="form-select" formControlName="stratID">
         <option selected disabled [value]="null">Select strategy</option>
         <option *ngFor="let strat of strategies$ | async" [value]="strat.id">
