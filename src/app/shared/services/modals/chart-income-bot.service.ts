@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
-import { BacktestResult } from '@interfaces/backtest.interface';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { BacktestResult } from "@interfaces/backtest.interface";
+import { BehaviorSubject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class ChartIncomeBotService {
   private resultsSourceInfo = new BehaviorSubject<BacktestResult>(null);

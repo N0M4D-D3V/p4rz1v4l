@@ -202,7 +202,7 @@ export class BacktestPage implements OnInit, OnDestroy {
       candleResults[0]?.timestamp,
       candleResults[candleResults.length - 1]?.timestamp
     );
-    
+
     this.chartIncomeBotService.infoResults(this.results);
     this.chartIncomeBotService.dataResults(candles);
     this.modalService.show(ChartIncomeBotModalComponent);

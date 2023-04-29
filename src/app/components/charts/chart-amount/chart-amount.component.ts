@@ -43,9 +43,7 @@ export class ChartAmountComponent {
       },
 
       xaxis: {
-        categories:
-          MonthsEnglish
-        ,
+        categories: MonthsEnglish,
       },
       tooltip: {
         theme: "dark",

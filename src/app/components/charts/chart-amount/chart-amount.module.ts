@@ -5,14 +5,7 @@ import { NgApexchartsModule } from "ng-apexcharts";
 import { ChartAmountComponent } from "./chart-amount.component";
 
 @NgModule({
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    NgApexchartsModule,
-  ],
-  declarations: [
-    ChartAmountComponent,
-  ],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, NgApexchartsModule],
+  declarations: [ChartAmountComponent],
 })
 export class ChartAmountModule {}

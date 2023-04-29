@@ -19,7 +19,7 @@ import { ChartIncomeBotModalModule } from "@modals/chart-income-bot/chart-income
     MatFormFieldModule,
     EditStrategyModalModule,
     ResultsModule,
-    ChartIncomeBotModalModule
+    ChartIncomeBotModalModule,
   ],
   providers: [],
   bootstrap: [],

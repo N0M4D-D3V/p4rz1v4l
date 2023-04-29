@@ -6,15 +6,7 @@ import { ChartIncomeBotModalComponent } from "./chart-income-bot-modal";
 import { ChartExecuteBotComponent } from "@components/charts/chart-execute-bot/chart-execute-bot.component";
 
 @NgModule({
-  imports: [
-    FormsModule,
-    ReactiveFormsModule,
-    CommonModule,
-    NgApexchartsModule,
-  ],
-  declarations: [
-    ChartIncomeBotModalComponent,
-    ChartExecuteBotComponent
-  ],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, NgApexchartsModule],
+  declarations: [ChartIncomeBotModalComponent, ChartExecuteBotComponent],
 })
 export class ChartIncomeBotModalModule {}
