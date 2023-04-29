@@ -6,6 +6,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { EditStrategyModalModule } from "@modals/edit-strategy/edit-strategy-modal.module";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ResultsModule } from "./modules/results/results.module";
+import { ChartIncomeBotModalModule } from "@modals/chart-income-bot/chart-income-bot-modal.module";
 
 @NgModule({
   declarations: [BacktestPage],
@@ -18,6 +19,7 @@ import { ResultsModule } from "./modules/results/results.module";
     MatFormFieldModule,
     EditStrategyModalModule,
     ResultsModule,
+    ChartIncomeBotModalModule
   ],
   providers: [],
   bootstrap: [],

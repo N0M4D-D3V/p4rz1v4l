@@ -18,6 +18,8 @@ import { BacktestCandle, Candle } from "@interfaces/candle";
 import { Backtester } from "@models/backtest/backtester.model";
 import { Strategy } from "@models/strategy/estrategy.model";
 import { BacktestResult } from "@interfaces/backtest.interface";
+import { ChartIncomeBotModalComponent } from "@modals/chart-income-bot/chart-income-bot-modal";
+import { ChartIncomeBotService } from "@services/modals/chart-income-bot.service";
 
 @Component({
   selector: "app-backtest",
@@ -96,7 +98,8 @@ export class BacktestPage implements OnInit, OnDestroy {
     private readonly fb: FormBuilder,
     private readonly exchangeFactory: ExchangeFactoryService,
     private readonly exchangeService: ExchangeService,
-    private readonly strategyService: StrategyService
+    private readonly strategyService: StrategyService,
+    private readonly chartIncomeBotService: ChartIncomeBotService
   ) {}
 
   ngOnInit(): void {
@@ -199,6 +202,10 @@ export class BacktestPage implements OnInit, OnDestroy {
       candleResults[0]?.timestamp,
       candleResults[candleResults.length - 1]?.timestamp
     );
+    
+    this.chartIncomeBotService.infoResults(this.results);
+    this.chartIncomeBotService.dataResults(candles);
+    this.modalService.show(ChartIncomeBotModalComponent);
   }
 
   private createForm(): void {
