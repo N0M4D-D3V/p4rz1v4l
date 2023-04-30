@@ -1,18 +1,16 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { User } from "@interfaces/user.interface";
-import { UserService } from "@services/user/user.service";
-import { Subscription, filter, map } from "rxjs";
 import { MIN_PASS_LENGTH } from "./config";
+import { UserService } from "@core/database/services/user.service";
 
 @Component({
   selector: "app-account",
   templateUrl: "./account.page.html",
   styleUrls: ["./account.page.scss"],
 })
-export class AccountPage implements OnInit, OnDestroy {
-  private subUser: Subscription;
-  private profileImage: File;
+export class AccountPage implements OnInit {
+  private user: User;
 
   public userForm: FormGroup;
   public userImg: string | ArrayBuffer;
@@ -23,29 +21,24 @@ export class AccountPage implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.subUser = this.userService
-      .getObservable()
-      .pipe(
-        filter((user: User[]) => !!user),
-        map((user: User[]) => user?.[0])
-      )
-      .subscribe((user: User) => this.createForm(user));
+    this.userService.getById(1).then((user: User) => this.createForm(user));
   }
 
-  public onSave(): void {
+  public async onSave(): Promise<void> {
     const user: User = {
       ...(this.userForm.value as User),
-      image: this.userImg,
+      image: this.userImg.toString(),
     };
-    this.userService.updateObservable(user);
+    if (this.user) user.id = this.user.id;
+
+    await this.userService.update(user);
+    window.location.reload();
   }
 
   public onUploadImage(event): void {
     const file = event?.target?.files[0];
 
     if (file) {
-      this.profileImage = file;
-
       let fileReader = new FileReader();
       fileReader.onload = (e) => {
         this.userImg = fileReader.result;
@@ -55,6 +48,7 @@ export class AccountPage implements OnInit, OnDestroy {
   }
 
   private createForm(user: User): void {
+    this.user = user;
     this.userImg = user ? user.image : "assets/images/users/user4.jpg";
     this.userForm = this.fb.group({
       nickname: [user?.nickname || "", Validators.required],
@@ -68,9 +62,5 @@ export class AccountPage implements OnInit, OnDestroy {
       pub: [user?.pub || ""],
       prib: [user?.prib || ""],
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subUser.unsubscribe();
   }
 }

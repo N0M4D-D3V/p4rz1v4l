@@ -1,7 +1,8 @@
-import { liveQuery, Observable, PromiseExtended } from "dexie";
+import { Table } from "dexie";
 import { Injectable } from "@angular/core";
 import { BacktestingDataset } from "./db.config";
 import { AppDatabase } from "./db";
+import { User } from "@interfaces/user.interface";
 
 @Injectable({ providedIn: "root" })
 export class DatabaseService {
@@ -9,36 +10,15 @@ export class DatabaseService {
 
   constructor() {}
 
-  public getAllBacktestingDatasets(): Observable<BacktestingDataset[]> {
-    return liveQuery(() => this.db.backtestingDatasets.toArray());
+  public getAppDatabase(): AppDatabase {
+    return this.db;
   }
 
-  public async getOneBacktestingDataset(
-    id: number
-  ): Promise<BacktestingDataset> {
-    return await this.db.backtestingDatasets.get(parseFloat(id.toString()));
+  public getBacktestingDatasets(): Table<BacktestingDataset, number> {
+    return this.db.backtestingDatasets;
   }
 
-  public async bulkBacktestingDataset(
-    dataset: BacktestingDataset[]
-  ): Promise<void> {
-    await this.db.backtestingDatasets.bulkAdd(dataset);
-  }
-
-  public async addBacktestingDataset(
-    dataset: BacktestingDataset
-  ): Promise<void> {
-    await this.db.backtestingDatasets.add(dataset);
-  }
-
-  public async updateBacktestingDataset(
-    id: number,
-    dataset: BacktestingDataset
-  ): Promise<void> {
-    await this.db.backtestingDatasets.update(id, dataset);
-  }
-
-  public async deleteBacktestingDataset(id: number): Promise<void> {
-    await this.db.backtestingDatasets.delete(parseFloat(id.toString()));
+  public getUser(): Table<User, number> {
+    return this.db.user;
   }
 }

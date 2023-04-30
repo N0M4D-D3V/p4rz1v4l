@@ -8,11 +8,11 @@ import {
 import { Router } from "@angular/router";
 import { TabManagerService } from "@components/tab/shared-tab/services/tab-manager.service";
 import { BotDetailService } from "@services/pages/bot/bot-page.service";
-import { Observable, Subscription, filter, map } from "rxjs";
 import { CustomRouterReuseStrategy } from "src/app/shared/routes/custom-router-reused";
 import { Tab } from "../tab/shared-tab/models";
-import { UserService } from "@services/user/user.service";
 import { User } from "@interfaces/user.interface";
+import { UserService } from "@core/database/services/user.service";
+import { Subscription } from "rxjs";
 
 @Component({
   selector: "app-header",
@@ -23,10 +23,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @Output() menuToggled = new EventEmitter<void>();
 
   private botRemovedSubscription: Subscription;
-  private subUser: Subscription;
 
   public tabs$ = this.tabManager.openedTabs$;
-  public user$: Observable<User>;
+  public user: User;
 
   constructor(
     private tabManager: TabManagerService,
@@ -35,12 +34,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private readonly userService: UserService
   ) {}
 
-  ngOnInit(): void {
-    this.user$ = this.userService.getObservable().pipe(
-      filter((user) => !!user),
-      map((user) => user[0])
-    );
-    this.user$.subscribe((item) => console.log(item));
+  async ngOnInit(): Promise<void> {
+    this.user = await this.userService.getById(1);
     this.onSusbscriptionRemove();
   }
 
@@ -84,7 +79,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.botRemovedSubscription.unsubscribe();
-    this.subUser.unsubscribe();
   }
 
   // This is for Notifications

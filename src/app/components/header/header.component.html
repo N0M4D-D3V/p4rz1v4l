@@ -26,12 +26,12 @@
       aria-expanded="false"
     >
       <img
-        src="{{ (user$ | async)?.image || 'assets/images/users/user4.jpg' }}"
+        src="{{ user?.image || 'assets/images/users/user4.jpg' }}"
         alt="user"
         class="rounded-circle"
         width="31"
       />
-      <span class="ms-2">{{ (user$ | async)?.nickname }}</span>
+      <span class="ms-2">{{ user?.nickname }}</span>
     </a>
     <div class="dropdown-menu-right" ngbDropdownMenu>
       <a class="dropdown-item" href="javascript:void(0)"> My Profile</a>

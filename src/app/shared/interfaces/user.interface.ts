@@ -10,5 +10,5 @@ export interface User {
   pub?: string;
   prib?: string;
 
-  image?: string | ArrayBuffer;
+  image?: string;
 }

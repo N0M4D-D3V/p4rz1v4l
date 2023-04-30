@@ -1,7 +1,7 @@
 <nav class="sidebar-nav">
   <div class="profile-section">
     <img
-      src="{{ (user$ | async)?.image || 'assets/images/users/user4.jpg' }}"
+      src="{{ user?.image || 'assets/images/users/user4.jpg' }}"
       alt="Profile picture"
       class="profile-picture"
     />

@@ -21,8 +21,8 @@ import { BacktestResult } from "@interfaces/backtest.interface";
 import { ChartIncomeBotModalComponent } from "@modals/chart-income-bot/chart-income-bot-modal";
 import { ChartIncomeBotService } from "@services/modals/chart-income-bot.service";
 import { BacktestingDataset } from "@core/database/db.config";
-import { DatabaseService } from "@core/database/db.service";
 import { Observable as DexieObservable } from "dexie";
+import { BacktestingDatasetService } from "@core/database/services/backtesting-dataset.service";
 
 @Component({
   selector: "app-backtest",
@@ -106,7 +106,7 @@ export class BacktestPage implements OnInit, OnDestroy {
   constructor(
     private readonly modalService: BsModalService,
     private readonly fb: FormBuilder,
-    private readonly dbService: DatabaseService,
+    private readonly backtestingDatasetService: BacktestingDatasetService,
     private readonly exchangeFactory: ExchangeFactoryService,
     private readonly exchangeService: ExchangeService,
     private readonly strategyService: StrategyService,
@@ -120,7 +120,7 @@ export class BacktestPage implements OnInit, OnDestroy {
   }
 
   private initSubscriptions(): void {
-    this.datasets$ = this.dbService.getAllBacktestingDatasets();
+    this.datasets$ = this.backtestingDatasetService.getAll();
     this.strategies$ = this.strategyService
       .getObservable()
       .pipe(filter((res: Strategy[]) => !!res));
@@ -153,7 +153,8 @@ export class BacktestPage implements OnInit, OnDestroy {
 
   private async onSubDatasetControl(id: number): Promise<void> {
     if (id) {
-      this.dataset = await this.dbService.getOneBacktestingDataset(id);
+      this.dataset =
+        await this.backtestingDatasetService.getOne(id);
       this.exchangeControl.setValue(this.dataset.exchange);
       this.from.setValue(this.dataset.from);
       this.to.setValue(this.dataset.to);
@@ -209,13 +210,13 @@ export class BacktestPage implements OnInit, OnDestroy {
 
     dataset.candles = candles;
 
-    await this.dbService.addBacktestingDataset(dataset);
+    await this.backtestingDatasetService.add(dataset);
   }
 
   public async onRemoveDataset(): Promise<void> {
     if (!this.datasetControl?.value) return;
-    await this.dbService
-      .deleteBacktestingDataset(this.datasetControl.value)
+    await this.backtestingDatasetService
+      .delete(this.datasetControl.value)
       .then(() => this.datasetControl.setValue(null));
   }
 

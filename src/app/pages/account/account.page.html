@@ -1,4 +1,4 @@
-<form [formGroup]="userForm">
+<form [formGroup]="userForm" *ngIf="userForm">
   <div class="row">
     <div class="col">
       <div class="mb-3">
@@ -35,15 +35,9 @@
       </div>
     </div>
     <div class="col">
-      <div class="profile-section">
-        <img
-          src="{{ userImg }}"
-          alt="Profile picture"
-          class="profile-picture"
-        />
-      </div>
-      <div class="w-100 mt-4">
-        <button class="btn btn-lg btn-secondary ms-4" (click)="uploadFile.click()">
+      <img src="{{ userImg }}" alt="Profile picture" class="profile-picture" />
+      <div class="w-100 mt-4 text-center">
+        <button class="btn btn-secondary" (click)="uploadFile.click()">
           UPLOAD PICTURE
         </button>
         <input
