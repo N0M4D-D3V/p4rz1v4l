@@ -104,7 +104,8 @@
       <select class="form-select" formControlName="dataset">
         <option selected disabled [value]="null">Load Dataset</option>
         <option *ngFor="let set of datasets$ | async" [value]="set.id">
-          From {{ set.from }} to {{ set.to }} ({{ set.exchange | titlecase
+          From {{ set.from }} to {{ set.to }} ({{
+            set.exchange | titlecase
           }})({{ set.market }})({{ set.candles.length }}/{{ set.timeframe }})
         </option>
       </select>
