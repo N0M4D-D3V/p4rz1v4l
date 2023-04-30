@@ -42,8 +42,6 @@ export class BotsPage implements OnInit, OnDestroy {
   private filteredIndexToId: { [index: number]: number } = {};
   private existingBotIds = new Set<number>();
   public searchBotInterface: Bot;
-  public deleteButtonLiteral: string = "Eliminar";
-  public addButtonLiteral: string = "Agregar bot";
   public searchStarted = false;
   public lastUsedBotId = 0;
 

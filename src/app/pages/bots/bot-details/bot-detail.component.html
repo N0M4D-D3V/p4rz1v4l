@@ -2,12 +2,12 @@
   <span>{{ botDetailCopy?.client.name }}</span>
 </h1>
 <p class="dates">
-  <small>Creado el {{ botDetailCopy.createdAt | date : "longDate" }}</small>
+  <small>Created at {{ botDetailCopy.createdAt | date : "longDate" }}</small>
   <ng-container *ngIf="botDetailCopy.createdAt !== botDetailCopy.lastModified">
     <small>-</small>
     <small>
       <em>
-        Última modificación:
+        Last Modification:
         {{ botDetailCopy.lastModified | date : "longDate" }}
       </em>
     </small>
@@ -17,7 +17,7 @@
 <form [formGroup]="form">
   <fieldset formGroupName="client">
     <label>
-      Nombre
+      Name
       <input name="name" type="text" formControlName="name" />
     </label>
     <!-- <div class="contacto">
@@ -77,6 +77,6 @@
     + Añadir Concepto
   </button>
   <button type="submit" (click)="onSave(form)" [disabled]="form.pristine">
-    Guardar
+    SAVE
   </button>
 </form>
