@@ -153,8 +153,7 @@ export class BacktestPage implements OnInit, OnDestroy {
 
   private async onSubDatasetControl(id: number): Promise<void> {
     if (id) {
-      this.dataset =
-        await this.backtestingDatasetService.getOne(id);
+      this.dataset = await this.backtestingDatasetService.getOne(id);
       this.exchangeControl.setValue(this.dataset.exchange);
       this.from.setValue(this.dataset.from);
       this.to.setValue(this.dataset.to);
