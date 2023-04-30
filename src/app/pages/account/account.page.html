@@ -1,2 +1,66 @@
-<h1 class="text-center">ACCOUNT PAGE!</h1>
-;
+<form [formGroup]="userForm">
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label class="form-label">Nickname</label>
+        <input type="text" class="form-control" formControlName="nickname" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input type="text" class="form-control" formControlName="name" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Surname</label>
+        <input type="text" class="form-control" formControlName="surname" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" formControlName="email" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" formControlName="pass" />
+      </div>
+
+      <h2 class="w-100 text-center mt-5 mb-0">KEYS</h2>
+      <hr class="mt-0 pt-0" />
+
+      <div class="mb-3">
+        <label class="form-label">Public Key</label>
+        <textarea class="form-control" formControlName="pub"></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Private Key</label>
+        <textarea class="form-control" formControlName="prib"></textarea>
+      </div>
+    </div>
+    <div class="col">
+      <div class="profile-section">
+        <img
+          src="{{ userImg }}"
+          alt="Profile picture"
+          class="profile-picture"
+        />
+      </div>
+      <div class="w-100 mt-4">
+        <button class="btn btn-lg btn-secondary ms-4" (click)="uploadFile.click()">
+          UPLOAD PICTURE
+        </button>
+        <input
+          type="file"
+          class="form-control d-none"
+          #uploadFile
+          (change)="onUploadImage($event)"
+        />
+      </div>
+    </div>
+  </div>
+
+  <button
+    class="btn btn-lg btn-success"
+    (click)="onSave()"
+    [disabled]="!userForm.valid"
+  >
+    SAVE
+  </button>
+</form>
