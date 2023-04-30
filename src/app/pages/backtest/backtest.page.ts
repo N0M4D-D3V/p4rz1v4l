@@ -20,6 +20,9 @@ import { Strategy } from "@models/strategy/estrategy.model";
 import { BacktestResult } from "@interfaces/backtest.interface";
 import { ChartIncomeBotModalComponent } from "@modals/chart-income-bot/chart-income-bot-modal";
 import { ChartIncomeBotService } from "@services/modals/chart-income-bot.service";
+import { BacktestingDataset } from "@core/database/db.config";
+import { DatabaseService } from "@core/database/db.service";
+import { Observable as DexieObservable } from "dexie";
 
 @Component({
   selector: "app-backtest",
@@ -31,6 +34,7 @@ export class BacktestPage implements OnInit, OnDestroy {
   private subStratID: Subscription;
   private subExchange: Subscription;
   private subMarket: Subscription;
+  private subDatasetID: Subscription;
 
   private get stratIDControl(): AbstractControl {
     return this.form.get("stratID");
@@ -82,8 +86,14 @@ export class BacktestPage implements OnInit, OnDestroy {
     );
   }
 
-  public exchange: Exchange;
+  public get datasetControl(): AbstractControl {
+    return this.form.get("dataset");
+  }
 
+  public exchange: Exchange;
+  public dataset: BacktestingDataset;
+
+  public datasets$: DexieObservable<BacktestingDataset[]>;
   public strategies$: Observable<Strategy[]>;
   public strategies: Strategy[];
   public exchangeList: string[] = [];
@@ -96,6 +106,7 @@ export class BacktestPage implements OnInit, OnDestroy {
   constructor(
     private readonly modalService: BsModalService,
     private readonly fb: FormBuilder,
+    private readonly dbService: DatabaseService,
     private readonly exchangeFactory: ExchangeFactoryService,
     private readonly exchangeService: ExchangeService,
     private readonly strategyService: StrategyService,
@@ -109,11 +120,16 @@ export class BacktestPage implements OnInit, OnDestroy {
   }
 
   private initSubscriptions(): void {
+    this.datasets$ = this.dbService.getAllBacktestingDatasets();
     this.strategies$ = this.strategyService
       .getObservable()
       .pipe(filter((res: Strategy[]) => !!res));
     this.subStrategies = this.strategies$.subscribe((strategies: Strategy[]) =>
       this.onStrategies(strategies)
+    );
+
+    this.subDatasetID = this.datasetControl.valueChanges.subscribe(
+      (id: number) => this.onSubDatasetControl(id)
     );
 
     this.subStratID = this.stratIDControl.valueChanges
@@ -135,6 +151,15 @@ export class BacktestPage implements OnInit, OnDestroy {
       });
   }
 
+  private async onSubDatasetControl(id: number): Promise<void> {
+    if (id) {
+      this.dataset = await this.dbService.getOneBacktestingDataset(id);
+      this.exchangeControl.setValue(this.dataset.exchange);
+      this.from.setValue(this.dataset.from);
+      this.to.setValue(this.dataset.to);
+    }
+  }
+
   private async onExchangeChange(name: string): Promise<void> {
     this.marketControl.disable();
     this.timeframeControl.disable();
@@ -146,11 +171,52 @@ export class BacktestPage implements OnInit, OnDestroy {
     this.marketControl.enable();
     this.timeframeControl.enable();
     this.limitControl.enable();
+
+    // If there is a dataset selected then just use the dataset info
+    if (this.dataset?.id) {
+      this.marketControl.setValue(this.dataset.market);
+      this.timeframeControl.setValue(this.dataset.timeframe);
+      this.limitControl.setValue(this.dataset.limit);
+    }
   }
 
   public onStrategies(strategies: Strategy[]): void {
     this.strategies = strategies;
     this.stratIDControl.setValue(null);
+  }
+
+  public async onSaveDataset(): Promise<void> {
+    const dataset: BacktestingDataset = {
+      exchange: this.exchange.id,
+      market: this.marketControl.value,
+      timeframe: this.timeframeControl.value,
+      limit: this.limitControl.value,
+      from: this.from.value,
+      to: this.to.value,
+      candles: [],
+    };
+
+    this.exchangeService.setExchange(this.exchange);
+    const candles: Candle[] = await this.exchangeService.getBetween(
+      {
+        symbol: dataset.market,
+        timeframe: dataset.timeframe,
+        limit: dataset.limit,
+      },
+      dataset.from,
+      dataset.to
+    );
+
+    dataset.candles = candles;
+
+    await this.dbService.addBacktestingDataset(dataset);
+  }
+
+  public async onRemoveDataset(): Promise<void> {
+    if (!this.datasetControl?.value) return;
+    await this.dbService
+      .deleteBacktestingDataset(this.datasetControl.value)
+      .then(() => this.datasetControl.setValue(null));
   }
 
   public onEdit(): void {
@@ -219,8 +285,9 @@ export class BacktestPage implements OnInit, OnDestroy {
       leverage: [1, Validators.required],
       stoploss: [true, Validators.required],
       feePercentage: [{ value: "", disabled: true }, Validators.required],
-      from: [null],
-      to: [null],
+      from: [null, Validators.required],
+      to: [null, Validators.required],
+      dataset: [null],
     });
   }
 
@@ -230,5 +297,6 @@ export class BacktestPage implements OnInit, OnDestroy {
     this.subStratID.unsubscribe();
     this.subExchange.unsubscribe();
     this.subMarket.unsubscribe();
+    this.subDatasetID.unsubscribe();
   }
 }

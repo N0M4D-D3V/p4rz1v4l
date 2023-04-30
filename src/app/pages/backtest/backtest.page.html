@@ -2,26 +2,6 @@
   <!-- FORM -->
   <div class="col-4" [formGroup]="form" *ngIf="form">
     <div class="row">
-      <div class="input-group p-0">
-        <div class="input-group-prepend">
-          <label class="input-group-text">From</label>
-        </div>
-        <input type="date" class="form-control" formControlName="from" />
-      </div>
-    </div>
-
-    <div class="row mt-1">
-      <div class="input-group p-0">
-        <div class="input-group-prepend">
-          <label class="input-group-text">To</label>
-        </div>
-        <input type="date" class="form-control" formControlName="to" />
-      </div>
-    </div>
-
-    <hr />
-
-    <div class="row">
       <select class="form-select" formControlName="stratID">
         <option selected disabled [value]="null">Select strategy</option>
         <option *ngFor="let strat of strategies$ | async" [value]="strat.id">
@@ -117,6 +97,56 @@
         >
       </div>
     </div>
+
+    <hr />
+
+    <div class="row">
+      <select class="form-select" formControlName="dataset">
+        <option selected disabled [value]="null">Load Dataset</option>
+        <option *ngFor="let set of datasets$ | async" [value]="set.id">
+          From {{ set.from }} to {{set.to}} ({{set.exchange |
+          titlecase}})({{set.market}})({{set.candles.length}}/{{set.timeframe}})
+        </option>
+      </select>
+    </div>
+
+    <div class="row mt-1">
+      <div class="input-group p-0">
+        <div class="input-group-prepend">
+          <label class="input-group-text">From</label>
+        </div>
+        <input type="date" class="form-control" formControlName="from" />
+      </div>
+    </div>
+
+    <div class="row mt-1">
+      <div class="input-group p-0">
+        <div class="input-group-prepend">
+          <label class="input-group-text">To</label>
+        </div>
+        <input type="date" class="form-control" formControlName="to" />
+      </div>
+    </div>
+
+    <div class="row mt-3">
+      <button
+        class="btn btn-danger col-2 ms-1"
+        (click)="onRemoveDataset()"
+        [disabled]="!datasetControl.value"
+      >
+        <i class="bi bi-trash-fill"></i>
+      </button>
+      <button
+        class="btn btn-success col ms-1"
+        (click)="onSaveDataset()"
+        [disabled]="!form.valid"
+      >
+        SAVE DATASET
+        <i class="bi bi-sd-card-fill"></i>
+      </button>
+    </div>
+
+    <hr />
 
     <div class="row mt-5">
       <button
