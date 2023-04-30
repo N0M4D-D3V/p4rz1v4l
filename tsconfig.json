@@ -14,7 +14,8 @@
       "@popovers/*": ["src/app/popovers/*"],
       "@mocks/*": ["src/app/mocks/*"],
       "@dictionary/*": ["src/app/shared/dictionary/*"],
-      "@directives/*": ["src/app/shared/directives/*"]
+      "@directives/*": ["src/app/shared/directives/*"],
+      "@core/*": ["src/app/core/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

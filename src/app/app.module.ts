@@ -12,6 +12,7 @@ import { SidebarComponent } from "@components/sidebar/sidebar.component";
 import { FullComponent } from "./layouts/full/full.component";
 import { HeaderComponent } from "@components/header/header.component";
 import { TabBarModule } from "@components/tab/tab.module";
+import { DatabaseService } from "./core/database/db.service";
 
 @NgModule({
   declarations: [
@@ -28,7 +29,12 @@ import { TabBarModule } from "@components/tab/tab.module";
     NgbModule,
     TabBarModule,
   ],
-  providers: [FormBuilder, ExchangeFactoryService, StrategyService],
+  providers: [
+    FormBuilder,
+    DatabaseService,
+    ExchangeFactoryService,
+    StrategyService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
