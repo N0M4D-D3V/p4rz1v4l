@@ -20,8 +20,7 @@ printf "# Updating project version... \n#"
 printf "\033[0m\n"
 branch=$(git symbolic-ref --short HEAD)
 if [[ $branch == "angular" ]]; then
-  git fetch
-  git pull --rebase
+  git pull origin --rebase
   git fetch origin $branch
   git merge origin/$branch
   npm run deploy:tag patch
