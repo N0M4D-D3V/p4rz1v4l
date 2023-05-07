@@ -1,6 +1,6 @@
 {
   "name": "p4rz1v4l",
-  "version": "0.0.36",
+  "version": "0.0.37",
   "scripts": {
     "ng": "ng",
     "deadline:update": "cd scripts && zsh update-deadline.sh",
