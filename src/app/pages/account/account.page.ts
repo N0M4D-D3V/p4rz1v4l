@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { User } from "@interfaces/user.interface";
 import { MIN_PASS_LENGTH } from "./config";
 import { UserService } from "@core/database/services/user.service";
+import { DEFAULT_USER_IMG } from "@common/global-config";
 
 @Component({
   selector: "app-account",
@@ -49,7 +50,7 @@ export class AccountPage implements OnInit {
 
   private createForm(user: User): void {
     this.user = user;
-    this.userImg = user ? user.image : "assets/images/users/user4.jpg";
+    this.userImg = user ? user.image : DEFAULT_USER_IMG;
     this.userForm = this.fb.group({
       nickname: [user?.nickname || "", Validators.required],
       name: [user?.name || "", Validators.required],
