@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import * as CryptoJS from "crypto-js";
 
-Injectable();
+Injectable({ providedIn: "root" });
 export class CryptoService {
   constructor() {}
 

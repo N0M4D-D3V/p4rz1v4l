@@ -12,8 +12,8 @@ import { SidebarComponent } from "@components/sidebar/sidebar.component";
 import { FullComponent } from "./layouts/full/full.component";
 import { HeaderComponent } from "@components/header/header.component";
 import { TabBarModule } from "@components/tab/tab.module";
-import { DatabaseService } from "@core/database/db.service";
-import { UserService } from "@core/database/services/user.service";
+import { CryptoService } from "@services/cryptography/crypto.service";
+import { LocalStorageService } from "@core/database/services/local-storage.service";
 
 @NgModule({
   declarations: [
@@ -30,7 +30,13 @@ import { UserService } from "@core/database/services/user.service";
     NgbModule,
     TabBarModule,
   ],
-  providers: [FormBuilder, ExchangeFactoryService, StrategyService],
+  providers: [
+    FormBuilder,
+    ExchangeFactoryService,
+    StrategyService,
+    CryptoService,
+    LocalStorageService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
