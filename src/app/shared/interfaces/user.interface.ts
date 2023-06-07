@@ -7,8 +7,8 @@ export interface User {
   email: string;
   pass: string;
 
-  pub?: string;
-  prib?: string;
+  apiKey?: string;
+  secretKey?: string;
 
   image?: string;
 }

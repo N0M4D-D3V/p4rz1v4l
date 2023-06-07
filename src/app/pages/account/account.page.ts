@@ -60,8 +60,8 @@ export class AccountPage implements OnInit {
         user?.pass || "",
         [Validators.required, Validators.minLength(MIN_PASS_LENGTH)],
       ],
-      pub: [user?.pub || ""],
-      prib: [user?.prib || ""],
+      apiKey: [user?.apiKey || ""],
+      secretKey: [user?.secretKey || ""],
     });
   }
 }

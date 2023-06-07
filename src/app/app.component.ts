@@ -5,6 +5,8 @@ import { AppRoutingService } from "@services/routing/approuting.services";
 import { StrategyService } from "@services/strategy/strategy.service";
 import { LocalStorageService } from "@core/database/services/local-storage.service";
 import { generateRandomKey } from "@common/functions";
+import { UserService } from "@core/database/services/user.service";
+import { User } from "@interfaces/user.interface";
 
 @Component({
   selector: "app-root",
@@ -18,6 +20,7 @@ export class AppComponent implements OnInit {
     private readonly appRoutingService: AppRoutingService,
     private readonly tabManager: TabManagerService,
     private readonly localStorageService: LocalStorageService,
+    private readonly userService: UserService,
     private readonly strategyService: StrategyService
   ) {}
 
@@ -25,6 +28,7 @@ export class AppComponent implements OnInit {
     this.getCurrentUrl();
     this.loadMocks();
     this.loadRandomKey();
+    this.logUser();
   }
 
   private getCurrentUrl() {
@@ -47,5 +51,12 @@ export class AppComponent implements OnInit {
       const newRandomKey: string = generateRandomKey();
       this.localStorageService.set<string>("AppRandomKey", newRandomKey);
     }
+  }
+
+  private logUser(): void {
+    this.userService
+      .getById(1)
+      .then((user: User) => (this.userService.currentUser = user))
+      .catch((err) => console.error(err));
   }
 }

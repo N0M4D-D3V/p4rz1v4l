@@ -7,6 +7,8 @@ import { LocalStorageService } from "./local-storage.service";
 
 @Injectable({ providedIn: "root" })
 export class UserService {
+  public currentUser: User;
+
   constructor(
     private readonly db: DatabaseService,
     private readonly cryptoService: CryptoService,
@@ -22,8 +24,10 @@ export class UserService {
     const user: User = await this.user.get(parseFloat(id.toString()));
 
     if (user?.pass) user.pass = this.cryptoService.decrypt(key, user.pass);
-    if (user?.prib) user.prib = this.cryptoService.decrypt(key, user.prib);
-    if (user?.pub) user.pub = this.cryptoService.decrypt(key, user.pub);
+    if (user?.secretKey)
+      user.secretKey = this.cryptoService.decrypt(key, user.secretKey);
+    if (user?.apiKey)
+      user.apiKey = this.cryptoService.decrypt(key, user.apiKey);
 
     return user;
   }
@@ -32,8 +36,10 @@ export class UserService {
     const key: string = this.lsService.get<string>("AppRandomKey");
 
     if (user?.pass) user.pass = this.cryptoService.encrypt(key, user.pass);
-    if (user?.prib) user.prib = this.cryptoService.encrypt(key, user.prib);
-    if (user?.pub) user.pub = this.cryptoService.encrypt(key, user.pub);
+    if (user?.secretKey)
+      user.secretKey = this.cryptoService.encrypt(key, user.secretKey);
+    if (user?.apiKey)
+      user.apiKey = this.cryptoService.encrypt(key, user.apiKey);
 
     if (user?.id) await this.user.update(user.id, user);
     else await this.user.add(user);

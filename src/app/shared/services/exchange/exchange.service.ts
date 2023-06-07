@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Exchange, OHLCV, Params } from "ccxt";
+import { Balances, Exchange, OHLCV, Params } from "ccxt";
 import { Candle } from "@interfaces/candle";
 import { ExchangeResponseInterpreter } from "@models/exchange/ExchangeResponseInterpreter";
 import moment from "moment";
@@ -17,6 +17,15 @@ export class ExchangeService {
   private exchange: Exchange;
 
   constructor() {}
+
+  public auth(apiKey: string, secret: string): void {
+    if (this.exchange) {
+      this.exchange.apiKey = apiKey;
+      this.exchange.secret = secret;
+    } else {
+      throw new Error("No exchange instance avalaible!");
+    }
+  }
 
   public setExchange(exchange: Exchange): void {
     this.exchange = exchange;
@@ -80,7 +89,12 @@ export class ExchangeService {
     return candles;
   }
 
-  private sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => setTimeout(resolve, ms));
+  public async getBalances(): Promise<any> {
+    this.checkCredentials();
+    return this.exchange.fetchBalance();
+  }
+
+  public checkCredentials(): void {
+    this.exchange.checkRequiredCredentials();
   }
 }

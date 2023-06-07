@@ -1,8 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~bootstrap/dist/css/bootstrap.min.css";
-@import "~bootstrap-icons/font/bootstrap-icons";
+@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons";
 
 /* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap";
+@import "../node_modules/bootstrap/scss/bootstrap";
 @import "assets/styles/animations.scss";
-@import url('https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800');
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800");

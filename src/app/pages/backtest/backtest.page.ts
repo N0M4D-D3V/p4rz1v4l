@@ -23,6 +23,7 @@ import { ChartIncomeBotService } from "@services/modals/chart-income-bot.service
 import { BacktestingDataset } from "@core/database/db.config";
 import { Observable as DexieObservable } from "dexie";
 import { BacktestingDatasetService } from "@core/database/services/backtesting-dataset.service";
+import { ExchangeKey } from "@custom-types/market.types";
 
 @Component({
   selector: "app-backtest",
@@ -140,8 +141,8 @@ export class BacktestPage implements OnInit, OnDestroy {
       });
 
     this.subExchange = this.exchangeControl.valueChanges
-      .pipe(filter((name: string) => !!name))
-      .subscribe(async (name: string) => await this.onExchangeChange(name));
+      .pipe(filter((name: ExchangeKey) => !!name))
+      .subscribe(async (name: ExchangeKey) => await this.onExchangeChange(name));
 
     this.subMarket = this.marketControl.valueChanges
       .pipe(filter((symbol: string) => !!symbol))
@@ -160,7 +161,7 @@ export class BacktestPage implements OnInit, OnDestroy {
     }
   }
 
-  private async onExchangeChange(name: string): Promise<void> {
+  private async onExchangeChange(name: ExchangeKey): Promise<void> {
     this.marketControl.disable();
     this.timeframeControl.disable();
     this.limitControl.disable();
