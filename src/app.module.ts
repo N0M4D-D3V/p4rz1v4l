@@ -2,6 +2,9 @@ import { Module } from "@nestjs/common";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { TypeOrmModule } from "@nestjs/typeorm";
+import { CcxtService } from "./services/ccxt.service";
+import { ExchangeResponseInterpreter } from "./services/exchange-response-interpreter.service";
+import { CcxtController } from "./controllers/ccxt/ccxt.controller";
 
 @Module({
   imports: [
@@ -16,7 +19,7 @@ import { TypeOrmModule } from "@nestjs/typeorm";
       synchronize: true,
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, CcxtController],
+  providers: [AppService, CcxtService, ExchangeResponseInterpreter],
 })
 export class AppModule {}
