@@ -1,0 +1,8 @@
+{
+  "basePrice": 0,
+  "buyPercentages": [5, 10],
+  "sellPercentages": [-5, -10],
+  "operationalPercentage": 1,
+  "stoplossPrice": 1000,
+  "takeprofitPrice": 1200
+}
