@@ -1,4 +1,7 @@
 {
+  "exchange": "binance",
+  "secret": "",
+  "api": "",
   "basePrice": 0,
   "buyPercentages": [5, 10],
   "sellPercentages": [-5, -10],

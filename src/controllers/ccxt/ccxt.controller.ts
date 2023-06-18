@@ -8,13 +8,18 @@ export class CcxtController {
 
   @Get()
   public async getAll(@Res() res): Promise<void> {
+    // this.ccxtService
+    //   .getAll({
+    //     symbol: "BTC/USDT",
+    //     timeframe: "1s",
+    //     limit: 1000,
+    //   })
+    //   .then((candles: Candle[]) => res.status(HttpStatus.OK).json(candles))
+    //   .catch((err) => res.status(HttpStatus.FORBIDDEN).json(err));
+
     this.ccxtService
-      .getAll({
-        symbol: "BTC/USDT",
-        timeframe: "1s",
-        limit: 1000,
-      })
-      .then((candles: Candle[]) => res.status(HttpStatus.OK).json(candles))
+      .getBalance()
+      .then((result) => res.status(HttpStatus.OK).json(result))
       .catch((err) => res.status(HttpStatus.FORBIDDEN).json(err));
   }
 }

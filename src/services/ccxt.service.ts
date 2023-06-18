@@ -1,13 +1,18 @@
 import { Injectable } from "@nestjs/common";
-import ccxt, { Exchange, OHLCV, binance } from "ccxt";
+import ccxt, { Balances, Exchange, OHLCV, binance } from "ccxt";
 import { Candle } from "src/interfaces/candle.interface";
 import { ExchangeResponseInterpreter } from "./exchange-response-interpreter.service";
 import moment from "moment";
 import { Query } from "src/interfaces/query.interface";
 
+import * as CONFIG from "src/config/config.json";
+
 @Injectable()
 export class CcxtService {
-  private exchange: Exchange = new binance();
+  private exchange: Exchange = new binance({
+    apiKey: CONFIG.api,
+    secret: CONFIG.secret,
+  });
 
   constructor(private readonly interpreter: ExchangeResponseInterpreter) {}
 
@@ -64,5 +69,17 @@ export class CcxtService {
     const candles: Candle[] = interpreter.createDataframe(ohlcv);
 
     return candles;
+  }
+
+  public async getBalance(): Promise<Balances> {
+    try {
+      await this.exchange.loadMarkets();
+      const balances = await this.exchange.fetchBalance();
+
+      return balances;
+    } catch (error) {
+      console.error("Error fetching account balance:", error);
+      throw error;
+    }
   }
 }
