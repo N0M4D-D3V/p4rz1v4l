@@ -17,9 +17,14 @@ export class CcxtController {
     //   .then((candles: Candle[]) => res.status(HttpStatus.OK).json(candles))
     //   .catch((err) => res.status(HttpStatus.FORBIDDEN).json(err));
 
-    this.ccxtService
-      .getBalance()
-      .then((result) => res.status(HttpStatus.OK).json(result))
-      .catch((err) => res.status(HttpStatus.FORBIDDEN).json(err));
+    // this.ccxtService
+    //   .getBalance()
+    //   .then((result) => res.status(HttpStatus.OK).json(result))
+    //   .catch((err) => res.status(HttpStatus.FORBIDDEN).json(err));
+
+    // this.ccxtService
+    //   .getPrice("BTC/USD")
+    //   .then((result) => res.status(HttpStatus.OK).json(result))
+    //   .catch((err) => res.status(HttpStatus.FORBIDDEN).json(err));
   }
 }

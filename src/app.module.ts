@@ -5,9 +5,12 @@ import { TypeOrmModule } from "@nestjs/typeorm";
 import { CcxtService } from "./services/ccxt.service";
 import { ExchangeResponseInterpreter } from "./services/exchange-response-interpreter.service";
 import { CcxtController } from "./controllers/ccxt/ccxt.controller";
+import { ScheduleModule } from "@nestjs/schedule";
+import { AccountService } from "./services/account.service";
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     TypeOrmModule.forRoot({
       type: "mysql",
       host: "localhost",
@@ -20,6 +23,11 @@ import { CcxtController } from "./controllers/ccxt/ccxt.controller";
     }),
   ],
   controllers: [AppController, CcxtController],
-  providers: [AppService, CcxtService, ExchangeResponseInterpreter],
+  providers: [
+    AppService,
+    CcxtService,
+    AccountService,
+    ExchangeResponseInterpreter,
+  ],
 })
 export class AppModule {}
