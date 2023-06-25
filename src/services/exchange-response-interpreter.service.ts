@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { OHLCV } from "ccxt";
+import { Operation } from "src/enum/operation.enum";
 import { Candle } from "src/interfaces/candle.interface";
 
 @Injectable()
@@ -18,6 +19,7 @@ export class ExchangeResponseInterpreter {
       low: ohlcv[3],
       close: ohlcv[4],
       volume: ohlcv[5],
+      operation: Operation.None,
     };
   }
 }

@@ -7,6 +7,9 @@ import { ExchangeResponseInterpreter } from "./services/exchange-response-interp
 import { CcxtController } from "./controllers/ccxt/ccxt.controller";
 import { ScheduleModule } from "@nestjs/schedule";
 import { AccountService } from "./services/account.service";
+import { GridOperationsService } from "./services/grid-operations.service";
+import { CandleService } from "./controllers/candles/candle.service";
+import { CandleDTO } from "./controllers/candles/candle-dto.entity";
 
 @Module({
   imports: [
@@ -18,9 +21,10 @@ import { AccountService } from "./services/account.service";
       username: "p4rz1v4l",
       password: "be_rich_or_be_poor",
       database: "p4rz1v4l",
-      entities: [],
+      entities: [__dirname + "/**/*.entity{.ts,.js}"],
       synchronize: true,
     }),
+    TypeOrmModule.forFeature([CandleDTO]),
   ],
   controllers: [AppController, CcxtController],
   providers: [
@@ -28,6 +32,8 @@ import { AccountService } from "./services/account.service";
     CcxtService,
     AccountService,
     ExchangeResponseInterpreter,
+    GridOperationsService,
+    CandleService,
   ],
 })
 export class AppModule {}
